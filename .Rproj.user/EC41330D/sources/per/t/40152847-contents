@@ -1,0 +1,691 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Preparación y exploración datos
+
+<div style="text-align: justify">
+
+```{r cargar-paquetes-2, warning=FALSE, message=FALSE}
+rm(list=ls())
+
+library(pacman)
+p_load(tidyverse,
+       knitr,
+       bookdown,
+       car,
+       sjmisc,
+       sjlabelled,
+       psych,
+       kableExtra,
+       gridExtra,
+       lubridate,
+       viridis,
+       statar,
+       readxl,
+       tinytex,
+       ggrepel,
+       ggalluvial,
+       survey, 
+       httr, 
+       )
+```
+
+```{r datos-2}
+# load(url("https://dataverse.harvard.edu/api/access/datafile/7245118"))
+# load(url("https://dataverse.harvard.edu/api/access/datafile/7245115"))
+load("C:/Users/danie/Dropbox/ELSOC/2_Bases_de_Datos/10_Combinacion_de_Olas_ELSOC/0F_Bases_de_Datos_2016_2022/bases_resultantes/ELSOC_Long.RData")
+```
+
+```{r seleccion}
+# Seleccion solo para mirar, aun sin ponderadores
+data <- elsoc_long_2016_2022 %>%
+  select(idencuesta,ola,ola_w01,ola_w02,ola_w03,
+         ola_w04,ola_w05,ola_w06,version,muestra,         # identificacion
+         sexo=m0_sexo,edad=m0_edad,educ=m01,              # caract sociodemografica
+         m02,m07,m08,m10,
+         m03,ciuo88_m03,ciuo08_m03,
+         m04,ciiu3_m04,ciiu4_m04,                         # caract ocupacional
+         c12_04,                                          # membresia sindicato
+         c08_03,                                          # freq participa huelgas
+         mov_valora=c20,mov_valora_otro=c20_otro,         # mov que mas valora
+         c21_01,c21_02,c21_03,c21_04,c21_05,c21_06,
+         c21_07,c21_08,c21_09,c21_10,c21_11,c22,c23,c24,  # caract mov valora
+         c13,c14_01,c14_02                                # interes politica
+         )
+```
+
+
+## Exploración variables de interés
+
+
+### Caracterización empleo
+
+Primero, una revisión exploratoria de las variables de interés, considerando toda la base de datos, sin ponderar.
+
+- m02. ¿Cuál de estas situaciones describe mejor su actividad principal durante el último mes?
+
+```{r}
+# Recodficar
+data <- data %>%
+  mutate(actividad=car::recode(m02,
+                               recodes=c("1='Trabaja de manera remunerada con jornada completa';
+                                          2='Trabaja de manera remunerada a tiempo parcial';
+                                          3='Estudia y trabaja';
+                                          4='Solo estudia';
+                                          5='Jubilado o pensionado';
+                                          6='Desempleado, buscando trabajo';
+                                          7='Realiza tareas no remuneradas';
+                                          8='Esta enfermo o tiene una discapacidad';
+                                          9='No estudia, no trabaja y no busca trabajo';
+                                          -888=NA; 
+                                          -999=NA"),
+                               as.factor=TRUE, # convertir a factor
+                               levels=c("Trabaja de manera remunerada con jornada completa",
+                                        "Trabaja de manera remunerada a tiempo parcial",
+                                        "Estudia y trabaja",
+                                        "Solo estudia",
+                                        "Jubilado o pensionado",
+                                        "Desempleado, buscando trabajo",
+                                        "Realiza tareas no remuneradas",
+                                        "Esta enfermo o tiene una discapacidad",
+                                        "No estudia, no trabaja y no busca trabajo"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_actividad <- data %>%
+  group_by(ola,actividad) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_actividad <- tabla_freq_actividad %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_actividad,caption="Frecuencias de cada categoría de Actividad por ola")
+```
+
+
+- m03. ¿Cuál es su ocupación u oficio actual? Describa sus principales tareas y funciones en el puesto de trabajo actual
+
+- ciuo88_m03: CIUO (1988) del entrevistado
+- ciuo08_m03: CIUO (2008) del entrevistado
+
+```{r}
+# CIUO - ISCO: creación de variables con 1 y 2 dígitos
+table(data$ciuo88_m03)
+class(data$ciuo88_m03)
+data$ciuo88_2d <- as.character(data$ciuo88_m03)
+data$ciuo88_2d <- substr(data$ciuo88_2d,1,2)
+data$ciuo88_2d <- as.integer(data$ciuo88_2d)
+table(data$ciuo88_2d)
+
+table(data$ciuo08_m03)
+class(data$ciuo08_m03)
+data$ciuo08_2d <- as.character(data$ciuo08_m03)
+data$ciuo08_2d <- substr(data$ciuo08_2d,1,2)
+data$ciuo08_2d <- as.integer(data$ciuo08_2d)
+table(data$ciuo08_2d)
+
+class(data$ciuo88_m03)
+data$ciuo88_1d <- as.character(data$ciuo88_m03)
+data$ciuo88_1d <- substr(data$ciuo88_1d,1,1)
+data$ciuo88_1d <- as.integer(data$ciuo88_1d)
+table(data$ciuo88_1d)
+
+class(data$ciuo08_m03)
+data$ciuo08_1d <- as.character(data$ciuo08_m03)
+data$ciuo08_1d <- substr(data$ciuo08_1d,1,1)
+data$ciuo08_1d <- as.integer(data$ciuo08_1d)
+table(data$ciuo08_1d)
+
+
+# 
+
+
+```
+
+
+- m04. ¿A qué rubro o giro de actividad se dedica principalmente la empresa, institución o negocio para la cual usted trabaja?
+
+- ciiu3_m04: CIIU (III version) del entrevistado
+- ciiu4_m04: CIIU (IV version) del entrevistado
+
+```{r}
+table(data$ciiu3_m04)
+class(data$ciiu3_m04)
+data$ciiu3_2 <- as.character(data$ciiu3_m04)
+data$ciiu3_2 <- substr(data$ciiu3_2,1,2)
+data$ciiu3_2 <- as.integer(data$ciiu3_2)
+table(data$ciiu3_2)
+
+table(data$ciiu4_m04)
+class(data$ciiu4_m04)
+data$ciiu4_2 <- as.character(data$ciiu4_m04)
+data$ciiu4_2 <- substr(data$ciiu4_2,1,2)
+data$ciiu4_2 <- as.integer(data$ciiu4_2)
+table(data$ciiu4_2)
+
+class(data$ciiu4_m04)
+data$ciiu4_1 <- as.character(data$ciiu4_m04)
+data$ciiu4_1 <- substr(data$ciiu4_1,1,1)
+data$ciiu4_1 <- as.integer(data$ciiu4_1)
+table(data$ciiu4_1)
+
+
+```
+
+
+- m07. En su actual ocupación usted trabaja como:
+
+```{r}
+# Recodficar
+data <- data %>%
+  mutate(rel_empleo=car::recode(m07,
+                                recodes=c("1='Empleado u obrero en empresa privada';
+                                           2='Empleado u obrero del sector público';
+                                           3='Miembro de las Fuerzas Armadas y de Orden';
+                                           4='Patrón/a o empleador/a';
+                                           5='Trabaja solo, no tiene empleados';
+                                           6='Familiar no remunerado';
+                                           7='Servicio doméstico';
+                                           -888=NA; 
+                                           -999=NA"),
+                                as.factor=TRUE, # convertir a factor
+                                levels=c("Empleado u obrero en empresa privada",
+                                         "Empleado u obrero del sector público",
+                                         "Miembro de las Fuerzas Armadas y de Orden",
+                                         "Patrón/a o empleador/a",
+                                         "Trabaja solo, no tiene empleados",
+                                         "Familiar no remunerado",
+                                         "Servicio doméstico"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_rel_empleo <- data %>%
+  group_by(ola,rel_empleo) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_rel_empleo <- tabla_freq_rel_empleo %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_rel_empleo,caption="Frecuencias de cada categoría de Relación de Empleo por ola")
+```
+
+
+- m08. Su trabajo o negocio principal es de tipo:
+
+```{r}
+# Recodficar
+data <- data %>%
+  mutate(temp_trabajo=car::recode(m08,
+                                  recodes=c("1='Permanente';
+                                             2='De temporada o estacional';
+                                             3='Ocasional o eventual';
+                                             4='A prueba';
+                                             5='Por plazo o tiempo determinado';
+                                             -888=NA; 
+                                             -999=NA"),
+                                  as.factor=TRUE, # convertir a factor
+                                  levels=c("Permanente",
+                                           "De temporada o estacional",
+                                           "Ocasional o eventual",
+                                           "A prueba",
+                                           "Por plazo o tiempo determinado"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_temp_trabajo <- data %>%
+  group_by(ola,temp_trabajo) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_temp_trabajo <- tabla_freq_temp_trabajo %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_temp_trabajo,caption="Frecuencias de cada categoría de Temporalidad del trabajo por ola")
+```
+
+
+- m10. En su trabajo principal, ¿tiene contrato de trabajo escrito?
+
+```{r}
+# Recodficar
+data <- data %>%
+  mutate(contrato=car::recode(m10,
+                              recodes=c("1='Sí, lo firmé';
+                                         2='Sí, pero no lo he firmado';
+                                         3='No tengo';
+                                         -888=NA; 
+                                         -999=NA"),
+                              as.factor=TRUE, # convertir a factor
+                              levels=c("Sí, lo firmé",
+                                       "Sí, pero no lo he firmado",
+                                       "No tengo"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_contrato <- data %>%
+  group_by(ola,contrato) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_contrato <- tabla_freq_contrato %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_contrato,caption="Frecuencias de cada categoría de Tipo de contrato por ola")
+```
+
+
+### Valoración Movimiento de Demandas Laborales
+
+Considerando la pregunta de ELSOC:
+
+- c20. Pensando en la lista de movimientos sociales que a continuación le mostraré, por favor indique ¿cuál es el que usted más valora?
+
+Si consideramos **solamente** a las personas que responden que el movimiento que más valoran es el de "Movimiento social de apoyo a demandas laborales" tenemos:
+
+```{r}
+tabla_freq_mov_laboral <- data %>%
+  group_by(ola) %>%
+  summarise(n_mov_laboral = sum(mov_valora==2), 
+            n_ola = n(),
+            prop = n_mov_laboral/n_ola)
+
+kable(tabla_freq_mov_laboral, caption = "Frecuencia de respuestas 'Movimiento social de apoyo a demandas laborales'")
+```
+
+El porcentaje más bajo de respuestas positivas se dio el año 2018 con un 6.08% y el más alto el año 2021 con un 16.75%. En promedio corresponde al 10.87% de la muestra.
+
+
+Esta variable tiene una serie de ítems asociados al nivel de acuerdo con afirmaciones respecto al movimiento social que más se valora.
+
+- c21. Pensando en [movimiento social que más valora], ¿cuán de acuerdo o en desacuerdo está usted con las siguientes afirmaciones?
+
+- c21_01. Siento un compromiso con este movimiento
+
+```{r}
+# tabla1 <- data%>%select(c21_01, ola, mov_valora)%>%
+#   filter(data$mov_valora==2&ola==5) # 381
+# table(tabla1$c21_01)
+# # -999 -888    1    2    3    4    5 
+# #    1    3    4   24   41  278   30 
+
+# tabla_freq_compromiso_ml <- data %>%
+#   filter(mov_valora==2) %>%
+#   group_by(ola) %>%
+#   summarise("1"=sum(c21_01==1),
+#             "2"=sum(c21_01==2),
+#             "3"=sum(c21_01==3),
+#             "4"=sum(c21_01==4),
+#             "5"=sum(c21_01==5))
+# 
+# tabla_freq_compromiso_ml
+
+# Recodificar
+data <- data %>%
+  mutate(compromiso_mov=car::recode(c21_01,
+                                    recodes=c("1='Totalmente en desacuerdo';
+                                               2='En desacuerdo';
+                                               3='Ni en desacuerdo ni de acuerdo';
+                                               4='De acuerdo';
+                                               5='Totalmente de acuerdo';
+                                               -888=NA; 
+                                               -999=NA"),
+                                    as.factor = TRUE, # convertir a factor
+                                    levels = c("Totalmente en desacuerdo",
+                                               "En desacuerdo",
+                                               "Ni en desacuerdo ni de acuerdo",
+                                               "De acuerdo",
+                                               "Totalmente de acuerdo"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_compromiso_ml <- data %>%
+  filter(mov_valora==2) %>%
+  group_by(ola,compromiso_mov) %>%
+  summarise(frecuencia = n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_compromiso_ml <- tabla_freq_compromiso_ml %>%
+  pivot_wider(names_from = ola, values_from = frecuencia, names_prefix = "Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_compromiso_ml, caption = "Frecuencias de 'Grado de acuerdo: Compromiso con el movimiento' por ola")
+```
+
+
+- c21_02. Me identifico con este movimiento
+
+```{r}
+# Recodificar
+data <- data %>%
+  mutate(identificacion_mov=car::recode(c21_02,
+                                        recodes=c("1='Totalmente en desacuerdo';
+                                                   2='En desacuerdo';
+                                                   3='Ni en desacuerdo ni de acuerdo';
+                                                   4='De acuerdo';
+                                                   5='Totalmente de acuerdo';
+                                                   -888=NA; 
+                                                   -999=NA"),
+                                        as.factor=TRUE, # convertir a factor
+                                        levels=c("Totalmente en desacuerdo",
+                                                 "En desacuerdo",
+                                                 "Ni en desacuerdo ni de acuerdo",
+                                                 "De acuerdo",
+                                                 "Totalmente de acuerdo"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_identificacion_ml <- data %>%
+  filter(mov_valora==2) %>%
+  group_by(ola,identificacion_mov) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_identificacion_ml <- tabla_freq_identificacion_ml %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_identificacion_ml,caption="Frecuencias de 'Grado de acuerdo: Identificación con el movimiento' por ola")
+```
+
+
+- c21_05. Las acciones y protestas de este movimiento pueden generar un cambio social
+
+```{r}
+# Recodificar
+data <- data %>%
+  mutate(acciones_mov=car::recode(c21_05,
+                                  recodes=c("1='Totalmente en desacuerdo';
+                                             2='En desacuerdo';
+                                             3='Ni en desacuerdo ni de acuerdo';
+                                             4='De acuerdo';
+                                             5='Totalmente de acuerdo';
+                                             -888=NA; 
+                                             -999=NA"),
+                                  as.factor=TRUE, # convertir a factor
+                                  levels=c("Totalmente en desacuerdo",
+                                           "En desacuerdo",
+                                           "Ni en desacuerdo ni de acuerdo",
+                                           "De acuerdo",
+                                           "Totalmente de acuerdo"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_acciones_ml <- data %>%
+  filter(mov_valora==2) %>%
+  group_by(ola,acciones_mov) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_acciones_ml <- tabla_freq_acciones_ml %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_acciones_ml,caption="Frecuencias de 'Grado de acuerdo: Acciones movimiento pueden generar cambio' por ola")
+```
+
+
+- c21_09. Las autoridades y el movimiento tienen posiciones opuestas
+
+```{r}
+# Recodificar
+data <- data %>%
+  mutate(opuesta_mov=car::recode(c21_09,
+                                 recodes=c("1='Totalmente en desacuerdo';
+                                            2='En desacuerdo';
+                                            3='Ni en desacuerdo ni de acuerdo';
+                                            4='De acuerdo';
+                                            5='Totalmente de acuerdo';
+                                            -888=NA; 
+                                            -999=NA"),
+                                 as.factor=TRUE, # convertir a factor
+                                 levels=c("Totalmente en desacuerdo",
+                                          "En desacuerdo",
+                                          "Ni en desacuerdo ni de acuerdo",
+                                          "De acuerdo",
+                                          "Totalmente de acuerdo"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_opuesta_ml <- data %>%
+  filter(mov_valora==2) %>%
+  group_by(ola,opuesta_mov) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_opuesta_ml <- tabla_freq_opuesta_ml %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_opuesta_ml,caption="Frecuencias de 'Grado de acuerdo: Posición opuesta entre el movimiento y las autoridades' por ola")
+```
+
+
+- c22. Ahora, pensando en los últimos 12 meses, cuán frecuntemente ha participado usted en [movimiento social que más valora]
+
+```{r}
+# Recodificar
+data <- data %>%
+  mutate(participacion_mov=car::recode(c22,
+                                       recodes=c("1='Nunca';
+                                                  2='Casi nunca';
+                                                  3='A veces';
+                                                  4='Frecuentemente';
+                                                  5='Muy Frecuentemente';
+                                                  -888=NA; 
+                                                  -999=NA"),
+                                       as.factor=TRUE, # convertir a factor
+                                       levels=c("Nunca",
+                                                "Casi nunca",
+                                                "A veces",
+                                                "Frecuentemente",
+                                                "Muy Frecuentemente"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_participacion_ml <- data %>%
+  filter(mov_valora==2) %>%
+  group_by(ola,participacion_mov) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_participacion_ml <- tabla_freq_participacion_ml %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_participacion_ml,caption="Frecuencias de 'Frecuencia: Participación en el movimiento' por ola")
+
+```
+
+
+### Participación en sindicatos
+
+- c12_04. Membresía sindicatos
+
+```{r}
+# Recodficar
+data <- data %>%
+  mutate(mem_sindicato=car::recode(c12_04,
+                                   recodes=c("1='No es miembro';
+                                              2='Miembro inactivo';
+                                              3='Miembro activo';
+                                              -888=NA; 
+                                              -999=NA"),
+                                   as.factor=TRUE, # convertir a factor
+                                   levels=c("No es miembro",
+                                            "Miembro inactivo",
+                                            "Miembro activo"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_mem_sindicato <- data %>%
+  group_by(ola,mem_sindicato) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_mem_sindicato <- tabla_freq_mem_sindicato %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_mem_sindicato,caption="Frecuencias de cada categoría de Membresía Sindicatos por ola considerando toda la muestra")
+```
+
+```{r}
+tabla_freq_mem_sindicato_ml <- data %>%
+  filter(mov_valora==2) %>%
+  group_by(ola,mem_sindicato) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_mem_sindicato_ml <- tabla_freq_mem_sindicato_ml %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_mem_sindicato_ml,caption="Frecuencias de Membresía Sindicato por ola, para quienes valoran movimientos laborales")
+```
+
+
+### Participación en huelgas
+
+- c08_03. Durante los últimos 12 meses, con cuánta frecuencia usted ha participado en una huelga
+
+```{r}
+# Recodficar
+data <- data %>%
+  mutate(part_huelga=car::recode(c08_03,
+                                 recodes=c("1='Nunca';
+                                            2='Casi nunca';
+                                            3='A veces';
+                                            4='Frecuentemente';
+                                            5='Muy Frecuentemente';
+                                            -888=NA; 
+                                            -999=NA"),
+                                 as.factor=TRUE, # convertir a factor
+                                 levels=c("Nunca",
+                                          "Casi nunca",
+                                          "A veces",
+                                          "Frecuentemente",
+                                          "Muy Frecuentemente"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_part_huelga <- data %>%
+  group_by(ola,part_huelga) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_part_huelga <- tabla_freq_part_huelga %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_part_huelga,caption="Frecuencias de cada categoría de Participación en huelga por ola considerando toda la muestra")
+```
+
+
+```{r}
+tabla_freq_part_huelga_ml <- data %>%
+  filter(mov_valora==2) %>%
+  group_by(ola,part_huelga) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_part_huelga_ml <- tabla_freq_part_huelga_ml %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_part_huelga_ml,caption="Frecuencias de Participación en huelga por ola, para quienes valoran movimientos laborales")
+```
+
+
+```{r}
+tabla_freq_part_huelga_ps <- data %>%
+  filter(c12_04==2|c12_04==3) %>%
+  group_by(ola,part_huelga) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_part_huelga_ps <- tabla_freq_part_huelga_ps %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_part_huelga_ps,caption="Frecuencias de Participación en huelga por ola, para quienes son miembros de sindicatos (activos o inactivos)")
+```
+
+
+### Interés en política
+
+- c13. ¿Qué tan interesado está usted en la política?
+
+```{r}
+# Recodficar
+data <- data %>%
+  mutate(int_politica=car::recode(c13,
+                                  recodes=c("1='Nada interesado';
+                                             2='Poco interesado';
+                                             3='Algo interesado';
+                                             4='Bastante interesado';
+                                             5='Muy interesado';
+                                             -888=NA; 
+                                             -999=NA"),
+                                  as.factor=TRUE, # convertir a factor
+                                  levels=c("Nada interesado",
+                                           "Poco interesado",
+                                           "Algo interesado",
+                                           "Bastante interesado",
+                                           "Muy interesado"))) # ordenar niveles
+
+# Calcular frecuencias
+tabla_freq_int_politica <- data %>%
+  group_by(ola,int_politica) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_int_politica <- tabla_freq_int_politica %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_int_politica,caption="Frecuencias de cada categoría de Interés en la política por ola considerando toda la muestra")
+```
+
+
+```{r}
+tabla_freq_int_politica_ml <- data %>%
+  filter(mov_valora==2) %>%
+  group_by(ola,int_politica) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_int_politica_ml <- tabla_freq_int_politica_ml %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_int_politica_ml,caption="Frecuencias de Interés en la política por ola, para quienes valoran movimientos laborales")
+```
+
+
+```{r}
+tabla_freq_int_politica_ps <- data %>%
+  filter(c12_04==2|c12_04==3) %>%
+  group_by(ola,int_politica) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
+
+# Crear tabla en formato wide
+tabla_freq_int_politica_ps <- tabla_freq_int_politica_ps %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+
+# Mostrar tabla
+kable(tabla_freq_int_politica_ps,caption="Frecuencias de Interés en la política por ola, para quienes son miembros de sindicatos (activos o inactivos)")
+```

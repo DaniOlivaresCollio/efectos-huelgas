@@ -1,0 +1,49 @@
+h1:transformaciones-políticas Transformaciones políticas
+h2:participación-política Participación política
+fig:graf-participacion Participación electoral por elección
+fig:graf-perfiles-3 Perfiles de votante
+fig:graf-tipo-participacion Porcentaje que declaró haber votado según perfil de votante
+fig:graf-eficacia Autoeficacia política según perfil de votante
+fig:graf-parti-mov-2 Participación en marchas o manifestaciones, según perfil de votante
+h2:caracterización-del-tipo-de-votante Caracterización del tipo de votante
+fig:graf-sexo-2 Sexo según perfil de votante
+fig:graf-edad-2 Tramos etarios en 2022 según perfil de votante
+fig:graf-educacion-2 Nivel educacional en 2022 según perfil de votante
+fig:graf-clase-subj-ingreso Clase social en 2022 según perfil de votante
+h2:proceso-constituyente Proceso constituyente
+fig:graf-consti-2 Nueva constitución según perfil de votante
+fig:graf-pleb-salida Plebiscito de Salida 2022
+fig:graf-alluvial-pleb Preferencias en plebiscito de entrada y salida
+fig:graf-tipo-salida Preferencias en plebiscito de salida según perfil de votante
+fig:graf-alluvial-pleb-tipo Preferencias de voto en plebiscito de entrada y salida, según perfil de votante
+fig:graf-convencion-2 Desconfianza en la Convención Constitucional en 2022, según perfil de votante
+h2:actitudes-hacia-la-democracia Actitudes hacia la democracia
+fig:graf-leg-dem-2 Legitimidad democrática según perfil de votante
+fig:graf-autori Preferencia por el autoritarismo según perfil de votante
+fig:graf-satis-dem-2 Satisfacción democrática, según perfil de votante
+fig:graf-autoritarismo-2 Actitudes autoritarias según perfil de votante
+h2:identidad-e-involucramiento-político Identidad e involucramiento político
+fig:graf-posicion-pol-2 Posición política en 2022 según perfil de votante
+fig:graf-sin-posicion-2 Ausencia de posición política según perfil de votante
+fig:graf-cambios-idpol-idpol Estabilidad y cambios en posición política entre 2019 y 2022, según perfil de votante
+fig:graf-interes-2 Interés en la política según perfil de votante
+fig:graf-id-partido-2 Partidismo según perfil de votante
+fig:graf-involv-poli-2 Involucramiento político según perfil de votante
+h2:confianza-institucional Confianza institucional
+fig:graf-conf-pol-2 Desonfianza en el gobierno y el presidente, según perfil de votante
+fig:graf-conf-pol-2-2 Desconfianza en partidos políticos y congreso, según perfil de votante
+fig:graf-carab Desonfianza en Carabineros según perfil de votante
+h2:opinión-pública-y-orientaciones-socio-políticas Opinión pública y orientaciones socio-políticas
+h3:orientaciones-valóricas Orientaciones valóricas
+fig:graf-op-valores-2 Actitudes valóricas según perfil de votante
+h3:orientaciones-socio-económicas Orientaciones socio-económicas
+fig:graf-pension
+fig:graf-educacion
+h3:orientaciones-socio-culturales Orientaciones socio-culturales
+fig:desconf-mapuche Desconfianza hacia los Mapuche según perfil de votante
+fig:consti-mapuche
+fig:desconf-inmigrante Desconfianza hacia inmigrantes, según nacionalidad de migrantes y perfil de votante
+fig:ame-realista-proced Inmigración y amenaza hacia el desempleo, según nacionalidad de migrantes y perfil de votante
+fig:ame-simbolica-proced Inmigración y amenaza hacia la identidad chilena, según nacionalidad de migrantes y perfil de votante
+fig:graf-medidas-inm
+

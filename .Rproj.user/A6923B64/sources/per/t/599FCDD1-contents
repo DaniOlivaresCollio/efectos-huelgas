@@ -1,0 +1,27 @@
+# Descriptivas
+
+<div style="text-align: justify">
+
+
+```{r cargar-paquetes-3}
+rm(list=ls())
+ 
+library(knitr)
+library(tidyverse)
+library(sjmisc)
+library(sjlabelled)
+library(ggrepel)
+library(ggalluvial)
+library(survey)
+library(lubridate)
+library(viridis)
+library(statar)
+library(tidyverse)
+
+options(dplyr.summarise.inform = FALSE)
+```
+
+```{r}
+
+```
+

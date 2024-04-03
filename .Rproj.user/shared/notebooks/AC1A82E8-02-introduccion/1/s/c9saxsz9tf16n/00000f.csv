@@ -1,0 +1,4 @@
+"0",""
+"0","load(file.path('..', 'inputs', 'ELSOC_Long.RData'))"
+"0","load(file.path('..', 'inputs', 'ELSOC_Wide.RData'))"
+"0",""

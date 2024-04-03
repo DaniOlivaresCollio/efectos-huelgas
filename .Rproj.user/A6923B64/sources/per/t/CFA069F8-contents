@@ -1,0 +1,87 @@
+# Procesamiento
+
+<div style="text-align: justify">
+
+```{r cargar-paquetes-2, warning=FALSE, message=FALSE}
+rm(list=ls())
+
+library(knitr)
+library(kableExtra)
+library(gridExtra)
+library(tidyverse)
+library(sjmisc)
+library(sjlabelled)
+library(lubridate)
+library(viridis)
+library(statar)
+library(bookdown)
+library(readxl)
+library(psych)
+```
+
+```{r datos-2}
+load(url("https://dataverse.harvard.edu/api/access/datafile/7245118"))
+load(url("https://dataverse.harvard.edu/api/access/datafile/7245115"))
+
+```
+
+```{r seleccion}
+# Seleción solo para mirar, aun sin ponderadores
+
+data <- elsoc_long_2016_2022.2 %>%
+  select(idencuesta,ola,ola_w01,ola_w02,ola_w03,ola_w04,ola_w05,ola_w06,version,muestra, # identificacion
+         sexo=m0_sexo,edad=m0_edad,educ=m01, # caracterizacion sociodemografica
+         actividad=m02,ocupacion=m03, # caracterizacion ocupacional
+         sindicato=c12_04,
+         huelga=c08_03,
+         mov_valora=c20,mov_valora_otro=c20_otro,
+         c21_01,c21_02,c21_03,c21_04,c21_05,c21_06,c21_07,c21_08,c21_09,c21_10,c21_11,c22,c23,c24,
+         c13,c14_01,c14_02,m07)
+```
+
+```{r include=FALSE}
+n_mov_valora_w1 <- dim(data%>%filter(data$mov_valora==2&ola==1))[1] # 381
+n_mov_valora_w2 <- dim(data%>%filter(data$mov_valora==2&ola==2))[1] # 271
+n_mov_valora_w3 <- dim(data%>%filter(data$mov_valora==2&ola==3))[1] # 228
+n_mov_valora_w4 <- dim(data%>%filter(data$mov_valora==2&ola==4))[1] # 311
+n_mov_valora_w5 <- dim(data%>%filter(data$mov_valora==2&ola==5))[1] # 459
+n_mov_valora_w6 <- dim(data%>%filter(data$mov_valora==2&ola==6))[1] # 254
+```
+
+Considerando la pregunta de ELSOC:
+
+- Pensando en la lista de movimientos sociales que a continuación le mostraré, por favor indique ¿cuál es el que usted más valora?
+
+Si consideramos solamente a las personas que responden que el moviemiento que más valoran es el de "Movimiento social de apoyo a demandas laborales" tenemos:
+
+```{r freq_ola_mov_valora}
+tabla_frecuencias <- data %>%
+  group_by(ola) %>%
+  summarise(n_mov_laboral = sum(mov_valora==2), 
+            n_ola = n(),
+            prop = n_mov_laboral/n_ola*100)
+
+tabla_frecuencias
+```
+
+
+
+```{r}
+tabla1 <- data%>%select(c21_01, ola, mov_valora)%>%
+  filter(data$mov_valora==2&ola==1) # 381
+table(tabla1$c21_01)
+# -999 -888    1    2    3    4    5 
+#    1    3    4   24   41  278   30 
+
+tabla2 <- data%>%select(c21_02, ola, mov_valora) %>%
+  filter(data$mov_valora==2&ola==2) # 271
+table(tabla2$c21_02)
+  # 1   2   3   4   5 
+  # 1  16  36 188  30 
+
+tabla2 <- data%>%select(c23, ola, mov_valora) %>%
+  filter(data$mov_valora==2&ola==2) # 271
+table(tabla2$c23)
+# -888    1    2    3    4    5 
+#    3  196   25   39    7    1 
+```
