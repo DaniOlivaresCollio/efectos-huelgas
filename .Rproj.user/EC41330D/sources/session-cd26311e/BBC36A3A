@@ -1,9 +1,9 @@
 {
     "id": "BBC36A3A",
-    "path": "~/fondecyt/efectos-huelgas/bookdown/index.Rmd",
+    "path": "C:/Users/danie/Documents/fondecyt/efectos-huelgas/index.Rmd",
     "project_path": "index.Rmd",
     "type": "r_markdown",
-    "hash": "1593482960",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1709657531726.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "49,69",
-        "scrollLine": "0"
+        "cursorPosition": "49,3",
+        "scrollLine": "12"
     },
     "folds": "",
-    "lastKnownWriteTime": 1709740377,
+    "lastKnownWriteTime": 1712181752,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1709740377729,
+    "last_content_update": 1712181752,
     "read_only": false,
     "read_only_alternatives": []
 }

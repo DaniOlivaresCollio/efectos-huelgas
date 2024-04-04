@@ -113,37 +113,39 @@ kable(tabla_freq_actividad,caption="Frecuencias de cada categoría de Actividad 
 - ciuo08_m03: CIUO (2008) del entrevistado
 
 ```{r}
+# CIUO - ISCO: Recodificación 88->08 en ola 2016
+corrtab08_88 <- read_excel("input/corrtab08-88.xls")
+corrtab08_88 <- corrtab08_88 %>% 
+  rename(isco08=`ISCO 08 Code`,isco88=`ISCO-88 code`)
+
+indices <- match(data$ciuo88_m03,corrtab08_88$isco88)
+data$ciuo08_rec <- corrtab08_88$isco08[indices]
+data$ciuo08_rec <- as.numeric(data$ciuo08_rec)
+
+# Unir en una variable ciuo08_m03 y ciuo08_rec (ex ciuo88_m03)
+data$isco08 <- ifelse(!is.na(data$ciuo08_rec),data$ciuo08_rec,data$ciuo08_m03)
+
 # CIUO - ISCO: creación de variables con 1 y 2 dígitos
-table(data$ciuo88_m03)
-class(data$ciuo88_m03)
-data$ciuo88_2d <- as.character(data$ciuo88_m03)
-data$ciuo88_2d <- substr(data$ciuo88_2d,1,2)
-data$ciuo88_2d <- as.integer(data$ciuo88_2d)
-table(data$ciuo88_2d)
+data$isco08_1d <- as.character(data$isco08)
+data$isco08_1d <- substr(data$isco08_1d,1,1)
+data$isco08_1d <- as.numeric(data$isco08_1d)
 
-table(data$ciuo08_m03)
-class(data$ciuo08_m03)
-data$ciuo08_2d <- as.character(data$ciuo08_m03)
-data$ciuo08_2d <- substr(data$ciuo08_2d,1,2)
-data$ciuo08_2d <- as.integer(data$ciuo08_2d)
-table(data$ciuo08_2d)
+data$isco08_2d <- as.character(data$isco08)
+data$isco08_2d <- substr(data$isco08_2d,1,2)
+data$isco08_2d <- as.numeric(data$isco08_2d)
 
-class(data$ciuo88_m03)
-data$ciuo88_1d <- as.character(data$ciuo88_m03)
-data$ciuo88_1d <- substr(data$ciuo88_1d,1,1)
-data$ciuo88_1d <- as.integer(data$ciuo88_1d)
-table(data$ciuo88_1d)
+# Calcular frecuencias
+tabla_freq_isco08 <- data %>%
+  group_by(ola,isco08_1d) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup() 
 
-class(data$ciuo08_m03)
-data$ciuo08_1d <- as.character(data$ciuo08_m03)
-data$ciuo08_1d <- substr(data$ciuo08_1d,1,1)
-data$ciuo08_1d <- as.integer(data$ciuo08_1d)
-table(data$ciuo08_1d)
+# Crear tabla en formato wide
+tabla_freq_isco08 <- tabla_freq_isco08 %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
 
-
-# 
-
-
+# Mostrar tabla
+kable(tabla_freq_isco08,caption="Frecuencias de cada categoría de Ocupación por ola")
 ```
 
 
@@ -153,25 +155,6 @@ table(data$ciuo08_1d)
 - ciiu4_m04: CIIU (IV version) del entrevistado
 
 ```{r}
-table(data$ciiu3_m04)
-class(data$ciiu3_m04)
-data$ciiu3_2 <- as.character(data$ciiu3_m04)
-data$ciiu3_2 <- substr(data$ciiu3_2,1,2)
-data$ciiu3_2 <- as.integer(data$ciiu3_2)
-table(data$ciiu3_2)
-
-table(data$ciiu4_m04)
-class(data$ciiu4_m04)
-data$ciiu4_2 <- as.character(data$ciiu4_m04)
-data$ciiu4_2 <- substr(data$ciiu4_2,1,2)
-data$ciiu4_2 <- as.integer(data$ciiu4_2)
-table(data$ciiu4_2)
-
-class(data$ciiu4_m04)
-data$ciiu4_1 <- as.character(data$ciiu4_m04)
-data$ciiu4_1 <- substr(data$ciiu4_1,1,1)
-data$ciiu4_1 <- as.integer(data$ciiu4_1)
-table(data$ciiu4_1)
 
 
 ```

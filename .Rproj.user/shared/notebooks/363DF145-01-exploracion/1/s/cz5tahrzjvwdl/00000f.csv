@@ -5,13 +5,13 @@
 "2","In readLines(index, encoding = encoding) :"
 "2","
  "
-"2"," incomplete final line found on 'C:/Users/danie/OneDrive/Documentos/fondecyt/efectos-huelgas/bookdown/index.Rmd'
+"2"," incomplete final line found on 'C:/Users/danie/Documents/fondecyt/efectos-huelgas/index.Rmd'
 "
 "2","2: "
 "2","In readLines(index, encoding = encoding) :"
 "2","
  "
-"2"," incomplete final line found on 'C:/Users/danie/OneDrive/Documentos/fondecyt/efectos-huelgas/bookdown/index.Rmd'
+"2"," incomplete final line found on 'C:/Users/danie/Documents/fondecyt/efectos-huelgas/index.Rmd'
 "
 "0","library(pacman)"
 "0","p_load(tidyverse,"
