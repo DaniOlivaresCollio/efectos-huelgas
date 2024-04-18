@@ -3,6 +3,7 @@ output:
   pdf_document: default
   html_document: default
 ---
+
 # Preparación y exploración datos
 
 <div style="text-align: justify">
@@ -56,15 +57,13 @@ data <- elsoc_long_2016_2022 %>%
          )
 ```
 
-
 ## Exploración variables de interés
-
 
 ### Caracterización empleo
 
 Primero, una revisión exploratoria de las variables de interés, considerando toda la base de datos, sin ponderar.
 
-- m02. ¿Cuál de estas situaciones describe mejor su actividad principal durante el último mes?
+-   m02. ¿Cuál de estas situaciones describe mejor su actividad principal durante el último mes?
 
 ```{r}
 # Recodficar
@@ -100,30 +99,41 @@ tabla_freq_actividad <- data %>%
 
 # Crear tabla en formato wide
 tabla_freq_actividad <- tabla_freq_actividad %>%
-  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_") %>%
+  rename(`2016`=Ola_1,`2017`=Ola_2,`2018`=Ola_3,`2019`=Ola_4,`2021`=Ola_5,`2022`=Ola_6)  
 
 # Mostrar tabla
 kable(tabla_freq_actividad,caption="Frecuencias de cada categoría de Actividad por ola")
 ```
 
+-   m03. ¿Cuál es su ocupación u oficio actual? Describa sus principales tareas y funciones en el puesto de trabajo actual
 
-- m03. ¿Cuál es su ocupación u oficio actual? Describa sus principales tareas y funciones en el puesto de trabajo actual
+-   ciuo88_m03: CIUO (1988) del entrevistado
 
-- ciuo88_m03: CIUO (1988) del entrevistado
-- ciuo08_m03: CIUO (2008) del entrevistado
+-   ciuo08_m03: CIUO (2008) del entrevistado
 
 ```{r}
-# CIUO - ISCO: Recodificación 88->08 en ola 2016
+# Carga bbdd con comparacion 88 y 08
 corrtab08_88 <- read_excel("input/corrtab08-88.xls")
-corrtab08_88 <- corrtab08_88 %>% 
+corrtab08_88 <- corrtab08_88 %>%
   rename(isco08=`ISCO 08 Code`,isco88=`ISCO-88 code`)
 
+# Exploración
+valores_repetidos <- table(corrtab08_88$isco88) # Contar los valores repetidos en la variable
+valores_repetidos <- valores_repetidos <- valores_repetidos[valores_repetidos > 1]
+valores_repetidos
+
+valores_repetidos <- table(corrtab08_88$isco08) # Contar los valores repetidos en la variable
+valores_repetidos <- valores_repetidos <- valores_repetidos[valores_repetidos > 1]
+valores_repetidos
+
+# CIUO - ISCO: Recodificación 88->08 4 digitos en datos elsoc
 indices <- match(data$ciuo88_m03,corrtab08_88$isco88)
 data$ciuo08_rec <- corrtab08_88$isco08[indices]
-data$ciuo08_rec <- as.numeric(data$ciuo08_rec)
+data$ciuo08_rec <- as.numeric(data$ciuo08_rec) # es solo la recodificación de las que eran 88 en data
 
-# Unir en una variable ciuo08_m03 y ciuo08_rec (ex ciuo88_m03)
-data$isco08 <- ifelse(!is.na(data$ciuo08_rec),data$ciuo08_rec,data$ciuo08_m03)
+# Unir en una variable ciuo08_m03 y ciuo08_rec (ex ciuo88_m03) 4 digitos
+data$isco08 <- ifelse(!is.na(data$ciuo08_rec),data$ciuo08_rec,data$ciuo08_m03) # es la unión en una variable de todo en 08
 
 # CIUO - ISCO: creación de variables con 1 y 2 dígitos
 data$isco08_1d <- as.character(data$isco08)
@@ -135,32 +145,140 @@ data$isco08_2d <- substr(data$isco08_2d,1,2)
 data$isco08_2d <- as.numeric(data$isco08_2d)
 
 # Calcular frecuencias
-tabla_freq_isco08 <- data %>%
+tabla_freq_isco08_1d <- data %>%
   group_by(ola,isco08_1d) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup()
+
+# Crear tabla en formato wide
+tabla_freq_isco08_1d <- tabla_freq_isco08_1d %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_") %>%
+  rename(`2016`=Ola_1,`2017`=Ola_2,`2018`=Ola_3,`2019`=Ola_4,`2021`=Ola_5,`2022`=Ola_6) 
+
+# Mostrar tabla
+kable(tabla_freq_isco08_1d,caption="Frecuencias de cada categoría de Ocupación por ola")
+
+# Calcular frecuencias
+tabla_freq_isco08_2d <- data %>%
+  group_by(ola,isco08_2d) %>%
+  summarise(frecuencia=n()) %>%
+  ungroup()
+
+# Crear tabla en formato wide
+tabla_freq_isco08_2d <- tabla_freq_isco08_2d %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_") %>%
+  rename(`2016`=Ola_1,`2017`=Ola_2,`2018`=Ola_3,`2019`=Ola_4,`2021`=Ola_5,`2022`=Ola_6) 
+
+# Mostrar tabla
+kable(tabla_freq_isco08_2d,caption="Frecuencias de cada categoría de Ocupación por ola")
+```
+
+
+```{r}
+install.packages("ISCO08ConveRsions")
+library(ISCO08ConveRsions)
+
+
+
+
+
+```
+
+```{r}
+# cruzar nivel educacional
+# universitario completo o más
+# universitario incompleto o técnicos
+# enseñanza media completa o menos
+# 
+# 11 a 34 expertos o experts
+# 35,41,42,43,44,53,  calificados o skilled
+# 51,54,61,62,71,72,73,74,75,81, media completa o menos serán no calificados, más de media completa skilled
+# 52,63,82,83,90+ unskilled
+
+
+
+```
+
+
+
+
+```{r}
+# CIUO - ISCO: creación de variables con 1 y 2 dígitos en data
+data$isco88_1d <- as.character(data$ciuo88_m03)
+data$isco88_1d <- substr(data$isco88_1d,1,1)
+data$isco88_1d <- as.numeric(data$isco88_1d)
+
+data$isco88_2d <- as.character(data$ciuo88_m03)
+data$isco88_2d <- substr(data$isco88_2d,1,2)
+data$isco88_2d <- as.numeric(data$isco88_2d)
+
+data$isco08_1d <- as.character(data$ciuo08_m03)
+data$isco08_1d <- substr(data$isco08_1d,1,1)
+data$isco08_1d <- as.numeric(data$isco08_1d)
+
+data$isco08_2d <- as.character(data$ciuo08_m03)
+data$isco08_2d <- substr(data$isco08_2d,1,2)
+data$isco08_2d <- as.numeric(data$isco08_2d)
+
+# CIUO - ISCO: creación de variables con 1 y 2 dígitos en corrtab08_88
+corrtab08_88 <- read_excel("input/corrtab08-88.xls")
+corrtab08_88 <- corrtab08_88 %>% 
+  rename(isco08=`ISCO 08 Code`,isco88=`ISCO-88 code`)
+
+corrtab08_88$isco88_1d <- as.character(corrtab08_88$isco88)
+corrtab08_88$isco88_1d <- substr(corrtab08_88$isco88_1d,1,1)
+corrtab08_88$isco88_1d <- as.numeric(corrtab08_88$isco88_1d)
+
+corrtab08_88$isco88_2d <- as.character(corrtab08_88$isco88)
+corrtab08_88$isco88_2d <- substr(corrtab08_88$isco88_2d,1,2)
+corrtab08_88$isco88_2d <- as.numeric(corrtab08_88$isco88_2d)
+
+corrtab08_88$isco08_1d <- as.character(corrtab08_88$isco08)
+corrtab08_88$isco08_1d <- substr(corrtab08_88$isco08_1d,1,1)
+corrtab08_88$isco08_1d <- as.numeric(corrtab08_88$isco08_1d)
+
+corrtab08_88$isco08_2d <- as.character(corrtab08_88$isco08)
+corrtab08_88$isco08_2d <- substr(corrtab08_88$isco08_2d,1,2)
+corrtab08_88$isco08_2d <- as.numeric(corrtab08_88$isco08_2d)
+
+sum(corrtab08_88$isco88_2d != corrtab08_88$isco08_2d)
+sum(corrtab08_88$isco88_1d != corrtab08_88$isco08_1d)
+
+# CIUO - ISCO: Recodificación 88->08 en ola 2016
+indices <- match(data$isco88_2d,corrtab08_88$isco88_2d)
+data$ciuo08_rec <- corrtab08_88$isco08_2d[indices]
+data$ciuo08_rec <- as.numeric(data$ciuo08_rec)
+
+# Unir en una variable ciuo08_m03 y ciuo08_rec (ex ciuo88_m03)
+data$isco08_2d <- ifelse(!is.na(data$ciuo08_rec),data$ciuo08_rec,data$isco08_2d)
+
+# Calcular frecuencias
+tabla_freq_isco08_2d <- data %>%
+  group_by(ola,isco08_2d) %>%
   summarise(frecuencia=n()) %>%
   ungroup() 
 
 # Crear tabla en formato wide
-tabla_freq_isco08 <- tabla_freq_isco08 %>%
-  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")
+tabla_freq_isco08_2d <- tabla_freq_isco08_2d %>%
+  pivot_wider(names_from=ola,values_from=frecuencia,names_prefix="Ola_")%>%
+  rename(`2016`=Ola_1,`2017`=Ola_2,`2018`=Ola_3,`2019`=Ola_4,`2021`=Ola_5,`2022`=Ola_6)
 
 # Mostrar tabla
-kable(tabla_freq_isco08,caption="Frecuencias de cada categoría de Ocupación por ola")
+kable(tabla_freq_isco08_2d,caption="Frecuencias de cada categoría de Ocupación por ola")
 ```
 
+-   m04. ¿A qué rubro o giro de actividad se dedica principalmente la empresa, institución o negocio para la cual usted trabaja?
 
-- m04. ¿A qué rubro o giro de actividad se dedica principalmente la empresa, institución o negocio para la cual usted trabaja?
+-   ciiu3_m04: CIIU (III version) del entrevistado
 
-- ciiu3_m04: CIIU (III version) del entrevistado
-- ciiu4_m04: CIIU (IV version) del entrevistado
+-   ciiu4_m04: CIIU (IV version) del entrevistado
 
 ```{r}
 
 
 ```
 
-
-- m07. En su actual ocupación usted trabaja como:
+-   m07. En su actual ocupación usted trabaja como:
 
 ```{r}
 # Recodficar
@@ -198,8 +316,7 @@ tabla_freq_rel_empleo <- tabla_freq_rel_empleo %>%
 kable(tabla_freq_rel_empleo,caption="Frecuencias de cada categoría de Relación de Empleo por ola")
 ```
 
-
-- m08. Su trabajo o negocio principal es de tipo:
+-   m08. Su trabajo o negocio principal es de tipo:
 
 ```{r}
 # Recodficar
@@ -233,8 +350,7 @@ tabla_freq_temp_trabajo <- tabla_freq_temp_trabajo %>%
 kable(tabla_freq_temp_trabajo,caption="Frecuencias de cada categoría de Temporalidad del trabajo por ola")
 ```
 
-
-- m10. En su trabajo principal, ¿tiene contrato de trabajo escrito?
+-   m10. En su trabajo principal, ¿tiene contrato de trabajo escrito?
 
 ```{r}
 # Recodficar
@@ -264,12 +380,11 @@ tabla_freq_contrato <- tabla_freq_contrato %>%
 kable(tabla_freq_contrato,caption="Frecuencias de cada categoría de Tipo de contrato por ola")
 ```
 
-
 ### Valoración Movimiento de Demandas Laborales
 
 Considerando la pregunta de ELSOC:
 
-- c20. Pensando en la lista de movimientos sociales que a continuación le mostraré, por favor indique ¿cuál es el que usted más valora?
+-   c20. Pensando en la lista de movimientos sociales que a continuación le mostraré, por favor indique ¿cuál es el que usted más valora?
 
 Si consideramos **solamente** a las personas que responden que el movimiento que más valoran es el de "Movimiento social de apoyo a demandas laborales" tenemos:
 
@@ -285,12 +400,11 @@ kable(tabla_freq_mov_laboral, caption = "Frecuencia de respuestas 'Movimiento so
 
 El porcentaje más bajo de respuestas positivas se dio el año 2018 con un 6.08% y el más alto el año 2021 con un 16.75%. En promedio corresponde al 10.87% de la muestra.
 
-
 Esta variable tiene una serie de ítems asociados al nivel de acuerdo con afirmaciones respecto al movimiento social que más se valora.
 
-- c21. Pensando en [movimiento social que más valora], ¿cuán de acuerdo o en desacuerdo está usted con las siguientes afirmaciones?
+-   c21. Pensando en [movimiento social que más valora], ¿cuán de acuerdo o en desacuerdo está usted con las siguientes afirmaciones?
 
-- c21_01. Siento un compromiso con este movimiento
+-   c21_01. Siento un compromiso con este movimiento
 
 ```{r}
 # tabla1 <- data%>%select(c21_01, ola, mov_valora)%>%
@@ -342,8 +456,7 @@ tabla_freq_compromiso_ml <- tabla_freq_compromiso_ml %>%
 kable(tabla_freq_compromiso_ml, caption = "Frecuencias de 'Grado de acuerdo: Compromiso con el movimiento' por ola")
 ```
 
-
-- c21_02. Me identifico con este movimiento
+-   c21_02. Me identifico con este movimiento
 
 ```{r}
 # Recodificar
@@ -378,8 +491,7 @@ tabla_freq_identificacion_ml <- tabla_freq_identificacion_ml %>%
 kable(tabla_freq_identificacion_ml,caption="Frecuencias de 'Grado de acuerdo: Identificación con el movimiento' por ola")
 ```
 
-
-- c21_05. Las acciones y protestas de este movimiento pueden generar un cambio social
+-   c21_05. Las acciones y protestas de este movimiento pueden generar un cambio social
 
 ```{r}
 # Recodificar
@@ -414,8 +526,7 @@ tabla_freq_acciones_ml <- tabla_freq_acciones_ml %>%
 kable(tabla_freq_acciones_ml,caption="Frecuencias de 'Grado de acuerdo: Acciones movimiento pueden generar cambio' por ola")
 ```
 
-
-- c21_09. Las autoridades y el movimiento tienen posiciones opuestas
+-   c21_09. Las autoridades y el movimiento tienen posiciones opuestas
 
 ```{r}
 # Recodificar
@@ -450,8 +561,7 @@ tabla_freq_opuesta_ml <- tabla_freq_opuesta_ml %>%
 kable(tabla_freq_opuesta_ml,caption="Frecuencias de 'Grado de acuerdo: Posición opuesta entre el movimiento y las autoridades' por ola")
 ```
 
-
-- c22. Ahora, pensando en los últimos 12 meses, cuán frecuntemente ha participado usted en [movimiento social que más valora]
+-   c22. Ahora, pensando en los últimos 12 meses, cuán frecuntemente ha participado usted en [movimiento social que más valora]
 
 ```{r}
 # Recodificar
@@ -487,10 +597,9 @@ kable(tabla_freq_participacion_ml,caption="Frecuencias de 'Frecuencia: Participa
 
 ```
 
-
 ### Participación en sindicatos
 
-- c12_04. Membresía sindicatos
+-   c12_04. Membresía sindicatos
 
 ```{r}
 # Recodficar
@@ -535,10 +644,9 @@ tabla_freq_mem_sindicato_ml <- tabla_freq_mem_sindicato_ml %>%
 kable(tabla_freq_mem_sindicato_ml,caption="Frecuencias de Membresía Sindicato por ola, para quienes valoran movimientos laborales")
 ```
 
-
 ### Participación en huelgas
 
-- c08_03. Durante los últimos 12 meses, con cuánta frecuencia usted ha participado en una huelga
+-   c08_03. Durante los últimos 12 meses, con cuánta frecuencia usted ha participado en una huelga
 
 ```{r}
 # Recodficar
@@ -572,7 +680,6 @@ tabla_freq_part_huelga <- tabla_freq_part_huelga %>%
 kable(tabla_freq_part_huelga,caption="Frecuencias de cada categoría de Participación en huelga por ola considerando toda la muestra")
 ```
 
-
 ```{r}
 tabla_freq_part_huelga_ml <- data %>%
   filter(mov_valora==2) %>%
@@ -587,7 +694,6 @@ tabla_freq_part_huelga_ml <- tabla_freq_part_huelga_ml %>%
 # Mostrar tabla
 kable(tabla_freq_part_huelga_ml,caption="Frecuencias de Participación en huelga por ola, para quienes valoran movimientos laborales")
 ```
-
 
 ```{r}
 tabla_freq_part_huelga_ps <- data %>%
@@ -604,10 +710,9 @@ tabla_freq_part_huelga_ps <- tabla_freq_part_huelga_ps %>%
 kable(tabla_freq_part_huelga_ps,caption="Frecuencias de Participación en huelga por ola, para quienes son miembros de sindicatos (activos o inactivos)")
 ```
 
-
 ### Interés en política
 
-- c13. ¿Qué tan interesado está usted en la política?
+-   c13. ¿Qué tan interesado está usted en la política?
 
 ```{r}
 # Recodficar
@@ -641,7 +746,6 @@ tabla_freq_int_politica <- tabla_freq_int_politica %>%
 kable(tabla_freq_int_politica,caption="Frecuencias de cada categoría de Interés en la política por ola considerando toda la muestra")
 ```
 
-
 ```{r}
 tabla_freq_int_politica_ml <- data %>%
   filter(mov_valora==2) %>%
@@ -656,7 +760,6 @@ tabla_freq_int_politica_ml <- tabla_freq_int_politica_ml %>%
 # Mostrar tabla
 kable(tabla_freq_int_politica_ml,caption="Frecuencias de Interés en la política por ola, para quienes valoran movimientos laborales")
 ```
-
 
 ```{r}
 tabla_freq_int_politica_ps <- data %>%

@@ -1,0 +1,4 @@
+"0","# CIUO - ISCO: Recodificación 88->08 en ola 2016
+corrtab08_88 <- read_excel(""input/corrtab08-88.xls"")
+"
+"2","New names:"

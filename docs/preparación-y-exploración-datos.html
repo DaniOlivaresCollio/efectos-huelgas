@@ -117,7 +117,6 @@
 
 
 
-
 <div id="exploración-variables-de-interés" class="section level2 hasAnchor" number="1.1">
 <h2><span class="header-section-number">1.1</span> Exploración variables de interés<a href="preparación-y-exploración-datos.html#exploración-variables-de-interés" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="caracterización-empleo" class="section level3 hasAnchor" number="1.1.1">
@@ -129,7 +128,7 @@
 <table>
 <caption><span id="tab:unnamed-chunk-1">Tabla 1.1: </span>Frecuencias de cada categoría de Actividad por ola</caption>
 <colgroup>
-<col width="58%" />
+<col width="62%" />
 <col width="6%" />
 <col width="6%" />
 <col width="6%" />
@@ -140,12 +139,12 @@
 <thead>
 <tr class="header">
 <th align="left">actividad</th>
-<th align="right">Ola_1</th>
-<th align="right">Ola_2</th>
-<th align="right">Ola_3</th>
-<th align="right">Ola_4</th>
-<th align="right">Ola_5</th>
-<th align="right">Ola_6</th>
+<th align="right">2016</th>
+<th align="right">2017</th>
+<th align="right">2018</th>
+<th align="right">2019</th>
+<th align="right">2021</th>
+<th align="right">2022</th>
 </tr>
 </thead>
 <tbody>
@@ -246,17 +245,59 @@
 <li><p>ciuo88_m03: CIUO (1988) del entrevistado</p></li>
 <li><p>ciuo08_m03: CIUO (2008) del entrevistado</p></li>
 </ul>
+<pre><code>## 
+## 0110 1221 1222 1223 1225 1226 1227 1229 1231 1311 1312 1314 1315 1316 1317 1319 
+##    3    2    2    2    2    2    2   11    2   11    2    2    2    2    7    9 
+## 2113 2131 2132 2139 2141 2144 2149 2211 2212 2221 2229 2230 2310 2320 2359 2411 
+##    2    7    3    3    3    2    3    2    3    2    2    6    2    2    5    2 
+## 2412 2419 2451 2455 3114 3121 3122 3131 3132 3151 3152 3211 3212 3221 3222 3224 
+##    3    7    4    2    2    3    2    2    2    2    7    2    2    3    2    2 
+## 3226 3229 3241 3340 3411 3415 3417 3431 3434 3439 3450 3471 3472 3473 3475 4111 
+##    4    5    2    8    2    3    2    4    2    4    2    5    2    2    3    2 
+## 4112 4114 4115 4121 4122 4131 4132 4133 4141 4142 4143 4144 4190 4211 4222 4223 
+##    2    2    4    3    2    2    2    2    3    2    3    2    5    3    6    2 
+## 5121 5122 5123 5131 5132 5139 5141 5169 5220 5230 6113 6124 6129 6152 6210 7111 
+##    2    3    2    2    3    2    2    2    6    2    2    3    2    2    4    2 
+## 7122 7129 7143 7231 7233 7242 7243 7245 7311 7322 7331 7341 7432 8111 8121 8122 
+##    2    3    2    2    2    2    2    2    2    2    2    2    2    2    2    2 
+## 8123 8124 8142 8143 8152 8153 8154 8155 8159 8171 8172 8211 8221 8222 8223 8224 
+##    2    2    2    2    2    2    2    2    2    2    2    2    2    2    2    2 
+## 8229 8231 8232 8240 8251 8252 8253 8261 8262 8263 8264 8265 8266 8269 8271 8272 
+##    2    2    2    2    2    2    2    2    2    2    3    2    2    2    2    2 
+## 8273 8274 8275 8276 8277 8278 8279 8281 8282 8283 8284 8285 8286 8290 9113 9132 
+##    2    2    2    2    2    2    2    2    2    2    2    2    2    4    2    2 
+## 9142 9152 9161 9162 9211 9321 9322 9333 
+##    3    3    2    3    4    2    2    2</code></pre>
+<pre><code>## 
+## 1114 1211 1212 1213 1219 1221 1222 1223 1321 1322 1323 1324 1330 1341 1342 1343 
+##    3    2    2    2    6    2    2    2    2    2    2    3    4    2    3    3 
+## 1344 1345 1346 1349 1411 1412 1420 1439 2120 2131 2132 2212 2230 2250 2262 2263 
+##    2    2    2    2    2    2    2    2    2    2    2    2    2    2    2    4 
+## 2267 2269 2320 2341 2342 2351 2352 2353 2355 2356 2359 2412 2431 2432 2513 2519 
+##    2    3    2    2    2    2    2    2    2    2    2    3    2    2    3    3 
+## 2642 2652 2653 2654 3112 3113 3114 3115 3117 3121 3122 3123 3133 3135 3139 3153 
+##    2    2    2    2    2    2    2    2    2    2   37    2    4    4    5    2 
+## 3221 3222 3257 3259 3313 3339 3341 3342 3343 3344 3359 3411 3413 3423 3433 3435 
+##    2    2    2    2    2    3   17    2    2    2    3    2    2    2    2    3 
+## 3514 3521 3522 4131 4132 4211 4212 4221 5161 5164 5246 5329 5414 6111 6112 6113 
+##    2    2    2    2    2    2    2    2    2    2    2    2    2    2    2    2 
+## 6114 6121 6122 6123 6130 6210 6221 6222 6223 7111 7113 7223 7316 7317 7318 7321 
+##    2    3    3    2    2    3    2    2    2    2    2    2    2    2    3    3 
+## 7322 7323 7421 7422 7523 7531 7541 8111 8121 8131 8132 8152 8160 8171 8181 8212 
+##    3    2    2    4    2    2    2    2    4    9    2    2    9    2    2    2 
+## 8219 9214 9329 9612 9621 
+##    4    2    2    2    2</code></pre>
 <table>
 <caption><span id="tab:unnamed-chunk-2">Tabla 1.2: </span>Frecuencias de cada categoría de Ocupación por ola</caption>
 <thead>
 <tr class="header">
 <th align="right">isco08_1d</th>
-<th align="right">Ola_1</th>
-<th align="right">Ola_2</th>
-<th align="right">Ola_3</th>
-<th align="right">Ola_4</th>
-<th align="right">Ola_5</th>
-<th align="right">Ola_6</th>
+<th align="right">2016</th>
+<th align="right">2017</th>
+<th align="right">2018</th>
+<th align="right">2019</th>
+<th align="right">2021</th>
+<th align="right">2022</th>
 </tr>
 </thead>
 <tbody>
@@ -352,6 +393,836 @@
 </tr>
 </tbody>
 </table>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Tabla 1.2: </span>Frecuencias de cada categoría de Ocupación por ola</caption>
+<thead>
+<tr class="header">
+<th align="right">isco08_2d</th>
+<th align="right">2016</th>
+<th align="right">2017</th>
+<th align="right">2018</th>
+<th align="right">2019</th>
+<th align="right">2021</th>
+<th align="right">2022</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">14</td>
+<td align="right"></td>
+<td align="right">8</td>
+<td align="right"></td>
+<td align="right">2</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">13</td>
+<td align="right">15</td>
+<td align="right"></td>
+<td align="right">22</td>
+<td align="right"></td>
+<td align="right">3</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">14</td>
+<td align="right">60</td>
+<td align="right"></td>
+<td align="right">22</td>
+<td align="right"></td>
+<td align="right">28</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">21</td>
+<td align="right">47</td>
+<td align="right"></td>
+<td align="right">52</td>
+<td align="right"></td>
+<td align="right">50</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">22</td>
+<td align="right">34</td>
+<td align="right"></td>
+<td align="right">37</td>
+<td align="right"></td>
+<td align="right">26</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">23</td>
+<td align="right">82</td>
+<td align="right"></td>
+<td align="right">125</td>
+<td align="right"></td>
+<td align="right">86</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">24</td>
+<td align="right">45</td>
+<td align="right"></td>
+<td align="right">41</td>
+<td align="right"></td>
+<td align="right">35</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">25</td>
+<td align="right">6</td>
+<td align="right"></td>
+<td align="right">7</td>
+<td align="right"></td>
+<td align="right">15</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">26</td>
+<td align="right">43</td>
+<td align="right"></td>
+<td align="right">46</td>
+<td align="right"></td>
+<td align="right">36</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">31</td>
+<td align="right">54</td>
+<td align="right"></td>
+<td align="right">32</td>
+<td align="right"></td>
+<td align="right">37</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">32</td>
+<td align="right">29</td>
+<td align="right"></td>
+<td align="right">42</td>
+<td align="right"></td>
+<td align="right">42</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">33</td>
+<td align="right">209</td>
+<td align="right"></td>
+<td align="right">68</td>
+<td align="right"></td>
+<td align="right">54</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">34</td>
+<td align="right">63</td>
+<td align="right"></td>
+<td align="right">24</td>
+<td align="right"></td>
+<td align="right">9</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">35</td>
+<td align="right">7</td>
+<td align="right"></td>
+<td align="right">8</td>
+<td align="right"></td>
+<td align="right">5</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">41</td>
+<td align="right">2</td>
+<td align="right"></td>
+<td align="right">74</td>
+<td align="right"></td>
+<td align="right">11</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">42</td>
+<td align="right">24</td>
+<td align="right"></td>
+<td align="right">43</td>
+<td align="right"></td>
+<td align="right">24</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">51</td>
+<td align="right">54</td>
+<td align="right"></td>
+<td align="right">134</td>
+<td align="right"></td>
+<td align="right">84</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">52</td>
+<td align="right">180</td>
+<td align="right"></td>
+<td align="right">299</td>
+<td align="right"></td>
+<td align="right">182</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">53</td>
+<td align="right">49</td>
+<td align="right"></td>
+<td align="right">76</td>
+<td align="right"></td>
+<td align="right">65</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">54</td>
+<td align="right">65</td>
+<td align="right"></td>
+<td align="right">64</td>
+<td align="right"></td>
+<td align="right">47</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">61</td>
+<td align="right">34</td>
+<td align="right"></td>
+<td align="right">22</td>
+<td align="right"></td>
+<td align="right">19</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">62</td>
+<td align="right">7</td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+<td align="right">10</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">71</td>
+<td align="right">123</td>
+<td align="right"></td>
+<td align="right">109</td>
+<td align="right"></td>
+<td align="right">96</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">72</td>
+<td align="right">62</td>
+<td align="right"></td>
+<td align="right">82</td>
+<td align="right"></td>
+<td align="right">51</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">73</td>
+<td align="right">7</td>
+<td align="right"></td>
+<td align="right">20</td>
+<td align="right"></td>
+<td align="right">11</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">74</td>
+<td align="right">29</td>
+<td align="right"></td>
+<td align="right">34</td>
+<td align="right"></td>
+<td align="right">31</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">75</td>
+<td align="right">98</td>
+<td align="right"></td>
+<td align="right">98</td>
+<td align="right"></td>
+<td align="right">105</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">81</td>
+<td align="right">6</td>
+<td align="right"></td>
+<td align="right">52</td>
+<td align="right"></td>
+<td align="right">37</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">83</td>
+<td align="right">114</td>
+<td align="right"></td>
+<td align="right">149</td>
+<td align="right"></td>
+<td align="right">87</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">91</td>
+<td align="right">154</td>
+<td align="right"></td>
+<td align="right">206</td>
+<td align="right"></td>
+<td align="right">152</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">92</td>
+<td align="right">15</td>
+<td align="right"></td>
+<td align="right">43</td>
+<td align="right"></td>
+<td align="right">36</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">93</td>
+<td align="right">27</td>
+<td align="right"></td>
+<td align="right">83</td>
+<td align="right"></td>
+<td align="right">36</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">95</td>
+<td align="right">14</td>
+<td align="right"></td>
+<td align="right">18</td>
+<td align="right"></td>
+<td align="right">15</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">96</td>
+<td align="right">10</td>
+<td align="right"></td>
+<td align="right">16</td>
+<td align="right"></td>
+<td align="right">7</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right"></td>
+<td align="right">1145</td>
+<td align="right">2473</td>
+<td align="right">1433</td>
+<td align="right">3417</td>
+<td align="right">1099</td>
+<td align="right">2730</td>
+</tr>
+<tr class="even">
+<td align="right">11</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">6</td>
+<td align="right"></td>
+<td align="right">8</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">36</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">43</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">57</td>
+<td align="right"></td>
+<td align="right">55</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">44</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">13</td>
+<td align="right"></td>
+<td align="right">36</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">63</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">2</td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">82</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">94</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">24</td>
+<td align="right"></td>
+<td align="right">5</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">99</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">54</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">47</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+<pre><code>## package &#39;ISCO08ConveRsions&#39; successfully unpacked and MD5 sums checked
+## 
+## The downloaded binary packages are in
+##  C:\Users\danie\AppData\Local\Temp\Rtmpob6Xle\downloaded_packages</code></pre>
+<pre><code>## [1] 377</code></pre>
+<pre><code>## [1] 147</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-5">Tabla 1.3: </span>Frecuencias de cada categoría de Ocupación por ola</caption>
+<thead>
+<tr class="header">
+<th align="right">isco08_2d</th>
+<th align="right">2016</th>
+<th align="right">2017</th>
+<th align="right">2018</th>
+<th align="right">2019</th>
+<th align="right">2021</th>
+<th align="right">2022</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">4</td>
+<td align="right"></td>
+<td align="right">6</td>
+<td align="right"></td>
+<td align="right">8</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">78</td>
+<td align="right"></td>
+<td align="right">8</td>
+<td align="right"></td>
+<td align="right">2</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">13</td>
+<td align="right">20</td>
+<td align="right"></td>
+<td align="right">22</td>
+<td align="right"></td>
+<td align="right">3</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">21</td>
+<td align="right">167</td>
+<td align="right"></td>
+<td align="right">52</td>
+<td align="right"></td>
+<td align="right">50</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">22</td>
+<td align="right">86</td>
+<td align="right"></td>
+<td align="right">37</td>
+<td align="right"></td>
+<td align="right">26</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">23</td>
+<td align="right">82</td>
+<td align="right"></td>
+<td align="right">125</td>
+<td align="right"></td>
+<td align="right">86</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">31</td>
+<td align="right">172</td>
+<td align="right"></td>
+<td align="right">32</td>
+<td align="right"></td>
+<td align="right">37</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">32</td>
+<td align="right">344</td>
+<td align="right"></td>
+<td align="right">42</td>
+<td align="right"></td>
+<td align="right">42</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">33</td>
+<td align="right">40</td>
+<td align="right"></td>
+<td align="right">68</td>
+<td align="right"></td>
+<td align="right">54</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">51</td>
+<td align="right">277</td>
+<td align="right"></td>
+<td align="right">134</td>
+<td align="right"></td>
+<td align="right">84</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">52</td>
+<td align="right">177</td>
+<td align="right"></td>
+<td align="right">299</td>
+<td align="right"></td>
+<td align="right">182</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">71</td>
+<td align="right">88</td>
+<td align="right"></td>
+<td align="right">109</td>
+<td align="right"></td>
+<td align="right">96</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">73</td>
+<td align="right">100</td>
+<td align="right"></td>
+<td align="right">20</td>
+<td align="right"></td>
+<td align="right">11</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">83</td>
+<td align="right">114</td>
+<td align="right"></td>
+<td align="right">149</td>
+<td align="right"></td>
+<td align="right">87</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">92</td>
+<td align="right">15</td>
+<td align="right"></td>
+<td align="right">43</td>
+<td align="right"></td>
+<td align="right">36</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">93</td>
+<td align="right">27</td>
+<td align="right"></td>
+<td align="right">83</td>
+<td align="right"></td>
+<td align="right">36</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right"></td>
+<td align="right">1136</td>
+<td align="right">2473</td>
+<td align="right">1433</td>
+<td align="right">3417</td>
+<td align="right">1099</td>
+<td align="right">2730</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">22</td>
+<td align="right"></td>
+<td align="right">28</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">24</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">41</td>
+<td align="right"></td>
+<td align="right">35</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">25</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">7</td>
+<td align="right"></td>
+<td align="right">15</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">26</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">46</td>
+<td align="right"></td>
+<td align="right">36</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">34</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">24</td>
+<td align="right"></td>
+<td align="right">9</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">35</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">8</td>
+<td align="right"></td>
+<td align="right">5</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">36</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">41</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">74</td>
+<td align="right"></td>
+<td align="right">11</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">42</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">43</td>
+<td align="right"></td>
+<td align="right">24</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">43</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">57</td>
+<td align="right"></td>
+<td align="right">55</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">44</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">13</td>
+<td align="right"></td>
+<td align="right">36</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">53</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">76</td>
+<td align="right"></td>
+<td align="right">65</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">54</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">64</td>
+<td align="right"></td>
+<td align="right">47</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">61</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">22</td>
+<td align="right"></td>
+<td align="right">19</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">62</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+<td align="right">10</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">63</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">2</td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">72</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">82</td>
+<td align="right"></td>
+<td align="right">51</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">74</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">34</td>
+<td align="right"></td>
+<td align="right">31</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">75</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">98</td>
+<td align="right"></td>
+<td align="right">105</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">81</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">52</td>
+<td align="right"></td>
+<td align="right">37</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">82</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">91</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">206</td>
+<td align="right"></td>
+<td align="right">152</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">94</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">24</td>
+<td align="right"></td>
+<td align="right">5</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">95</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">18</td>
+<td align="right"></td>
+<td align="right">15</td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">96</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">16</td>
+<td align="right"></td>
+<td align="right">7</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">99</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">54</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="right">47</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">1</td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li><p>m04. ¿A qué rubro o giro de actividad se dedica principalmente la empresa, institución o negocio para la cual usted trabaja?</p></li>
 <li><p>ciiu3_m04: CIIU (III version) del entrevistado</p></li>
@@ -359,7 +1230,7 @@
 <li><p>m07. En su actual ocupación usted trabaja como:</p></li>
 </ul>
 <table style="width:100%;">
-<caption><span id="tab:unnamed-chunk-4">Tabla 1.3: </span>Frecuencias de cada categoría de Relación de Empleo por ola</caption>
+<caption><span id="tab:unnamed-chunk-7">Tabla 1.4: </span>Frecuencias de cada categoría de Relación de Empleo por ola</caption>
 <colgroup>
 <col width="53%" />
 <col width="7%" />
@@ -459,7 +1330,7 @@
 <li>m08. Su trabajo o negocio principal es de tipo:</li>
 </ul>
 <table>
-<caption><span id="tab:unnamed-chunk-5">Tabla 1.4: </span>Frecuencias de cada categoría de Temporalidad del trabajo por ola</caption>
+<caption><span id="tab:unnamed-chunk-8">Tabla 1.5: </span>Frecuencias de cada categoría de Temporalidad del trabajo por ola</caption>
 <colgroup>
 <col width="46%" />
 <col width="8%" />
@@ -541,7 +1412,7 @@
 <li>m10. En su trabajo principal, ¿tiene contrato de trabajo escrito?</li>
 </ul>
 <table>
-<caption><span id="tab:unnamed-chunk-6">Tabla 1.5: </span>Frecuencias de cada categoría de Tipo de contrato por ola</caption>
+<caption><span id="tab:unnamed-chunk-9">Tabla 1.6: </span>Frecuencias de cada categoría de Tipo de contrato por ola</caption>
 <thead>
 <tr class="header">
 <th align="left">contrato</th>
@@ -601,7 +1472,7 @@
 </ul>
 <p>Si consideramos <strong>solamente</strong> a las personas que responden que el movimiento que más valoran es el de “Movimiento social de apoyo a demandas laborales” tenemos:</p>
 <table>
-<caption><span id="tab:unnamed-chunk-7">Tabla 1.6: </span>Frecuencia de respuestas ‘Movimiento social de apoyo a demandas laborales’</caption>
+<caption><span id="tab:unnamed-chunk-10">Tabla 1.7: </span>Frecuencia de respuestas ‘Movimiento social de apoyo a demandas laborales’</caption>
 <thead>
 <tr class="header">
 <th align="right">ola</th>
@@ -656,7 +1527,7 @@
 <li><p>c21_01. Siento un compromiso con este movimiento</p></li>
 </ul>
 <table>
-<caption><span id="tab:unnamed-chunk-8">Tabla 1.7: </span>Frecuencias de ‘Grado de acuerdo: Compromiso con el movimiento’ por ola</caption>
+<caption><span id="tab:unnamed-chunk-11">Tabla 1.8: </span>Frecuencias de ‘Grado de acuerdo: Compromiso con el movimiento’ por ola</caption>
 <colgroup>
 <col width="46%" />
 <col width="8%" />
@@ -738,7 +1609,7 @@
 <li>c21_02. Me identifico con este movimiento</li>
 </ul>
 <table>
-<caption><span id="tab:unnamed-chunk-9">Tabla 1.8: </span>Frecuencias de ‘Grado de acuerdo: Identificación con el movimiento’ por ola</caption>
+<caption><span id="tab:unnamed-chunk-12">Tabla 1.9: </span>Frecuencias de ‘Grado de acuerdo: Identificación con el movimiento’ por ola</caption>
 <colgroup>
 <col width="46%" />
 <col width="8%" />
@@ -820,7 +1691,7 @@
 <li>c21_05. Las acciones y protestas de este movimiento pueden generar un cambio social</li>
 </ul>
 <table>
-<caption><span id="tab:unnamed-chunk-10">Tabla 1.9: </span>Frecuencias de ‘Grado de acuerdo: Acciones movimiento pueden generar cambio’ por ola</caption>
+<caption><span id="tab:unnamed-chunk-13">Tabla 1.10: </span>Frecuencias de ‘Grado de acuerdo: Acciones movimiento pueden generar cambio’ por ola</caption>
 <colgroup>
 <col width="46%" />
 <col width="8%" />
@@ -902,7 +1773,7 @@
 <li>c21_09. Las autoridades y el movimiento tienen posiciones opuestas</li>
 </ul>
 <table>
-<caption><span id="tab:unnamed-chunk-11">Tabla 1.10: </span>Frecuencias de ‘Grado de acuerdo: Posición opuesta entre el movimiento y las autoridades’ por ola</caption>
+<caption><span id="tab:unnamed-chunk-14">Tabla 1.11: </span>Frecuencias de ‘Grado de acuerdo: Posición opuesta entre el movimiento y las autoridades’ por ola</caption>
 <colgroup>
 <col width="46%" />
 <col width="8%" />
@@ -984,7 +1855,7 @@
 <li>c22. Ahora, pensando en los últimos 12 meses, cuán frecuntemente ha participado usted en [movimiento social que más valora]</li>
 </ul>
 <table>
-<caption><span id="tab:unnamed-chunk-12">Tabla 1.11: </span>Frecuencias de ‘Frecuencia: Participación en el movimiento’ por ola</caption>
+<caption><span id="tab:unnamed-chunk-15">Tabla 1.12: </span>Frecuencias de ‘Frecuencia: Participación en el movimiento’ por ola</caption>
 <thead>
 <tr class="header">
 <th align="left">participacion_mov</th>
@@ -1060,7 +1931,7 @@
 <li>c12_04. Membresía sindicatos</li>
 </ul>
 <table>
-<caption><span id="tab:unnamed-chunk-13">Tabla 1.12: </span>Frecuencias de cada categoría de Membresía Sindicatos por ola considerando toda la muestra</caption>
+<caption><span id="tab:unnamed-chunk-16">Tabla 1.13: </span>Frecuencias de cada categoría de Membresía Sindicatos por ola considerando toda la muestra</caption>
 <thead>
 <tr class="header">
 <th align="left">mem_sindicato</th>
@@ -1112,7 +1983,7 @@
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-14">Tabla 1.13: </span>Frecuencias de Membresía Sindicato por ola, para quienes valoran movimientos laborales</caption>
+<caption><span id="tab:unnamed-chunk-17">Tabla 1.14: </span>Frecuencias de Membresía Sindicato por ola, para quienes valoran movimientos laborales</caption>
 <thead>
 <tr class="header">
 <th align="left">mem_sindicato</th>
@@ -1170,7 +2041,7 @@
 <li>c08_03. Durante los últimos 12 meses, con cuánta frecuencia usted ha participado en una huelga</li>
 </ul>
 <table>
-<caption><span id="tab:unnamed-chunk-15">Tabla 1.14: </span>Frecuencias de cada categoría de Participación en huelga por ola considerando toda la muestra</caption>
+<caption><span id="tab:unnamed-chunk-18">Tabla 1.15: </span>Frecuencias de cada categoría de Participación en huelga por ola considerando toda la muestra</caption>
 <thead>
 <tr class="header">
 <th align="left">part_huelga</th>
@@ -1240,7 +2111,7 @@
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-16">Tabla 1.15: </span>Frecuencias de Participación en huelga por ola, para quienes valoran movimientos laborales</caption>
+<caption><span id="tab:unnamed-chunk-19">Tabla 1.16: </span>Frecuencias de Participación en huelga por ola, para quienes valoran movimientos laborales</caption>
 <thead>
 <tr class="header">
 <th align="left">part_huelga</th>
@@ -1310,7 +2181,7 @@
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-17">Tabla 1.16: </span>Frecuencias de Participación en huelga por ola, para quienes son miembros de sindicatos (activos o inactivos)</caption>
+<caption><span id="tab:unnamed-chunk-20">Tabla 1.17: </span>Frecuencias de Participación en huelga por ola, para quienes son miembros de sindicatos (activos o inactivos)</caption>
 <thead>
 <tr class="header">
 <th align="left">part_huelga</th>
@@ -1359,7 +2230,7 @@
 <li>c13. ¿Qué tan interesado está usted en la política?</li>
 </ul>
 <table>
-<caption><span id="tab:unnamed-chunk-18">Tabla 1.17: </span>Frecuencias de cada categoría de Interés en la política por ola considerando toda la muestra</caption>
+<caption><span id="tab:unnamed-chunk-21">Tabla 1.18: </span>Frecuencias de cada categoría de Interés en la política por ola considerando toda la muestra</caption>
 <thead>
 <tr class="header">
 <th align="left">int_politica</th>
@@ -1429,7 +2300,7 @@
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-19">Tabla 1.18: </span>Frecuencias de Interés en la política por ola, para quienes valoran movimientos laborales</caption>
+<caption><span id="tab:unnamed-chunk-22">Tabla 1.19: </span>Frecuencias de Interés en la política por ola, para quienes valoran movimientos laborales</caption>
 <thead>
 <tr class="header">
 <th align="left">int_politica</th>
@@ -1499,7 +2370,7 @@
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-20">Tabla 1.19: </span>Frecuencias de Interés en la política por ola, para quienes son miembros de sindicatos (activos o inactivos)</caption>
+<caption><span id="tab:unnamed-chunk-23">Tabla 1.20: </span>Frecuencias de Interés en la política por ola, para quienes son miembros de sindicatos (activos o inactivos)</caption>
 <thead>
 <tr class="header">
 <th align="left">int_politica</th>

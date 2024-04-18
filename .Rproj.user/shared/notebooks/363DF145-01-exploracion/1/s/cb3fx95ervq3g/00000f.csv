@@ -1,0 +1,32 @@
+"0","p_load(tidyverse,
+       knitr,
+       bookdown,
+       car,
+       sjmisc,
+       sjlabelled,
+       psych,
+       kableExtra,
+       gridExtra,
+       lubridate,
+       viridis,
+       statar,
+       readxl,
+       tinytex,
+       ggrepel,
+       ggalluvial,
+       survey, 
+       httr, 
+       )
+"
+"2","Failed with error:  "
+"2",""
+"2","‘invalid package name’"
+"2",""
+"2","
+"
+"2","Failed with error:  "
+"2",""
+"2","‘invalid package name’"
+"2",""
+"2","
+"
