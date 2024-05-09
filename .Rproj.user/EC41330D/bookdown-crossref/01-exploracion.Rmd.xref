@@ -1,16 +1,15 @@
 h1:preparación-y-exploración-datos Preparación y exploración datos
-h2:exploración-variables-de-interés Exploración variables de interés
-h3:caracterización-empleo Caracterización empleo
-h4:actividad Actividad
-h4:ocupación Ocupación
-h4:nivel-de-cualificación Nivel de cualificación
-h4:rama-de-actividad-económica Rama de Actividad Económica
-h4:supervisión Supervisión
-h4:relación-de-empleo Relación de empleo
-h4:temporalidad-del-trabajo Temporalidad del trabajo
-h4:tipo-de-contrato Tipo de Contrato
-h3:valoración-movimiento-de-demandas-laborales Valoración Movimiento de Demandas Laborales
-h3:participación-en-sindicatos Participación en sindicatos
-h3:participación-en-huelgas Participación en huelgas
-h3:interés-en-política Interés en política
+h2:caracterización-empleo Caracterización empleo
+h3:actividad-principal Actividad principal
+h3:relación-de-empleo Relación de empleo
+h3:ocupación Ocupación
+h3:nivel-de-cualificación Nivel de cualificación
+h3:rama-de-actividad-económica Rama de Actividad Económica
+h3:supervisión Supervisión
+h3:temporalidad-del-trabajo Temporalidad del trabajo
+h3:tipo-de-contrato Tipo de Contrato
+h2:valoración-movimiento-de-demandas-laborales Valoración Movimiento de Demandas Laborales
+h2:participación-en-sindicatos Participación en sindicatos
+h2:participación-en-huelgas Participación en huelgas
+h2:interés-en-política Interés en política
 

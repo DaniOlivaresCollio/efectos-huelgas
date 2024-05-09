@@ -1,0 +1,7 @@
+"0","tabla_freq_mov_laboral <- data %>%"
+"0","  group_by(ola) %>%"
+"0","  summarise(n_mov_laboral = sum(mov_valora==2), "
+"0","            n_ola = n(),"
+"0","            prop = n_mov_laboral/n_ola)"
+"0",""
+"0","kable(tabla_freq_mov_laboral, caption = ""Frecuencia de respuestas 'Movimiento social de apoyo a demandas laborales'"")"

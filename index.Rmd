@@ -75,4 +75,6 @@ Las olas corresponden a los siguientes años:
 - Ola 5: 2021
 - Ola 6: 2022
 
+La muestra original comienza el año 2016, se incorpora una muestra de refresco el 2018.
+
 En mayo de 2024 se contará con la séptima ola correspondiente al año 2023.

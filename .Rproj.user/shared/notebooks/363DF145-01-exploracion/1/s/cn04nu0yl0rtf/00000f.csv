@@ -27,4 +27,4 @@
 "0","         show.col.prc = TRUE, "
 "0","         var.labels = c(""Actividad"",""Ola""),"
 "0","         show.summary = FALSE,"
-"0","         title = ""Frecuencias y porcentajes de Actividad, por ola"") "
+"0","         title = ""Frecuencias y porcentajes de Actividad principal, por ola"") "

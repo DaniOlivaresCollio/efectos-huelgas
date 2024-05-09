@@ -170,21 +170,20 @@ Las olas corresponden a los siguientes años:
   Ola 6: 2022
 \end{itemize}
 
+La muestra original comienza el año 2016, se incorpora una muestra de refresco el 2018.
+
 En mayo de 2024 se contará con la séptima ola correspondiente al año 2023.
 
 \hypertarget{preparaciuxf3n-y-exploraciuxf3n-datos}{%
 \chapter{Preparación y exploración datos}\label{preparaciuxf3n-y-exploraciuxf3n-datos}}
 
-\hypertarget{exploraciuxf3n-variables-de-interuxe9s}{%
-\section{Exploración variables de interés}\label{exploraciuxf3n-variables-de-interuxe9s}}
-
-Primero, una revisión exploratoria de las variables de interés, considerando todas las olas de la base de datos y la muestra original y de refresco, sin ponderar.
+Primero, se realiza una revisión exploratoria de las variables de interés, considerando todas las olas de la base de datos, tanto para la muestra original como la de refresco, sin ponderar.
 
 \hypertarget{caracterizaciuxf3n-empleo}{%
-\subsection{Caracterización empleo}\label{caracterizaciuxf3n-empleo}}
+\section{Caracterización empleo}\label{caracterizaciuxf3n-empleo}}
 
-\hypertarget{actividad}{%
-\subsubsection{Actividad}\label{actividad}}
+\hypertarget{actividad-principal}{%
+\subsection{Actividad principal}\label{actividad-principal}}
 
 \begin{itemize}
 \tightlist
@@ -192,7 +191,7 @@ Primero, una revisión exploratoria de las variables de interés, considerando t
   m02. ¿Cuál de estas situaciones describe mejor su actividad principal durante el último mes?
 \end{itemize}
 
-Frecuencias y porcentajes de Actividad, por ola
+Frecuencias y porcentajes de Actividad principal, por ola
 
 Actividad
 
@@ -372,1164 +371,22 @@ Total
 
 {17991}{100~\%}
 
-\hypertarget{ocupaciuxf3n}{%
-\subsubsection{Ocupación}\label{ocupaciuxf3n}}
+Se continua con una base de datos filtrada dejando solo a las personas ocupadas de acuerdo con las siguientes categorías de actividad principal:
 
 \begin{itemize}
 \tightlist
 \item
-  m03. ¿Cuál es su ocupación u oficio actual? Describa sus principales tareas y funciones en el puesto de trabajo actual
+  m02==1: Trabaja de manera remunerada con jornada completa
+\item
+  m02==2: Trabaja de manera remunerada a tiempo parcial
+\item
+  m03==3: Estudia y trabaja
 \end{itemize}
 
-Esta variable se encuentra codificada de acuerdo con la CIUO88 para el año 2016, y CIUO08 para los años 2018 y 2021.
-
-\begin{itemize}
-\tightlist
-\item
-  ciuo88\_m03: CIUO (1988) del entrevistado
-\item
-  ciuo08\_m03: CIUO (2008) del entrevistado
-\end{itemize}
-
-Por lo tanto, se realiza una recodificación generando una nueva variable donde están todas las olas homolagadas a la CIUO08. Se presentan las frecuecnias y porcentajes con uno y dos dígitos.
-
-Frecuencias y porcentajes de Ocupación con 1 dígito, por ola
-
-CIUO08
-
-Ola
-
-Total
-
-2016
-
-2017
-
-2018
-
-2019
-
-2021
-
-2022
-
-1
-
-{89}{5~\%}
-
-{0}{0~\%}
-
-{58}{2.5~\%}
-
-{0}{0~\%}
-
-{41}{2.5~\%}
-
-{0}{0~\%}
-
-{188}{3.3~\%}
-
-2
-
-{257}{14.4~\%}
-
-{0}{0~\%}
-
-{308}{13.3~\%}
-
-{0}{0~\%}
-
-{248}{15.1~\%}
-
-{0}{0~\%}
-
-{813}{14.2~\%}
-
-3
-
-{362}{20.3~\%}
-
-{0}{0~\%}
-
-{175}{7.6~\%}
-
-{0}{0~\%}
-
-{147}{9~\%}
-
-{0}{0~\%}
-
-{684}{11.9~\%}
-
-4
-
-{26}{1.5~\%}
-
-{0}{0~\%}
-
-{187}{8.1~\%}
-
-{0}{0~\%}
-
-{127}{7.7~\%}
-
-{0}{0~\%}
-
-{340}{5.9~\%}
-
-5
-
-{348}{19.5~\%}
-
-{0}{0~\%}
-
-{573}{24.8~\%}
-
-{0}{0~\%}
-
-{378}{23~\%}
-
-{0}{0~\%}
-
-{1299}{22.6~\%}
-
-6
-
-{41}{2.3~\%}
-
-{0}{0~\%}
-
-{25}{1.1~\%}
-
-{0}{0~\%}
-
-{30}{1.8~\%}
-
-{0}{0~\%}
-
-{96}{1.7~\%}
-
-7
-
-{319}{17.9~\%}
-
-{0}{0~\%}
-
-{343}{14.8~\%}
-
-{0}{0~\%}
-
-{294}{17.9~\%}
-
-{0}{0~\%}
-
-{956}{16.7~\%}
-
-8
-
-{120}{6.7~\%}
-
-{0}{0~\%}
-
-{202}{8.7~\%}
-
-{0}{0~\%}
-
-{125}{7.6~\%}
-
-{0}{0~\%}
-
-{447}{7.8~\%}
-
-9
-
-{220}{12.3~\%}
-
-{0}{0~\%}
-
-{444}{19.2~\%}
-
-{0}{0~\%}
-
-{251}{15.3~\%}
-
-{0}{0~\%}
-
-{915}{15.9~\%}
-
-Total
-
-{1782}{100~\%}
-
-{0}{100~\%}
-
-{2315}{100~\%}
-
-{0}{100~\%}
-
-{1641}{100~\%}
-
-{0}{100~\%}
-
-{5738}{100~\%}
-
-Frecuencias y porcentajes de Ocupación con 2 dígitos, por ola
-
-CIUO08
-
-Ola
-
-Total
-
-2016
-
-2017
-
-2018
-
-2019
-
-2021
-
-2022
-
-11
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{6}{0.3~\%}
-
-{0}{0~\%}
-
-{8}{0.5~\%}
-
-{0}{0~\%}
-
-{14}{0.2~\%}
-
-12
-
-{14}{0.8~\%}
-
-{0}{0~\%}
-
-{8}{0.3~\%}
-
-{0}{0~\%}
-
-{2}{0.1~\%}
-
-{0}{0~\%}
-
-{24}{0.4~\%}
-
-13
-
-{15}{0.8~\%}
-
-{0}{0~\%}
-
-{22}{1~\%}
-
-{0}{0~\%}
-
-{3}{0.2~\%}
-
-{0}{0~\%}
-
-{40}{0.7~\%}
-
-14
-
-{60}{3.4~\%}
-
-{0}{0~\%}
-
-{22}{1~\%}
-
-{0}{0~\%}
-
-{28}{1.7~\%}
-
-{0}{0~\%}
-
-{110}{1.9~\%}
-
-21
-
-{47}{2.6~\%}
-
-{0}{0~\%}
-
-{52}{2.2~\%}
-
-{0}{0~\%}
-
-{50}{3~\%}
-
-{0}{0~\%}
-
-{149}{2.6~\%}
-
-22
-
-{34}{1.9~\%}
-
-{0}{0~\%}
-
-{37}{1.6~\%}
-
-{0}{0~\%}
-
-{26}{1.6~\%}
-
-{0}{0~\%}
-
-{97}{1.7~\%}
-
-23
-
-{82}{4.6~\%}
-
-{0}{0~\%}
-
-{125}{5.4~\%}
-
-{0}{0~\%}
-
-{86}{5.2~\%}
-
-{0}{0~\%}
-
-{293}{5.1~\%}
-
-24
-
-{45}{2.5~\%}
-
-{0}{0~\%}
-
-{41}{1.8~\%}
-
-{0}{0~\%}
-
-{35}{2.1~\%}
-
-{0}{0~\%}
-
-{121}{2.1~\%}
-
-25
-
-{6}{0.3~\%}
-
-{0}{0~\%}
-
-{7}{0.3~\%}
-
-{0}{0~\%}
-
-{15}{0.9~\%}
-
-{0}{0~\%}
-
-{28}{0.5~\%}
-
-26
-
-{43}{2.4~\%}
-
-{0}{0~\%}
-
-{46}{2~\%}
-
-{0}{0~\%}
-
-{36}{2.2~\%}
-
-{0}{0~\%}
-
-{125}{2.2~\%}
-
-31
-
-{54}{3~\%}
-
-{0}{0~\%}
-
-{32}{1.4~\%}
-
-{0}{0~\%}
-
-{37}{2.3~\%}
-
-{0}{0~\%}
-
-{123}{2.1~\%}
-
-32
-
-{29}{1.6~\%}
-
-{0}{0~\%}
-
-{42}{1.8~\%}
-
-{0}{0~\%}
-
-{42}{2.6~\%}
-
-{0}{0~\%}
-
-{113}{2~\%}
-
-33
-
-{209}{11.7~\%}
-
-{0}{0~\%}
-
-{68}{2.9~\%}
-
-{0}{0~\%}
-
-{54}{3.3~\%}
-
-{0}{0~\%}
-
-{331}{5.8~\%}
-
-34
-
-{63}{3.5~\%}
-
-{0}{0~\%}
-
-{24}{1~\%}
-
-{0}{0~\%}
-
-{9}{0.5~\%}
-
-{0}{0~\%}
-
-{96}{1.7~\%}
-
-35
-
-{7}{0.4~\%}
-
-{0}{0~\%}
-
-{8}{0.3~\%}
-
-{0}{0~\%}
-
-{5}{0.3~\%}
-
-{0}{0~\%}
-
-{20}{0.3~\%}
-
-36
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{1}{0~\%}
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{1}{0~\%}
-
-41
-
-{2}{0.1~\%}
-
-{0}{0~\%}
-
-{74}{3.2~\%}
-
-{0}{0~\%}
-
-{11}{0.7~\%}
-
-{0}{0~\%}
-
-{87}{1.5~\%}
-
-42
-
-{24}{1.3~\%}
-
-{0}{0~\%}
-
-{43}{1.9~\%}
-
-{0}{0~\%}
-
-{24}{1.5~\%}
-
-{0}{0~\%}
-
-{91}{1.6~\%}
-
-43
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{57}{2.5~\%}
-
-{0}{0~\%}
-
-{55}{3.4~\%}
-
-{0}{0~\%}
-
-{112}{2~\%}
-
-44
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{13}{0.6~\%}
-
-{0}{0~\%}
-
-{36}{2.2~\%}
-
-{0}{0~\%}
-
-{49}{0.9~\%}
-
-47
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{1}{0.1~\%}
-
-{0}{0~\%}
-
-{1}{0~\%}
-
-51
-
-{54}{3~\%}
-
-{0}{0~\%}
-
-{134}{5.8~\%}
-
-{0}{0~\%}
-
-{84}{5.1~\%}
-
-{0}{0~\%}
-
-{272}{4.7~\%}
-
-52
-
-{180}{10.1~\%}
-
-{0}{0~\%}
-
-{299}{12.9~\%}
-
-{0}{0~\%}
-
-{182}{11.1~\%}
-
-{0}{0~\%}
-
-{661}{11.5~\%}
-
-53
-
-{49}{2.7~\%}
-
-{0}{0~\%}
-
-{76}{3.3~\%}
-
-{0}{0~\%}
-
-{65}{4~\%}
-
-{0}{0~\%}
-
-{190}{3.3~\%}
-
-54
-
-{65}{3.6~\%}
-
-{0}{0~\%}
-
-{64}{2.8~\%}
-
-{0}{0~\%}
-
-{47}{2.9~\%}
-
-{0}{0~\%}
-
-{176}{3.1~\%}
-
-61
-
-{34}{1.9~\%}
-
-{0}{0~\%}
-
-{22}{1~\%}
-
-{0}{0~\%}
-
-{19}{1.2~\%}
-
-{0}{0~\%}
-
-{75}{1.3~\%}
-
-62
-
-{7}{0.4~\%}
-
-{0}{0~\%}
-
-{1}{0~\%}
-
-{0}{0~\%}
-
-{10}{0.6~\%}
-
-{0}{0~\%}
-
-{18}{0.3~\%}
-
-63
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{2}{0.1~\%}
-
-{0}{0~\%}
-
-{1}{0.1~\%}
-
-{0}{0~\%}
-
-{3}{0.1~\%}
-
-71
-
-{123}{6.9~\%}
-
-{0}{0~\%}
-
-{109}{4.7~\%}
-
-{0}{0~\%}
-
-{96}{5.9~\%}
-
-{0}{0~\%}
-
-{328}{5.7~\%}
-
-72
-
-{62}{3.5~\%}
-
-{0}{0~\%}
-
-{82}{3.5~\%}
-
-{0}{0~\%}
-
-{51}{3.1~\%}
-
-{0}{0~\%}
-
-{195}{3.4~\%}
-
-73
-
-{7}{0.4~\%}
-
-{0}{0~\%}
-
-{20}{0.9~\%}
-
-{0}{0~\%}
-
-{11}{0.7~\%}
-
-{0}{0~\%}
-
-{38}{0.7~\%}
-
-74
-
-{29}{1.6~\%}
-
-{0}{0~\%}
-
-{34}{1.5~\%}
-
-{0}{0~\%}
-
-{31}{1.9~\%}
-
-{0}{0~\%}
-
-{94}{1.6~\%}
-
-75
-
-{98}{5.5~\%}
-
-{0}{0~\%}
-
-{98}{4.2~\%}
-
-{0}{0~\%}
-
-{105}{6.4~\%}
-
-{0}{0~\%}
-
-{301}{5.2~\%}
-
-81
-
-{6}{0.3~\%}
-
-{0}{0~\%}
-
-{52}{2.2~\%}
-
-{0}{0~\%}
-
-{37}{2.3~\%}
-
-{0}{0~\%}
-
-{95}{1.7~\%}
-
-82
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{1}{0~\%}
-
-{0}{0~\%}
-
-{1}{0.1~\%}
-
-{0}{0~\%}
-
-{2}{0~\%}
-
-83
-
-{114}{6.4~\%}
-
-{0}{0~\%}
-
-{149}{6.4~\%}
-
-{0}{0~\%}
-
-{87}{5.3~\%}
-
-{0}{0~\%}
-
-{350}{6.1~\%}
-
-91
-
-{154}{8.6~\%}
-
-{0}{0~\%}
-
-{206}{8.9~\%}
-
-{0}{0~\%}
-
-{152}{9.3~\%}
-
-{0}{0~\%}
-
-{512}{8.9~\%}
-
-92
-
-{15}{0.8~\%}
-
-{0}{0~\%}
-
-{43}{1.9~\%}
-
-{0}{0~\%}
-
-{36}{2.2~\%}
-
-{0}{0~\%}
-
-{94}{1.6~\%}
-
-93
-
-{27}{1.5~\%}
-
-{0}{0~\%}
-
-{83}{3.6~\%}
-
-{0}{0~\%}
-
-{36}{2.2~\%}
-
-{0}{0~\%}
-
-{146}{2.5~\%}
-
-94
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{24}{1~\%}
-
-{0}{0~\%}
-
-{5}{0.3~\%}
-
-{0}{0~\%}
-
-{29}{0.5~\%}
-
-95
-
-{14}{0.8~\%}
-
-{0}{0~\%}
-
-{18}{0.8~\%}
-
-{0}{0~\%}
-
-{15}{0.9~\%}
-
-{0}{0~\%}
-
-{47}{0.8~\%}
-
-96
-
-{10}{0.6~\%}
-
-{0}{0~\%}
-
-{16}{0.7~\%}
-
-{0}{0~\%}
-
-{7}{0.4~\%}
-
-{0}{0~\%}
-
-{33}{0.6~\%}
-
-99
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{54}{2.3~\%}
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{0}{0~\%}
-
-{54}{0.9~\%}
-
-Total
-
-{1782}{100~\%}
-
-{0}{100~\%}
-
-{2315}{100~\%}
-
-{0}{100~\%}
-
-{1641}{100~\%}
-
-{0}{100~\%}
-
-{5738}{100~\%}
-
-\hypertarget{nivel-de-cualificaciuxf3n}{%
-\subsubsection{Nivel de cualificación}\label{nivel-de-cualificaciuxf3n}}
-
-Se crea una nueva variable con el Nivel de cualificación, de acuerdo con la variable CIUO08 de 2 dígitos \emph{isco08\_2d}, siguiendo el criterio:
-
-\begin{itemize}
-\tightlist
-\item
-  Expertos (Experts): 11 a 34 con universitaria completa o más
-\item
-  Calificados (Skilled): 11 a 34 con universitaria incompleta o menos, y 35,41,42,43,44,53, y 51,54,61,62,71,72,73,74,75,81 con media completa o más.
-\item
-  No calificados (Unskilled): 51,54,61,62,71,72,73,74,75,81 con media incompleta o menos, y 52,61,63,75,82,83,90+
-\end{itemize}
-
-Frecuencias y porcentajes del Nivel de Cualificación, por ola
-
-Nivel decualificación
-
-Ola
-
-Total
-
-2016
-
-2017
-
-2018
-
-2019
-
-2021
-
-2022
-
-Experts
-
-{240}{15.4~\%}
-
-{0}{0~\%}
-
-{289}{15.5~\%}
-
-{0}{0~\%}
-
-{242}{17.4~\%}
-
-{0}{0~\%}
-
-{771}{16~\%}
-
-Skilled
-
-{650}{41.6~\%}
-
-{0}{0~\%}
-
-{671}{35.9~\%}
-
-{0}{0~\%}
-
-{510}{36.7~\%}
-
-{0}{0~\%}
-
-{1831}{38~\%}
-
-Unskilled
-
-{672}{43~\%}
-
-{0}{0~\%}
-
-{910}{48.7~\%}
-
-{0}{0~\%}
-
-{637}{45.9~\%}
-
-{0}{0~\%}
-
-{2219}{46~\%}
-
-Total
-
-{1562}{100~\%}
-
-{0}{100~\%}
-
-{1870}{100~\%}
-
-{0}{100~\%}
-
-{1389}{100~\%}
-
-{0}{100~\%}
-
-{4821}{100~\%}
-
-\hypertarget{rama-de-actividad-econuxf3mica}{%
-\subsubsection{Rama de Actividad Económica}\label{rama-de-actividad-econuxf3mica}}
-
-\begin{itemize}
-\tightlist
-\item
-  m04. ¿A qué rubro o giro de actividad se dedica principalmente la empresa, institución o negocio para la cual usted trabaja?
-\end{itemize}
-
-Esta variable se encuentra codificada de acuerdo con la CIIU3 para el año 2016, y CIIU4 para los años 2018 y 2021.
-
-\begin{itemize}
-\tightlist
-\item
-  ciiu3\_m04: CIIU (III version) del entrevistado
-\item
-  ciiu4\_m04: CIIU (IV version) del entrevistado
-\end{itemize}
-
-Por lo tanto, se realiza una recodificación generando una nueva variable donde están todas las olas homolagadas a la CIIU4.
-
-\begin{verbatim}
-## 
-##   1   2   5  11  13  14  15  17  18  19  20  21  22  24  25  26  27  28  29  32 
-##  54  20   7   1  26   2  62   5  31   3  12   6   8   6   2   2   7  14   8   1 
-##  35  36  37  40  41  45  50  51  52  55  60  61  63  64  65  66  67  70  71  72 
-##   1  18   1   1   3 185  54  16 249  74  80   6  10  23  14  11   2  18   5   8 
-##  73  74  75  80  85  90  91  92  93  95  99 
-##   2 109  62 161  83   3   6  29  24 150  25
-\end{verbatim}
-
-\begin{verbatim}
-## 
-##   1   2   3   4   5   7   8  10  11  12  13  14  15  16  17  18  19  20  21  22 
-##  93  34  22  41   1   4  12 152   7   2  15  54   5  28  17  15   2  13   8  11 
-##  23  24  25  26  28  30  31  32  33  34  35  36  38  40  41  42  43  45  46  47 
-##   5  13  25   5  10   2  27   5  18   1  18  10   6   7 227  31 100  82  66 560 
-##  49  50  51  52  53  55  56  58  59  60  61  62  63  64  65  66  68  69  70  71 
-## 180  10   5  45   5  17 179   2   2   5  32  20   1  29  13   9  24  41  12  24 
-##  72  73  74  75  77  78  79  80  81  82  84  85  86  87  88  90  91  92  93  94 
-##   7  18   6   6   9  12   3  54  87  14 203 358 205  20   6  15   2   4  19  15 
-##  95  96  97  99 
-##  24  71 300  89
-\end{verbatim}
-
-\hypertarget{supervisiuxf3n}{%
-\subsubsection{Supervisión}\label{supervisiuxf3n}}
-
-\begin{itemize}
-\tightlist
-\item
-  m06. En su trabajo, ¿a cuántas personas supervisa usted?
-\end{itemize}
-
-Se recodifica en una nueva variable donde:
-
-\begin{itemize}
-\tightlist
-\item
-  1 = supervisa a una o más personas
-\item
-  0 = no supervisa
-\end{itemize}
-
-Frecuencias y porcentajes de variable Supervisa, por ola
-
-Supervisa
-
-Ola
-
-Total
-
-2016
-
-2017
-
-2018
-
-2019
-
-2021
-
-2022
-
-0
-
-{1339}{74.3~\%}
-
-{0}{0~\%}
-
-{1769}{77~\%}
-
-{0}{0~\%}
-
-{750}{61.5~\%}
-
-{0}{0~\%}
-
-{3858}{72.5~\%}
-
-1
-
-{463}{25.7~\%}
-
-{0}{0~\%}
-
-{528}{23~\%}
-
-{0}{0~\%}
-
-{469}{38.5~\%}
-
-{0}{0~\%}
-
-{1460}{27.5~\%}
-
-Total
-
-{1802}{100~\%}
-
-{0}{100~\%}
-
-{2297}{100~\%}
-
-{0}{100~\%}
-
-{1219}{100~\%}
-
-{0}{100~\%}
-
-{5318}{100~\%}
+Quedan 11078 observaciones.
 
 \hypertarget{relaciuxf3n-de-empleo}{%
-\subsubsection{Relación de empleo}\label{relaciuxf3n-de-empleo}}
+\subsection{Relación de empleo}\label{relaciuxf3n-de-empleo}}
 
 \begin{itemize}
 \tightlist
@@ -1685,8 +542,1392 @@ Total
 
 {5716}{100~\%}
 
+Se continua con una base de datos filtrada dejando solo a las personas ocupadas empleadas o auto empleadasde acuerdo con las siguientes categorías de la relación de empleo:
+
+\begin{itemize}
+\tightlist
+\item
+  m07==1: Empleado u obrero en empresa privada
+\item
+  m07==2: Empleado u obrero del sector público
+\item
+  m07==5: Trabaja solo, no tiene empleados
+\item
+  m07==6: Familiar no remunerado
+\item
+  m07==7: Servicio doméstico
+\end{itemize}
+
+Dejando afuera:
+
+\begin{itemize}
+\tightlist
+\item
+  m07==3: Miembro de las Fuerzas Armadas y de Orden
+\item
+  m07==4: Patrón/a o empleador/a
+\end{itemize}
+
+Quedan 5372 observaciones.
+
+\hypertarget{ocupaciuxf3n}{%
+\subsection{Ocupación}\label{ocupaciuxf3n}}
+
+\begin{itemize}
+\tightlist
+\item
+  m03. ¿Cuál es su ocupación u oficio actual? Describa sus principales tareas y funciones en el puesto de trabajo actual
+\end{itemize}
+
+Esta variable se encuentra codificada de acuerdo con la CIUO88 para el año 2016, y CIUO08 para los años 2018 y 2021.
+
+\begin{itemize}
+\tightlist
+\item
+  ciuo88\_m03: CIUO (1988) del entrevistado
+\item
+  ciuo08\_m03: CIUO (2008) del entrevistado
+\end{itemize}
+
+Por lo tanto, se realiza una recodificación generando una nueva variable donde están todas las olas homolagadas a la CIUO08. Se presentan las frecuecnias y porcentajes con uno y dos dígitos.
+
+Frecuencias y porcentajes de Ocupación con 1 dígito, por ola
+
+CIUO08
+
+Ola
+
+Total
+
+2016
+
+2018
+
+2021
+
+1
+
+{60}{3.6~\%}
+
+{34}{1.6~\%}
+
+{18}{1.2~\%}
+
+{112}{2.1~\%}
+
+2
+
+{242}{14.5~\%}
+
+{289}{13.4~\%}
+
+{235}{15.3~\%}
+
+{766}{14.3~\%}
+
+3
+
+{342}{20.5~\%}
+
+{164}{7.6~\%}
+
+{137}{8.9~\%}
+
+{643}{12~\%}
+
+4
+
+{26}{1.6~\%}
+
+{181}{8.4~\%}
+
+{124}{8.1~\%}
+
+{331}{6.2~\%}
+
+5
+
+{328}{19.7~\%}
+
+{534}{24.7~\%}
+
+{356}{23.2~\%}
+
+{1218}{22.7~\%}
+
+6
+
+{41}{2.5~\%}
+
+{22}{1~\%}
+
+{27}{1.8~\%}
+
+{90}{1.7~\%}
+
+7
+
+{297}{17.8~\%}
+
+{309}{14.3~\%}
+
+{265}{17.3~\%}
+
+{871}{16.2~\%}
+
+8
+
+{117}{7~\%}
+
+{198}{9.2~\%}
+
+{123}{8~\%}
+
+{438}{8.2~\%}
+
+9
+
+{215}{12.9~\%}
+
+{430}{19.9~\%}
+
+{249}{16.2~\%}
+
+{894}{16.7~\%}
+
+Total
+
+{1668}{100~\%}
+
+{2161}{100~\%}
+
+{1534}{100~\%}
+
+{5363}{100~\%}
+
+Frecuencias y porcentajes de Ocupación con 2 dígitos, por ola
+
+CIUO08
+
+Ola
+
+Total
+
+2016
+
+2018
+
+2021
+
+11
+
+{0}{0~\%}
+
+{2}{0.1~\%}
+
+{7}{0.5~\%}
+
+{9}{0.2~\%}
+
+12
+
+{8}{0.5~\%}
+
+{8}{0.4~\%}
+
+{2}{0.1~\%}
+
+{18}{0.3~\%}
+
+13
+
+{12}{0.7~\%}
+
+{12}{0.6~\%}
+
+{1}{0.1~\%}
+
+{25}{0.5~\%}
+
+14
+
+{40}{2.4~\%}
+
+{12}{0.6~\%}
+
+{8}{0.5~\%}
+
+{60}{1.1~\%}
+
+21
+
+{42}{2.5~\%}
+
+{47}{2.2~\%}
+
+{43}{2.8~\%}
+
+{132}{2.5~\%}
+
+22
+
+{32}{1.9~\%}
+
+{33}{1.5~\%}
+
+{25}{1.6~\%}
+
+{90}{1.7~\%}
+
+23
+
+{80}{4.8~\%}
+
+{120}{5.6~\%}
+
+{85}{5.5~\%}
+
+{285}{5.3~\%}
+
+24
+
+{43}{2.6~\%}
+
+{39}{1.8~\%}
+
+{35}{2.3~\%}
+
+{117}{2.2~\%}
+
+25
+
+{6}{0.4~\%}
+
+{7}{0.3~\%}
+
+{12}{0.8~\%}
+
+{25}{0.5~\%}
+
+26
+
+{39}{2.3~\%}
+
+{43}{2~\%}
+
+{35}{2.3~\%}
+
+{117}{2.2~\%}
+
+31
+
+{52}{3.1~\%}
+
+{29}{1.3~\%}
+
+{30}{2~\%}
+
+{111}{2.1~\%}
+
+32
+
+{29}{1.7~\%}
+
+{42}{1.9~\%}
+
+{42}{2.7~\%}
+
+{113}{2.1~\%}
+
+33
+
+{196}{11.8~\%}
+
+{62}{2.9~\%}
+
+{52}{3.4~\%}
+
+{310}{5.8~\%}
+
+34
+
+{58}{3.5~\%}
+
+{22}{1~\%}
+
+{9}{0.6~\%}
+
+{89}{1.7~\%}
+
+35
+
+{7}{0.4~\%}
+
+{8}{0.4~\%}
+
+{4}{0.3~\%}
+
+{19}{0.4~\%}
+
+36
+
+{0}{0~\%}
+
+{1}{0~\%}
+
+{0}{0~\%}
+
+{1}{0~\%}
+
+41
+
+{2}{0.1~\%}
+
+{69}{3.2~\%}
+
+{11}{0.7~\%}
+
+{82}{1.5~\%}
+
+42
+
+{24}{1.4~\%}
+
+{43}{2~\%}
+
+{24}{1.6~\%}
+
+{91}{1.7~\%}
+
+43
+
+{0}{0~\%}
+
+{56}{2.6~\%}
+
+{55}{3.6~\%}
+
+{111}{2.1~\%}
+
+44
+
+{0}{0~\%}
+
+{13}{0.6~\%}
+
+{33}{2.2~\%}
+
+{46}{0.9~\%}
+
+47
+
+{0}{0~\%}
+
+{0}{0~\%}
+
+{1}{0.1~\%}
+
+{1}{0~\%}
+
+51
+
+{51}{3.1~\%}
+
+{126}{5.8~\%}
+
+{79}{5.1~\%}
+
+{256}{4.8~\%}
+
+52
+
+{173}{10.4~\%}
+
+{280}{13~\%}
+
+{170}{11.1~\%}
+
+{623}{11.6~\%}
+
+53
+
+{48}{2.9~\%}
+
+{73}{3.4~\%}
+
+{65}{4.2~\%}
+
+{186}{3.5~\%}
+
+54
+
+{56}{3.4~\%}
+
+{55}{2.5~\%}
+
+{42}{2.7~\%}
+
+{153}{2.9~\%}
+
+61
+
+{34}{2~\%}
+
+{19}{0.9~\%}
+
+{18}{1.2~\%}
+
+{71}{1.3~\%}
+
+62
+
+{7}{0.4~\%}
+
+{1}{0~\%}
+
+{8}{0.5~\%}
+
+{16}{0.3~\%}
+
+63
+
+{0}{0~\%}
+
+{2}{0.1~\%}
+
+{1}{0.1~\%}
+
+{3}{0.1~\%}
+
+71
+
+{116}{7~\%}
+
+{97}{4.5~\%}
+
+{82}{5.3~\%}
+
+{295}{5.5~\%}
+
+72
+
+{57}{3.4~\%}
+
+{72}{3.3~\%}
+
+{47}{3.1~\%}
+
+{176}{3.3~\%}
+
+73
+
+{6}{0.4~\%}
+
+{17}{0.8~\%}
+
+{10}{0.7~\%}
+
+{33}{0.6~\%}
+
+74
+
+{27}{1.6~\%}
+
+{33}{1.5~\%}
+
+{28}{1.8~\%}
+
+{88}{1.6~\%}
+
+75
+
+{91}{5.5~\%}
+
+{90}{4.2~\%}
+
+{98}{6.4~\%}
+
+{279}{5.2~\%}
+
+81
+
+{6}{0.4~\%}
+
+{52}{2.4~\%}
+
+{37}{2.4~\%}
+
+{95}{1.8~\%}
+
+82
+
+{0}{0~\%}
+
+{1}{0~\%}
+
+{1}{0.1~\%}
+
+{2}{0~\%}
+
+83
+
+{111}{6.7~\%}
+
+{145}{6.7~\%}
+
+{85}{5.5~\%}
+
+{341}{6.4~\%}
+
+91
+
+{150}{9~\%}
+
+{203}{9.4~\%}
+
+{152}{9.9~\%}
+
+{505}{9.4~\%}
+
+92
+
+{15}{0.9~\%}
+
+{43}{2~\%}
+
+{34}{2.2~\%}
+
+{92}{1.7~\%}
+
+93
+
+{27}{1.6~\%}
+
+{83}{3.8~\%}
+
+{36}{2.3~\%}
+
+{146}{2.7~\%}
+
+94
+
+{0}{0~\%}
+
+{24}{1.1~\%}
+
+{5}{0.3~\%}
+
+{29}{0.5~\%}
+
+95
+
+{13}{0.8~\%}
+
+{17}{0.8~\%}
+
+{15}{1~\%}
+
+{45}{0.8~\%}
+
+96
+
+{10}{0.6~\%}
+
+{16}{0.7~\%}
+
+{7}{0.5~\%}
+
+{33}{0.6~\%}
+
+99
+
+{0}{0~\%}
+
+{44}{2~\%}
+
+{0}{0~\%}
+
+{44}{0.8~\%}
+
+Total
+
+{1668}{100~\%}
+
+{2161}{100~\%}
+
+{1534}{100~\%}
+
+{5363}{100~\%}
+
+Recodificación con paquete \texttt{occupar}.
+
+Frecuencias y porcentajes de Ocupación con 2 dígitos, por ola
+
+CIUO08
+
+Ola
+
+Total
+
+2016
+
+2018
+
+2021
+
+11
+
+{0}{0~\%}
+
+{2}{0.1~\%}
+
+{7}{0.5~\%}
+
+{9}{0.2~\%}
+
+12
+
+{7}{0.4~\%}
+
+{8}{0.4~\%}
+
+{2}{0.1~\%}
+
+{17}{0.3~\%}
+
+13
+
+{5}{0.3~\%}
+
+{12}{0.6~\%}
+
+{1}{0.1~\%}
+
+{18}{0.3~\%}
+
+14
+
+{40}{2.4~\%}
+
+{12}{0.6~\%}
+
+{8}{0.5~\%}
+
+{60}{1.1~\%}
+
+21
+
+{39}{2.3~\%}
+
+{47}{2.2~\%}
+
+{43}{2.8~\%}
+
+{129}{2.4~\%}
+
+22
+
+{22}{1.3~\%}
+
+{33}{1.5~\%}
+
+{25}{1.6~\%}
+
+{80}{1.5~\%}
+
+23
+
+{80}{4.8~\%}
+
+{120}{5.6~\%}
+
+{85}{5.5~\%}
+
+{285}{5.3~\%}
+
+24
+
+{17}{1~\%}
+
+{39}{1.8~\%}
+
+{35}{2.3~\%}
+
+{91}{1.7~\%}
+
+25
+
+{6}{0.4~\%}
+
+{7}{0.3~\%}
+
+{12}{0.8~\%}
+
+{25}{0.5~\%}
+
+26
+
+{43}{2.6~\%}
+
+{43}{2~\%}
+
+{35}{2.3~\%}
+
+{121}{2.3~\%}
+
+31
+
+{22}{1.3~\%}
+
+{29}{1.3~\%}
+
+{30}{2~\%}
+
+{81}{1.5~\%}
+
+32
+
+{29}{1.7~\%}
+
+{42}{1.9~\%}
+
+{42}{2.7~\%}
+
+{113}{2.1~\%}
+
+33
+
+{55}{3.3~\%}
+
+{62}{2.9~\%}
+
+{52}{3.4~\%}
+
+{169}{3.2~\%}
+
+34
+
+{6}{0.4~\%}
+
+{22}{1~\%}
+
+{9}{0.6~\%}
+
+{37}{0.7~\%}
+
+35
+
+{9}{0.5~\%}
+
+{8}{0.4~\%}
+
+{4}{0.3~\%}
+
+{21}{0.4~\%}
+
+36
+
+{0}{0~\%}
+
+{1}{0~\%}
+
+{0}{0~\%}
+
+{1}{0~\%}
+
+41
+
+{49}{2.9~\%}
+
+{69}{3.2~\%}
+
+{11}{0.7~\%}
+
+{129}{2.4~\%}
+
+42
+
+{18}{1.1~\%}
+
+{43}{2~\%}
+
+{24}{1.6~\%}
+
+{85}{1.6~\%}
+
+43
+
+{45}{2.7~\%}
+
+{56}{2.6~\%}
+
+{55}{3.6~\%}
+
+{156}{2.9~\%}
+
+44
+
+{56}{3.4~\%}
+
+{13}{0.6~\%}
+
+{33}{2.2~\%}
+
+{102}{1.9~\%}
+
+47
+
+{0}{0~\%}
+
+{0}{0~\%}
+
+{1}{0.1~\%}
+
+{1}{0~\%}
+
+51
+
+{104}{6.2~\%}
+
+{126}{5.8~\%}
+
+{79}{5.1~\%}
+
+{309}{5.8~\%}
+
+52
+
+{195}{11.7~\%}
+
+{280}{13~\%}
+
+{170}{11.1~\%}
+
+{645}{12~\%}
+
+53
+
+{54}{3.2~\%}
+
+{73}{3.4~\%}
+
+{65}{4.2~\%}
+
+{192}{3.6~\%}
+
+54
+
+{56}{3.4~\%}
+
+{55}{2.5~\%}
+
+{42}{2.7~\%}
+
+{153}{2.9~\%}
+
+61
+
+{34}{2~\%}
+
+{19}{0.9~\%}
+
+{18}{1.2~\%}
+
+{71}{1.3~\%}
+
+62
+
+{7}{0.4~\%}
+
+{1}{0~\%}
+
+{8}{0.5~\%}
+
+{16}{0.3~\%}
+
+63
+
+{0}{0~\%}
+
+{2}{0.1~\%}
+
+{1}{0.1~\%}
+
+{3}{0.1~\%}
+
+71
+
+{113}{6.8~\%}
+
+{97}{4.5~\%}
+
+{82}{5.3~\%}
+
+{292}{5.4~\%}
+
+72
+
+{75}{4.5~\%}
+
+{72}{3.3~\%}
+
+{47}{3.1~\%}
+
+{194}{3.6~\%}
+
+73
+
+{9}{0.5~\%}
+
+{17}{0.8~\%}
+
+{10}{0.7~\%}
+
+{36}{0.7~\%}
+
+74
+
+{27}{1.6~\%}
+
+{33}{1.5~\%}
+
+{28}{1.8~\%}
+
+{88}{1.6~\%}
+
+75
+
+{92}{5.5~\%}
+
+{90}{4.2~\%}
+
+{98}{6.4~\%}
+
+{280}{5.2~\%}
+
+81
+
+{28}{1.7~\%}
+
+{52}{2.4~\%}
+
+{37}{2.4~\%}
+
+{117}{2.2~\%}
+
+82
+
+{0}{0~\%}
+
+{1}{0~\%}
+
+{1}{0.1~\%}
+
+{2}{0~\%}
+
+83
+
+{111}{6.7~\%}
+
+{145}{6.7~\%}
+
+{85}{5.5~\%}
+
+{341}{6.4~\%}
+
+91
+
+{150}{9~\%}
+
+{203}{9.4~\%}
+
+{152}{9.9~\%}
+
+{505}{9.4~\%}
+
+92
+
+{15}{0.9~\%}
+
+{43}{2~\%}
+
+{34}{2.2~\%}
+
+{92}{1.7~\%}
+
+93
+
+{27}{1.6~\%}
+
+{83}{3.8~\%}
+
+{36}{2.3~\%}
+
+{146}{2.7~\%}
+
+94
+
+{0}{0~\%}
+
+{24}{1.1~\%}
+
+{5}{0.3~\%}
+
+{29}{0.5~\%}
+
+95
+
+{13}{0.8~\%}
+
+{17}{0.8~\%}
+
+{15}{1~\%}
+
+{45}{0.8~\%}
+
+96
+
+{10}{0.6~\%}
+
+{16}{0.7~\%}
+
+{7}{0.5~\%}
+
+{33}{0.6~\%}
+
+99
+
+{0}{0~\%}
+
+{44}{2~\%}
+
+{0}{0~\%}
+
+{44}{0.8~\%}
+
+Total
+
+{1668}{100~\%}
+
+{2161}{100~\%}
+
+{1534}{100~\%}
+
+{5363}{100~\%}
+
+\hypertarget{nivel-de-cualificaciuxf3n}{%
+\subsection{Nivel de cualificación}\label{nivel-de-cualificaciuxf3n}}
+
+Se crea una nueva variable con el Nivel de cualificación, de acuerdo con la variable CIUO08 de 2 dígitos \emph{isco08\_2d}, siguiendo el criterio:
+
+\begin{itemize}
+\tightlist
+\item
+  Expertos (Experts): 11 a 34 con universitaria completa o más
+\item
+  Calificados (Skilled): 11 a 34 con universitaria incompleta o menos, y 35,41,42,43,44,53, y 51,54,61,62,71,72,73,74,75,81 con media completa o más.
+\item
+  No calificados (Unskilled): 51,54,61,62,71,72,73,74,75,81 con media incompleta o menos, y 52,61,63,75,82,83,90+
+\end{itemize}
+
+Frecuencias y porcentajes del Nivel de Cualificación, por ola
+
+Nivel decualificación
+
+Ola
+
+Total
+
+2016
+
+2018
+
+2021
+
+Experts
+
+{217}{14.9~\%}
+
+{268}{15.5~\%}
+
+{226}{17.6~\%}
+
+{711}{15.9~\%}
+
+Skilled
+
+{595}{40.9~\%}
+
+{614}{35.5~\%}
+
+{465}{36.2~\%}
+
+{1674}{37.5~\%}
+
+Unskilled
+
+{641}{44.1~\%}
+
+{848}{49~\%}
+
+{593}{46.2~\%}
+
+{2082}{46.6~\%}
+
+Total
+
+{1453}{100~\%}
+
+{1730}{100~\%}
+
+{1284}{100~\%}
+
+{4467}{100~\%}
+
+\hypertarget{rama-de-actividad-econuxf3mica}{%
+\subsection{Rama de Actividad Económica}\label{rama-de-actividad-econuxf3mica}}
+
+\begin{itemize}
+\tightlist
+\item
+  m04. ¿A qué rubro o giro de actividad se dedica principalmente la empresa, institución o negocio para la cual usted trabaja?
+\end{itemize}
+
+Esta variable se encuentra codificada de acuerdo con la CIIU3 para el año 2016, y CIIU4 para los años 2018 y 2021.
+
+\begin{itemize}
+\tightlist
+\item
+  ciiu3\_m04: CIIU (III version) del entrevistado
+\item
+  ciiu4\_m04: CIIU (IV version) del entrevistado
+\end{itemize}
+
+Por lo tanto, se realiza una recodificación generando una nueva variable donde están todas las olas homolagadas a la CIIU4.
+
+\begin{verbatim}
+## 
+##      01  02  03  04  06  07  08  09  10  11  12  13  14  15  16  17  18  19  20 
+## 123 165  34  20  41   1  30  14   7 200  15   2  49  49   5  39  28  12   3  14 
+##  21  22  23  24  25  26  28  30  31  32  33  34  35  36  37  38  40  41  42  43 
+##  11  25   7  20  32   5  16   3  25   6  26   1  19  12   2   7   7 337  42 118 
+##  45  46  47  49  50  51  52  53  55  56  58  59  60  61  62  63  64  65  66  68 
+## 113  78 753 250  16   4  50   8  21 222   3   5   5  51  21   6  44  24  10  26 
+##  69  70  71  72  73  74  75  77  78  79  80  81  82  84  85  86  87  88  90  91 
+##  55  16  34   9  21  36   8  12  26  12  52 108  13 194 516 270  26   6  14   7 
+##  92  93  94  95  96  97  99 
+##   4  18  19  19  80 440  75
+\end{verbatim}
+
+Frecuencias y porcentajes de la Rama de Actividad Económica, por ola
+
+Rama de ActividadEconómica
+
+Ola
+
+Total
+
+2016
+
+2018
+
+2021
+
+A
+
+{402}{24~\%}
+
+{305}{14.2~\%}
+
+{260}{17~\%}
+
+{967}{18~\%}
+
+B
+
+{543}{32.4~\%}
+
+{799}{37.1~\%}
+
+{588}{38.4~\%}
+
+{1930}{36~\%}
+
+C
+
+{15}{0.9~\%}
+
+{24}{1.1~\%}
+
+{21}{1.4~\%}
+
+{60}{1.1~\%}
+
+D
+
+{1}{0.1~\%}
+
+{11}{0.5~\%}
+
+{7}{0.5~\%}
+
+{19}{0.4~\%}
+
+E
+
+{6}{0.4~\%}
+
+{7}{0.3~\%}
+
+{8}{0.5~\%}
+
+{21}{0.4~\%}
+
+F
+
+{171}{10.2~\%}
+
+{188}{8.7~\%}
+
+{138}{9~\%}
+
+{497}{9.3~\%}
+
+G
+
+{292}{17.4~\%}
+
+{383}{17.8~\%}
+
+{269}{17.5~\%}
+
+{944}{17.6~\%}
+
+H
+
+{80}{4.8~\%}
+
+{105}{4.9~\%}
+
+{65}{4.2~\%}
+
+{250}{4.7~\%}
+
+R
+
+{5}{0.3~\%}
+
+{28}{1.3~\%}
+
+{10}{0.7~\%}
+
+{43}{0.8~\%}
+
+S
+
+{20}{1.2~\%}
+
+{58}{2.7~\%}
+
+{40}{2.6~\%}
+
+{118}{2.2~\%}
+
+T
+
+{142}{8.5~\%}
+
+{173}{8~\%}
+
+{125}{8.2~\%}
+
+{440}{8.2~\%}
+
+U
+
+{0}{0~\%}
+
+{73}{3.4~\%}
+
+{2}{0.1~\%}
+
+{75}{1.4~\%}
+
+Total
+
+{1677}{100~\%}
+
+{2154}{100~\%}
+
+{1533}{100~\%}
+
+{5364}{100~\%}
+
+\hypertarget{supervisiuxf3n}{%
+\subsection{Supervisión}\label{supervisiuxf3n}}
+
+\begin{itemize}
+\tightlist
+\item
+  m06. En su trabajo, ¿a cuántas personas supervisa usted?
+\end{itemize}
+
+Se recodifica en una nueva variable donde:
+
+\begin{itemize}
+\tightlist
+\item
+  1 = supervisa a una o más personas
+\item
+  0 = no supervisa
+\end{itemize}
+
+Frecuencias y porcentajes de variable Supervisa, por ola
+
+Supervisa
+
+Ola
+
+Total
+
+2016
+
+2018
+
+2021
+
+0
+
+{1300}{77.5~\%}
+
+{1710}{79.6~\%}
+
+{734}{65.9~\%}
+
+{3744}{75.8~\%}
+
+1
+
+{377}{22.5~\%}
+
+{438}{20.4~\%}
+
+{380}{34.1~\%}
+
+{1195}{24.2~\%}
+
+Total
+
+{1677}{100~\%}
+
+{2148}{100~\%}
+
+{1114}{100~\%}
+
+{4939}{100~\%}
+
 \hypertarget{temporalidad-del-trabajo}{%
-\subsubsection{Temporalidad del trabajo}\label{temporalidad-del-trabajo}}
+\subsection{Temporalidad del trabajo}\label{temporalidad-del-trabajo}}
 
 \begin{itemize}
 \tightlist
@@ -1704,114 +1945,72 @@ Total
 
 2016
 
-2017
-
 2018
-
-2019
 
 2021
 
-2022
-
 Permanente
 
-{1465}{81.5~\%}
+{1356}{81~\%}
 
-{0}{0~\%}
+{1647}{76.3~\%}
 
-{1766}{76.6~\%}
+{1114}{72.7~\%}
 
-{0}{0~\%}
-
-{1203}{73.4~\%}
-
-{0}{0~\%}
-
-{4434}{77.2~\%}
+{4117}{76.7~\%}
 
 De temporada oestacional
 
-{141}{7.8~\%}
+{135}{8.1~\%}
 
-{0}{0~\%}
+{218}{10.1~\%}
 
-{228}{9.9~\%}
+{115}{7.5~\%}
 
-{0}{0~\%}
-
-{121}{7.4~\%}
-
-{0}{0~\%}
-
-{490}{8.5~\%}
+{468}{8.7~\%}
 
 Ocasional o eventual
 
-{125}{7~\%}
+{117}{7~\%}
 
-{0}{0~\%}
+{172}{8~\%}
 
-{180}{7.8~\%}
+{187}{12.2~\%}
 
-{0}{0~\%}
-
-{195}{11.9~\%}
-
-{0}{0~\%}
-
-{500}{8.7~\%}
+{476}{8.9~\%}
 
 A prueba
 
 {9}{0.5~\%}
 
-{0}{0~\%}
+{16}{0.7~\%}
 
-{18}{0.8~\%}
+{10}{0.7~\%}
 
-{0}{0~\%}
-
-{10}{0.6~\%}
-
-{0}{0~\%}
-
-{37}{0.6~\%}
+{35}{0.7~\%}
 
 Por plazo o tiempodeterminado
 
-{58}{3.2~\%}
+{57}{3.4~\%}
 
-{0}{0~\%}
+{105}{4.9~\%}
 
-{114}{4.9~\%}
+{107}{7~\%}
 
-{0}{0~\%}
-
-{111}{6.8~\%}
-
-{0}{0~\%}
-
-{283}{4.9~\%}
+{269}{5~\%}
 
 Total
 
-{1798}{100~\%}
+{1674}{100~\%}
 
-{0}{100~\%}
+{2158}{100~\%}
 
-{2306}{100~\%}
+{1533}{100~\%}
 
-{0}{100~\%}
-
-{1640}{100~\%}
-
-{0}{100~\%}
-
-{5744}{100~\%}
+{5365}{100~\%}
 
 \hypertarget{tipo-de-contrato}{%
-\subsubsection{Tipo de Contrato}\label{tipo-de-contrato}}
+\subsection{Tipo de Contrato}\label{tipo-de-contrato}}
 
 \begin{itemize}
 \tightlist
@@ -1829,82 +2028,52 @@ Total
 
 2016
 
-2017
-
 2018
-
-2019
 
 2021
 
-2022
-
 Sí, lo firmé
 
-{1167}{65~\%}
+{1128}{67.3~\%}
 
-{0}{0~\%}
+{1403}{65.1~\%}
 
-{1445}{62.7~\%}
+{970}{63.2~\%}
 
-{0}{0~\%}
-
-{999}{60.9~\%}
-
-{0}{0~\%}
-
-{3611}{62.9~\%}
+{3501}{65.3~\%}
 
 Sí, pero no lo hefirmado
 
-{18}{1~\%}
+{16}{1~\%}
 
-{0}{0~\%}
+{24}{1.1~\%}
 
-{25}{1.1~\%}
+{18}{1.2~\%}
 
-{0}{0~\%}
-
-{18}{1.1~\%}
-
-{0}{0~\%}
-
-{61}{1.1~\%}
+{58}{1.1~\%}
 
 No tengo
 
-{610}{34~\%}
+{531}{31.7~\%}
 
-{0}{0~\%}
+{729}{33.8~\%}
 
-{833}{36.2~\%}
+{546}{35.6~\%}
 
-{0}{0~\%}
-
-{624}{38~\%}
-
-{0}{0~\%}
-
-{2067}{36~\%}
+{1806}{33.7~\%}
 
 Total
 
-{1795}{100~\%}
+{1675}{100~\%}
 
-{0}{100~\%}
+{2156}{100~\%}
 
-{2303}{100~\%}
+{1534}{100~\%}
 
-{0}{100~\%}
-
-{1641}{100~\%}
-
-{0}{100~\%}
-
-{5739}{100~\%}
+{5365}{100~\%}
 
 \hypertarget{valoraciuxf3n-movimiento-de-demandas-laborales}{%
-\subsection{Valoración Movimiento de Demandas Laborales}\label{valoraciuxf3n-movimiento-de-demandas-laborales}}
+\section{Valoración Movimiento de Demandas Laborales}\label{valoraciuxf3n-movimiento-de-demandas-laborales}}
 
 Considerando la pregunta de ELSOC:
 
@@ -1918,23 +2087,17 @@ Si consideramos \textbf{solamente} a las personas que responden que el movimient
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-11}Frecuencia de respuestas 'Movimiento social de apoyo a demandas laborales'}
+\caption{\label{tab:unnamed-chunk-12}Frecuencia de respuestas 'Movimiento social de apoyo a demandas laborales'}
 \centering
 \begin{tabular}[t]{r|r|r|r}
 \hline
 ola & n\_mov\_laboral & n\_ola & prop\\
 \hline
-1 & 381 & 2927 & 0.1301674\\
+1 & 248 & 1677 & 0.1478831\\
 \hline
-2 & 271 & 2473 & 0.1095835\\
+3 & 144 & 2161 & 0.0666358\\
 \hline
-3 & 228 & 3748 & 0.0608324\\
-\hline
-4 & 311 & 3417 & 0.0910155\\
-\hline
-5 & 459 & 2740 & 0.1675182\\
-\hline
-6 & 254 & 2730 & 0.0930403\\
+5 & 278 & 1534 & 0.1812256\\
 \hline
 \end{tabular}
 \end{table}
@@ -1960,111 +2123,69 @@ Total
 
 2016
 
-2017
-
 2018
-
-2019
 
 2021
 
-2022
-
 Totalmente endesacuerdo
 
-{4}{1.1~\%}
+{2}{0.8~\%}
 
-{1}{0.4~\%}
-
-{3}{1.3~\%}
+{2}{1.4~\%}
 
 {0}{0~\%}
 
-{0}{0~\%}
-
-{4}{1.6~\%}
-
-{12}{0.8~\%}
+{4}{1~\%}
 
 En desacuerdo
 
-{24}{6.4~\%}
+{12}{4.9~\%}
 
-{20}{7.4~\%}
-
-{20}{8.8~\%}
-
-{20}{6.4~\%}
+{11}{7.7~\%}
 
 {0}{0~\%}
 
-{22}{8.7~\%}
-
-{106}{7.4~\%}
+{23}{5.9~\%}
 
 Ni en desacuerdo nide acuerdo
 
-{41}{10.9~\%}
+{27}{11~\%}
 
-{33}{12.2~\%}
-
-{30}{13.3~\%}
-
-{31}{10~\%}
+{16}{11.2~\%}
 
 {0}{0~\%}
 
-{38}{15~\%}
-
-{173}{12~\%}
+{43}{11.1~\%}
 
 De acuerdo
 
-{278}{73.7~\%}
+{182}{74.3~\%}
 
-{185}{68.3~\%}
-
-{141}{62.4~\%}
-
-{230}{74~\%}
+{93}{65~\%}
 
 {0}{0~\%}
 
-{171}{67.6~\%}
-
-{1005}{69.9~\%}
+{275}{70.9~\%}
 
 Totalmente deacuerdo
 
-{30}{8~\%}
+{22}{9~\%}
 
-{32}{11.8~\%}
-
-{32}{14.2~\%}
-
-{30}{9.6~\%}
+{21}{14.7~\%}
 
 {0}{0~\%}
 
-{18}{7.1~\%}
-
-{142}{9.9~\%}
+{43}{11.1~\%}
 
 Total
 
-{377}{100~\%}
+{245}{100~\%}
 
-{271}{100~\%}
-
-{226}{100~\%}
-
-{311}{100~\%}
+{143}{100~\%}
 
 {0}{100~\%}
 
-{253}{100~\%}
-
-{1438}{100~\%}
+{388}{100~\%}
 
 \begin{itemize}
 \tightlist
@@ -2082,111 +2203,69 @@ Total
 
 2016
 
-2017
-
 2018
-
-2019
 
 2021
 
-2022
-
 Totalmente endesacuerdo
+
+{5}{2~\%}
+
+{2}{1.4~\%}
+
+{0}{0~\%}
 
 {7}{1.8~\%}
 
-{1}{0.4~\%}
-
-{4}{1.8~\%}
-
-{2}{0.6~\%}
-
-{0}{0~\%}
-
-{4}{1.6~\%}
-
-{18}{1.2~\%}
-
 En desacuerdo
 
-{18}{4.7~\%}
+{11}{4.5~\%}
 
-{16}{5.9~\%}
-
-{14}{6.2~\%}
-
-{12}{3.9~\%}
+{9}{6.2~\%}
 
 {0}{0~\%}
 
-{24}{9.4~\%}
-
-{84}{5.8~\%}
+{20}{5.1~\%}
 
 Ni en desacuerdo nide acuerdo
 
-{35}{9.2~\%}
+{24}{9.7~\%}
 
-{36}{13.3~\%}
-
-{20}{8.8~\%}
-
-{31}{10~\%}
+{12}{8.3~\%}
 
 {0}{0~\%}
 
-{35}{13.8~\%}
-
-{157}{10.9~\%}
+{36}{9.2~\%}
 
 De acuerdo
 
-{298}{78.6~\%}
+{191}{77.3~\%}
 
-{188}{69.4~\%}
-
-{161}{70.9~\%}
-
-{239}{76.8~\%}
+{106}{73.6~\%}
 
 {0}{0~\%}
 
-{176}{69.3~\%}
-
-{1062}{73.6~\%}
+{297}{76~\%}
 
 Totalmente deacuerdo
 
-{21}{5.5~\%}
+{16}{6.5~\%}
 
-{30}{11.1~\%}
-
-{28}{12.3~\%}
-
-{27}{8.7~\%}
+{15}{10.4~\%}
 
 {0}{0~\%}
 
-{15}{5.9~\%}
-
-{121}{8.4~\%}
+{31}{7.9~\%}
 
 Total
 
-{379}{100~\%}
+{247}{100~\%}
 
-{271}{100~\%}
-
-{227}{100~\%}
-
-{311}{100~\%}
+{144}{100~\%}
 
 {0}{100~\%}
 
-{254}{100~\%}
-
-{1442}{100~\%}
+{391}{100~\%}
 
 \begin{itemize}
 \tightlist
@@ -2204,111 +2283,69 @@ Total
 
 2016
 
-2017
-
 2018
-
-2019
 
 2021
 
-2022
-
 Totalmente endesacuerdo
 
-{4}{1.1~\%}
-
-{2}{0.7~\%}
-
-{1}{0.4~\%}
-
-{1}{0.3~\%}
+{2}{0.8~\%}
 
 {0}{0~\%}
 
-{1}{0.4~\%}
+{0}{0~\%}
 
-{9}{0.6~\%}
+{2}{0.5~\%}
 
 En desacuerdo
 
-{18}{4.7~\%}
+{10}{4.1~\%}
 
-{18}{6.6~\%}
-
-{10}{4.4~\%}
-
-{15}{4.9~\%}
+{6}{4.2~\%}
 
 {0}{0~\%}
 
-{20}{7.9~\%}
-
-{81}{5.6~\%}
+{16}{4.1~\%}
 
 Ni en desacuerdo nide acuerdo
 
-{46}{12.1~\%}
+{30}{12.2~\%}
 
-{42}{15.5~\%}
-
-{27}{11.9~\%}
-
-{22}{7.2~\%}
+{18}{12.5~\%}
 
 {0}{0~\%}
 
-{31}{12.3~\%}
-
-{168}{11.7~\%}
+{48}{12.3~\%}
 
 De acuerdo
 
-{276}{72.8~\%}
+{180}{73.2~\%}
 
-{179}{66.1~\%}
-
-{153}{67.4~\%}
-
-{214}{69.7~\%}
+{95}{66~\%}
 
 {0}{0~\%}
 
-{172}{68.3~\%}
-
-{994}{69.2~\%}
+{275}{70.5~\%}
 
 Totalmente deacuerdo
 
-{35}{9.2~\%}
+{24}{9.8~\%}
 
-{30}{11.1~\%}
-
-{36}{15.9~\%}
-
-{55}{17.9~\%}
+{25}{17.4~\%}
 
 {0}{0~\%}
 
-{28}{11.1~\%}
-
-{184}{12.8~\%}
+{49}{12.6~\%}
 
 Total
 
-{379}{100~\%}
+{246}{100~\%}
 
-{271}{100~\%}
-
-{227}{100~\%}
-
-{307}{100~\%}
+{144}{100~\%}
 
 {0}{100~\%}
 
-{252}{100~\%}
-
-{1436}{100~\%}
+{390}{100~\%}
 
 \begin{itemize}
 \tightlist
@@ -2318,23 +2355,23 @@ Total
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-15}Frecuencias de 'Grado de acuerdo: Posición opuesta entre el movimiento y las autoridades' por ola}
+\caption{\label{tab:unnamed-chunk-16}Frecuencias de 'Grado de acuerdo: Posición opuesta entre el movimiento y las autoridades' por ola}
 \centering
-\begin{tabular}[t]{l|r|r|r|r|r|r}
+\begin{tabular}[t]{l|r|r|r}
 \hline
-opuesta\_mov & Ola\_1 & Ola\_2 & Ola\_3 & Ola\_4 & Ola\_5 & Ola\_6\\
+opuesta\_mov & Ola\_1 & Ola\_3 & Ola\_5\\
 \hline
-Totalmente en desacuerdo & 6 & 3 & 2 & 1 &  & 2\\
+Totalmente en desacuerdo & 4 &  & \\
 \hline
-En desacuerdo & 27 & 21 & 14 & 20 &  & 35\\
+En desacuerdo & 12 & 10 & \\
 \hline
-Ni en desacuerdo ni de acuerdo & 52 & 39 & 29 & 34 &  & 61\\
+Ni en desacuerdo ni de acuerdo & 36 & 20 & \\
 \hline
-De acuerdo & 250 & 169 & 145 & 211 &  & 144\\
+De acuerdo & 164 & 92 & \\
 \hline
-Totalmente de acuerdo & 37 & 33 & 30 & 37 &  & 6\\
+Totalmente de acuerdo & 26 & 17 & \\
 \hline
- & 9 & 6 & 8 & 8 & 459 & 6\\
+ & 6 & 5 & 278\\
 \hline
 \end{tabular}
 \end{table}
@@ -2347,29 +2384,27 @@ Totalmente de acuerdo & 37 & 33 & 30 & 37 &  & 6\\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-16}Frecuencias de 'Frecuencia: Participación en el movimiento' por ola}
+\caption{\label{tab:unnamed-chunk-17}Frecuencias de 'Frecuencia: Participación en el movimiento' por ola}
 \centering
-\begin{tabular}[t]{l|r|r|r|r|r|r}
+\begin{tabular}[t]{l|r|r|r}
 \hline
-participacion\_mov & Ola\_1 & Ola\_2 & Ola\_3 & Ola\_4 & Ola\_5 & Ola\_6\\
+participacion\_mov & Ola\_1 & Ola\_3 & Ola\_5\\
 \hline
-Nunca & 251 & 169 & 148 & 180 & 305 & 164\\
+Nunca & 151 & 88 & 174\\
 \hline
-Casi nunca & 44 & 30 & 22 & 42 & 65 & 38\\
+Casi nunca & 30 & 12 & 45\\
 \hline
-A veces & 57 & 54 & 38 & 71 & 69 & 37\\
+A veces & 43 & 29 & 43\\
 \hline
-Frecuentemente & 21 & 15 & 12 & 15 & 19 & 12\\
+Frecuentemente & 18 & 8 & 15\\
 \hline
-Muy Frecuentemente & 6 & 3 & 8 & 3 & 1 & 2\\
-\hline
- & 2 &  &  &  &  & 1\\
+Muy Frecuentemente & 6 & 7 & 1\\
 \hline
 \end{tabular}
 \end{table}
 
 \hypertarget{participaciuxf3n-en-sindicatos}{%
-\subsection{Participación en sindicatos}\label{participaciuxf3n-en-sindicatos}}
+\section{Participación en sindicatos}\label{participaciuxf3n-en-sindicatos}}
 
 \begin{itemize}
 \tightlist
@@ -2379,44 +2414,44 @@ Muy Frecuentemente & 6 & 3 & 8 & 3 & 1 & 2\\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-17}Frecuencias de cada categoría de Membresía Sindicatos por ola considerando toda la muestra}
+\caption{\label{tab:unnamed-chunk-18}Frecuencias de cada categoría de Membresía Sindicatos por ola considerando toda la muestra}
 \centering
-\begin{tabular}[t]{l|r|r|r|r|r|r}
+\begin{tabular}[t]{l|r|r|r}
 \hline
-mem\_sindicato & Ola\_1 & Ola\_2 & Ola\_3 & Ola\_4 & Ola\_5 & Ola\_6\\
+mem\_sindicato & Ola\_1 & Ola\_3 & Ola\_5\\
 \hline
-No es miembro & 2613 &  & 3373 &  &  & 2329\\
+No es miembro & 1418 & 1836 & \\
 \hline
-Miembro inactivo & 89 &  & 108 &  &  & 48\\
+Miembro inactivo & 55 & 76 & \\
 \hline
-Miembro activo & 214 &  & 258 &  &  & 193\\
+Miembro activo & 198 & 244 & \\
 \hline
- & 11 & 2473 & 9 & 3417 & 2740 & 160\\
+ & 6 & 5 & 1534\\
 \hline
 \end{tabular}
 \end{table}
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-18}Frecuencias de Membresía Sindicato por ola, para quienes valoran movimientos laborales}
+\caption{\label{tab:unnamed-chunk-19}Frecuencias de Membresía Sindicato por ola, para quienes valoran movimientos laborales}
 \centering
-\begin{tabular}[t]{l|r|r|r|r|r|r}
+\begin{tabular}[t]{l|r|r|r}
 \hline
-mem\_sindicato & Ola\_1 & Ola\_2 & Ola\_3 & Ola\_4 & Ola\_5 & Ola\_6\\
+mem\_sindicato & Ola\_1 & Ola\_3 & Ola\_5\\
 \hline
-No es miembro & 314 &  & 173 &  &  & 203\\
+No es miembro & 186 & 95 & \\
 \hline
-Miembro inactivo & 12 &  & 16 &  &  & 7\\
+Miembro inactivo & 9 & 11 & \\
 \hline
-Miembro activo & 55 &  & 39 &  &  & 25\\
+Miembro activo & 53 & 38 & \\
 \hline
- &  & 271 &  & 311 & 459 & 19\\
+ &  &  & 278\\
 \hline
 \end{tabular}
 \end{table}
 
 \hypertarget{participaciuxf3n-en-huelgas}{%
-\subsection{Participación en huelgas}\label{participaciuxf3n-en-huelgas}}
+\section{Participación en huelgas}\label{participaciuxf3n-en-huelgas}}
 
 \begin{itemize}
 \tightlist
@@ -2426,73 +2461,73 @@ Miembro activo & 55 &  & 39 &  &  & 25\\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-19}Frecuencias de cada categoría de Participación en huelga por ola considerando toda la muestra}
-\centering
-\begin{tabular}[t]{l|r|r|r|r|r|r}
-\hline
-part\_huelga & Ola\_1 & Ola\_2 & Ola\_3 & Ola\_4 & Ola\_5 & Ola\_6\\
-\hline
-Nunca & 2547 & 2276 & 3407 & 3069 &  & 2594\\
-\hline
-Casi nunca & 122 & 78 & 152 & 135 &  & 74\\
-\hline
-A veces & 188 & 87 & 146 & 134 &  & 49\\
-\hline
-Frecuentemente & 49 & 25 & 29 & 54 &  & 11\\
-\hline
-Muy Frecuentemente & 15 & 7 & 11 & 22 &  & 2\\
-\hline
- & 6 &  & 3 & 3 & 2740 & \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}
-
-\caption{\label{tab:unnamed-chunk-20}Frecuencias de Participación en huelga por ola, para quienes valoran movimientos laborales}
-\centering
-\begin{tabular}[t]{l|r|r|r|r|r|r}
-\hline
-part\_huelga & Ola\_1 & Ola\_2 & Ola\_3 & Ola\_4 & Ola\_5 & Ola\_6\\
-\hline
-Nunca & 319 & 236 & 196 & 269 &  & 238\\
-\hline
-Casi nunca & 17 & 12 & 12 & 13 &  & 10\\
-\hline
-A veces & 33 & 16 & 14 & 24 &  & 4\\
-\hline
-Frecuentemente & 7 & 6 & 4 & 4 &  & 2\\
-\hline
-Muy Frecuentemente & 5 & 1 & 2 & 1 &  & \\
-\hline
- &  &  &  &  & 459 & \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}
-
-\caption{\label{tab:unnamed-chunk-21}Frecuencias de Participación en huelga por ola, para quienes son miembros de sindicatos (activos o inactivos)}
+\caption{\label{tab:unnamed-chunk-20}Frecuencias de cada categoría de Participación en huelga por ola considerando toda la muestra}
 \centering
 \begin{tabular}[t]{l|r|r|r}
 \hline
-part\_huelga & Ola\_1 & Ola\_3 & Ola\_6\\
+part\_huelga & Ola\_1 & Ola\_3 & Ola\_5\\
 \hline
-Nunca & 205 & 259 & 198\\
+Nunca & 1421 & 1915 & \\
 \hline
-Casi nunca & 25 & 46 & 23\\
+Casi nunca & 81 & 105 & \\
 \hline
-A veces & 57 & 47 & 11\\
+A veces & 134 & 112 & \\
 \hline
-Frecuentemente & 11 & 8 & 8\\
+Frecuentemente & 30 & 22 & \\
 \hline
-Muy Frecuentemente & 5 & 6 & 1\\
+Muy Frecuentemente & 9 & 6 & \\
+\hline
+ & 2 & 1 & 1534\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-21}Frecuencias de Participación en huelga por ola, para quienes valoran movimientos laborales}
+\centering
+\begin{tabular}[t]{l|r|r|r}
+\hline
+part\_huelga & Ola\_1 & Ola\_3 & Ola\_5\\
+\hline
+Nunca & 206 & 117 & \\
+\hline
+Casi nunca & 11 & 10 & \\
+\hline
+A veces & 24 & 11 & \\
+\hline
+Frecuentemente & 4 & 4 & \\
+\hline
+Muy Frecuentemente & 3 & 2 & \\
+\hline
+ &  &  & 278\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-22}Frecuencias de Participación en huelga por ola, para quienes son miembros de sindicatos (activos o inactivos)}
+\centering
+\begin{tabular}[t]{l|r|r}
+\hline
+part\_huelga & Ola\_1 & Ola\_3\\
+\hline
+Nunca & 171 & 224\\
+\hline
+Casi nunca & 22 & 40\\
+\hline
+A veces & 47 & 45\\
+\hline
+Frecuentemente & 9 & 8\\
+\hline
+Muy Frecuentemente & 4 & 3\\
 \hline
 \end{tabular}
 \end{table}
 
 \hypertarget{interuxe9s-en-poluxedtica}{%
-\subsection{Interés en política}\label{interuxe9s-en-poluxedtica}}
+\section{Interés en política}\label{interuxe9s-en-poluxedtica}}
 
 \begin{itemize}
 \tightlist
@@ -2502,69 +2537,67 @@ Muy Frecuentemente & 5 & 6 & 1\\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-22}Frecuencias de cada categoría de Interés en la política por ola considerando toda la muestra}
-\centering
-\begin{tabular}[t]{l|r|r|r|r|r|r}
-\hline
-int\_politica & Ola\_1 & Ola\_2 & Ola\_3 & Ola\_4 & Ola\_5 & Ola\_6\\
-\hline
-Nada interesado & 1782 & 1269 & 2046 & 1602 & 1108 & 1381\\
-\hline
-Poco interesado & 509 & 507 & 753 & 674 & 713 & 520\\
-\hline
-Algo interesado & 365 & 379 & 563 & 601 & 532 & 472\\
-\hline
-Bastante interesado & 178 & 200 & 264 & 358 & 255 & 258\\
-\hline
-Muy interesado & 80 & 109 & 110 & 179 & 123 & 99\\
-\hline
- & 13 & 9 & 12 & 3 & 9 & \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}
-
-\caption{\label{tab:unnamed-chunk-23}Frecuencias de Interés en la política por ola, para quienes valoran movimientos laborales}
-\centering
-\begin{tabular}[t]{l|r|r|r|r|r|r}
-\hline
-int\_politica & Ola\_1 & Ola\_2 & Ola\_3 & Ola\_4 & Ola\_5 & Ola\_6\\
-\hline
-Nada interesado & 220 & 123 & 121 & 156 & 197 & 108\\
-\hline
-Poco interesado & 62 & 63 & 44 & 70 & 129 & 59\\
-\hline
-Algo interesado & 66 & 52 & 38 & 53 & 83 & 52\\
-\hline
-Bastante interesado & 21 & 20 & 16 & 27 & 34 & 26\\
-\hline
-Muy interesado & 12 & 12 & 9 & 5 & 16 & 9\\
-\hline
- &  & 1 &  &  &  & \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}
-
-\caption{\label{tab:unnamed-chunk-24}Frecuencias de Interés en la política por ola, para quienes son miembros de sindicatos (activos o inactivos)}
+\caption{\label{tab:unnamed-chunk-23}Frecuencias de cada categoría de Interés en la política por ola considerando toda la muestra}
 \centering
 \begin{tabular}[t]{l|r|r|r}
 \hline
-int\_politica & Ola\_1 & Ola\_3 & Ola\_6\\
+int\_politica & Ola\_1 & Ola\_3 & Ola\_5\\
 \hline
-Nada interesado & 158 & 173 & 78\\
+Nada interesado & 996 & 1125 & 564\\
 \hline
-Poco interesado & 49 & 79 & 55\\
+Poco interesado & 302 & 463 & 407\\
 \hline
-Algo interesado & 55 & 62 & 51\\
+Algo interesado & 216 & 325 & 323\\
 \hline
-Bastante interesado & 27 & 30 & 40\\
+Bastante interesado & 108 & 168 & 169\\
 \hline
-Muy interesado & 14 & 20 & 17\\
+Muy interesado & 50 & 74 & 69\\
 \hline
- &  & 2 & \\
+ & 5 & 6 & 2\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-24}Frecuencias de Interés en la política por ola, para quienes valoran movimientos laborales}
+\centering
+\begin{tabular}[t]{l|r|r|r}
+\hline
+int\_politica & Ola\_1 & Ola\_3 & Ola\_5\\
+\hline
+Nada interesado & 138 & 65 & 115\\
+\hline
+Poco interesado & 40 & 33 & 82\\
+\hline
+Algo interesado & 46 & 27 & 56\\
+\hline
+Bastante interesado & 16 & 13 & 21\\
+\hline
+Muy interesado & 8 & 6 & 4\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-25}Frecuencias de Interés en la política por ola, para quienes son miembros de sindicatos (activos o inactivos)}
+\centering
+\begin{tabular}[t]{l|r|r}
+\hline
+int\_politica & Ola\_1 & Ola\_3\\
+\hline
+Nada interesado & 127 & 154\\
+\hline
+Poco interesado & 45 & 71\\
+\hline
+Algo interesado & 47 & 53\\
+\hline
+Bastante interesado & 22 & 24\\
+\hline
+Muy interesado & 12 & 17\\
+\hline
+ &  & 1\\
 \hline
 \end{tabular}
 \end{table}
