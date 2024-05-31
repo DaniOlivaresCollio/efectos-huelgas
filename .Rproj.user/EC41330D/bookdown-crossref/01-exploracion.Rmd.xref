@@ -1,6 +1,7 @@
-h1:preparación-y-exploración-datos Preparación y exploración datos
+h1:exploración-y-preparación-de-datos Exploración y preparación de datos
 h2:caracterización-empleo Caracterización empleo
 h3:actividad-principal Actividad principal
+h3:full-time Full-time
 h3:relación-de-empleo Relación de empleo
 h3:ocupación Ocupación
 h3:nivel-de-cualificación Nivel de cualificación
@@ -8,7 +9,9 @@ h3:rama-de-actividad-económica Rama de Actividad Económica
 h3:supervisión Supervisión
 h3:class Class
 h3:temporalidad-del-trabajo Temporalidad del trabajo
+h3:open-ended Open-ended
 h3:tipo-de-contrato Tipo de Contrato
+h3:female Female
 h2:valoración-movimiento-de-demandas-laborales Valoración Movimiento de Demandas Laborales
 h2:participación-en-sindicatos Participación en sindicatos
 h2:participación-en-huelgas Participación en huelgas

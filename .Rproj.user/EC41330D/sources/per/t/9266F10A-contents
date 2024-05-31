@@ -4,7 +4,8 @@ output:
   html_document: default
 ---
 
-# Preparación y exploración datos
+# Exploración y preparación de datos
+
 
 <div style="text-align: justify">
 
@@ -32,9 +33,11 @@ p_load(tidyverse,
        survey, 
        httr,
        devtools,
-       readr)
+       readr, 
+       ggplot2, 
+       labelled)
 
-devtools::install_github("DiogoFerrari/occupar", dependencies=F)
+devtools::install_github("DiogoFerrari/occupar",dependencies=F)
 ```
 
 ```{r datos-2}
@@ -60,6 +63,8 @@ data <- elsoc_long_2016_2022 %>%
 ```
 
 Primero, se realiza una revisión exploratoria de las variables de interés, considerando todas las olas de la base de datos, tanto para la muestra original como la de refresco, sin ponderar.
+
+Se comienza con 18.035 observaciones.
 
 ## Caracterización empleo
 
@@ -115,10 +120,25 @@ data <- filter(data, actividad %in% c("Trabaja de manera remunerada con jornada 
 
 Quedan 11078 observaciones.
 
+### Full-time
+
+Se crea una nueva variable binaria llamada *full-time* para identificar a aquellas personas que:
+
+- Trabajan de manera remunerada con jornada completa
+- Trabajan de manera remunerada a tiempo parcial, o trabajan y estudian
+
 ```{r}
+# Crear variable binaria: full-time
+data <- mutate(data,
+               full_time=if_else(actividad == "Trabaja de manera remunerada con jornada completa",1,0))
 
+# Tabla de frecuencias y porcentajes
+sjt.xtab(data$full_time,data$ola,
+         show.col.prc=TRUE, 
+         var.labels=c("Full-time","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de Trabajadores/as con jornada completa, por ola") 
 ```
-
 
 ### Relación de empleo
 
@@ -235,7 +255,7 @@ sjt.xtab(data$isco08_2d, data$ola,
          title = "Frecuencias y porcentajes de Ocupación con 2 dígitos, por ola")
 ```
 
-Recodificación con paquete `occupar`.
+Recodificación con paquete `occupar`, ver el [enlace](https://github.com/DiogoFerrari/occupar).
 
 ```{r}
 data$ciuo08_rec2 <- occupar::isco88to08(data$ciuo88_m03)
@@ -367,6 +387,53 @@ sjt.xtab(data$rama, data$ola,
          var.labels = c("Rama de Actividad Económica","Ola"),
          show.summary = FALSE,
          title = "Frecuencias y porcentajes de la Rama de Actividad Económica, por ola")
+```
+
+```{r}
+clase <- data %>% 
+  select(idencuesta,ola,class,class_2)
+
+clase <- clase %>%
+  drop_na(ola,class,class_2,idencuesta)
+
+clase <- clase %>% 
+  group_by(ola) %>% 
+  mutate(prop = n()/4537) %>% 
+  ungroup()
+
+ggplot(data = clase,
+       aes(y = prop,
+           x = ola,
+           fill = class_2, stratum=class_2, alluvium=idencuesta)) +
+  # geom_alluvium(aes(fill = rama), width = 0.2) +
+  ggalluvial::geom_stratum(linetype = 0) +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("2016","2017", "2018","2019","2021"), expand = c(.1, .1)) +
+  labs(title = "Gráfico Aluvial de la Variable 'Rama' a lo Largo de las Olas",
+       x = "Ola",
+       y = "Número de Encuestados") +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66)
+```
+
+```{r}
+ggplot(data = clase,
+       aes(y = prop,
+           x = ola,
+           axis2 = class_2,
+           alluvium = idencuesta,
+           stratum = class_2,
+           fill = class_2)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = 0.66) +
+  ggalluvial::geom_stratum(width = 0.55, linetype=0) +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum)), color = "black", size = 3) +
+  scale_x_discrete(limits = c("2016", "2017", "2018", "2019", "2021"), expand = c(.1, .1)) +
+  labs(title = "Gráfico Aluvial de la Variable 'Rama' a lo Largo de las Olas",
+       x = "Ola",
+       y = "Proporción") +
+  theme(legend.position = "bottom")
+
 ```
 
 Rama 2: 
@@ -533,6 +600,27 @@ sjt.xtab(data$temp_trabajo, data$ola,
          title = "Frecuencias y porcentajes de la Temporalidad del trabajo, por ola")
 ```
 
+### Open-ended
+
+Se crea una nueva variable binaria llamada *open-ended* para identificar a aquellas personas que:
+
+- Trabajan de manera permanente
+- No trabajan de manera permanente
+
+```{r}
+# Crear variable binaria: open-ended
+data <- mutate(data,
+               open_ended=if_else(temp_trabajo=="Permanente",1,0))
+
+# Tabla de frecuencias y porcentajes
+sjt.xtab(data$open_ended,data$ola,
+         show.col.prc=TRUE, 
+         var.labels=c("Open-ended","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de Trabajadores/as permanentes, por ola") 
+```
+
+
 ### Tipo de Contrato
 
 -   m10. En su trabajo principal, ¿tiene contrato de trabajo escrito?
@@ -557,6 +645,26 @@ sjt.xtab(data$contrato, data$ola,
          var.labels = c("Tipo de contrato","Ola"),
          show.summary = FALSE,
          title = "Frecuencias y porcentajes del Tipo de contrato, por ola")
+```
+
+### Female
+
+Se crea una nueva variable binaria llamada *female* para identificar a aquellas personas que:
+
+- En la variable sexo se identifican como mujeres
+- En la variable sexo no se identifican como mujeres
+
+```{r}
+# Crear variable binaria: female
+data <- mutate(data,
+               female=if_else(sexo==2,1,0))
+
+# Tabla de frecuencias y porcentajes
+sjt.xtab(data$female,data$ola,
+         show.col.prc=TRUE, 
+         var.labels=c("Female","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de Trabajadoras, por ola") 
 ```
 
 ## Valoración Movimiento de Demandas Laborales
