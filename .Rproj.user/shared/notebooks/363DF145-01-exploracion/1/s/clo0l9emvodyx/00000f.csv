@@ -1,4 +1,4 @@
-"0","# Crear variable binaria: full-time"
+"0","# Crear variable binaria: open-ended"
 "0","data <- mutate(data,"
 "0","               open_ended=if_else(temp_trabajo==""Permanente"",1,0))"
 "0",""
