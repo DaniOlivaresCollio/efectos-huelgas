@@ -3,7 +3,7 @@
     "path": "C:/Users/danie/Documents/fondecyt/efectos-huelgas/01-exploracion.Rmd",
     "project_path": "01-exploracion.Rmd",
     "type": "r_markdown",
-    "hash": "2792570847",
+    "hash": "3655658226",
     "contents": "",
     "dirty": false,
     "created": 1712246430616.0,
@@ -12,8 +12,8 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "419,0",
-        "scrollLine": "446",
+        "cursorPosition": "416,0",
+        "scrollLine": "388",
         "docOutlineVisible": "1",
         "docOutlineSize": "229",
         "rmdVisualMode": "false",
@@ -22,11 +22,11 @@
         "rmdVisualWrapConfigured": "true"
     },
     "folds": "",
-    "lastKnownWriteTime": 1717182239,
+    "lastKnownWriteTime": 1717151183,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1717182239973,
+    "last_content_update": 1717151183584,
     "read_only": false,
     "read_only_alternatives": []
 }

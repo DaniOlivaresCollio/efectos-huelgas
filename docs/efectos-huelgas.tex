@@ -172,14 +172,12 @@ Las olas corresponden a los siguientes años:
 
 La muestra original comienza el año 2016, se incorpora una muestra de refresco el 2018.
 
-En junio de 2024 se contará con la séptima ola correspondiente al año 2023.
+En mayo de 2024 se contará con la séptima ola correspondiente al año 2023.
 
-\hypertarget{exploraciuxf3n-y-preparaciuxf3n-de-datos}{%
-\chapter{Exploración y preparación de datos}\label{exploraciuxf3n-y-preparaciuxf3n-de-datos}}
+\hypertarget{preparaciuxf3n-y-exploraciuxf3n-datos}{%
+\chapter{Preparación y exploración datos}\label{preparaciuxf3n-y-exploraciuxf3n-datos}}
 
 Primero, se realiza una revisión exploratoria de las variables de interés, considerando todas las olas de la base de datos, tanto para la muestra original como la de refresco, sin ponderar.
-
-Se comienza con 18.035 observaciones.
 
 \hypertarget{caracterizaciuxf3n-empleo}{%
 \section{Caracterización empleo}\label{caracterizaciuxf3n-empleo}}
@@ -386,87 +384,6 @@ Se continua con una base de datos filtrada dejando solo a las personas ocupadas 
 \end{itemize}
 
 Quedan 11078 observaciones.
-
-\hypertarget{full-time}{%
-\subsection{Full-time}\label{full-time}}
-
-Se crea una nueva variable binaria llamada \emph{full-time} para identificar a aquellas personas que:
-
-\begin{itemize}
-\tightlist
-\item
-  Trabajan de manera remunerada con jornada completa
-\item
-  Trabajan de manera remunerada a tiempo parcial, o trabajan y estudian
-\end{itemize}
-
-Frecuencias y porcentajes de Trabajadores/as con jornada completa, por ola
-
-Full-time
-
-Ola
-
-Total
-
-2016
-
-2017
-
-2018
-
-2019
-
-2021
-
-2022
-
-0
-
-{411}{22.8~\%}
-
-{433}{28~\%}
-
-{627}{27.1~\%}
-
-{628}{29.5~\%}
-
-{546}{33.3~\%}
-
-{505}{30.8~\%}
-
-{3150}{28.4~\%}
-
-1
-
-{1391}{77.2~\%}
-
-{1116}{72~\%}
-
-{1688}{72.9~\%}
-
-{1501}{70.5~\%}
-
-{1095}{66.7~\%}
-
-{1137}{69.2~\%}
-
-{7928}{71.6~\%}
-
-Total
-
-{1802}{100~\%}
-
-{1549}{100~\%}
-
-{2315}{100~\%}
-
-{2129}{100~\%}
-
-{1641}{100~\%}
-
-{1642}{100~\%}
-
-{11078}{100~\%}
 
 \hypertarget{relaciuxf3n-de-empleo}{%
 \subsection{Relación de empleo}\label{relaciuxf3n-de-empleo}}
@@ -1242,7 +1159,7 @@ Total
 
 {5363}{100~\%}
 
-Recodificación con paquete \texttt{occupar}, ver el \href{https://github.com/DiogoFerrari/occupar}{enlace}.
+Recodificación con paquete \texttt{occupar}.
 
 Frecuencias y porcentajes de Ocupación con 2 dígitos, por ola
 
@@ -2512,63 +2429,6 @@ Total
 
 {5365}{100~\%}
 
-\hypertarget{open-ended}{%
-\subsection{Open-ended}\label{open-ended}}
-
-Se crea una nueva variable binaria llamada \emph{open-ended} para identificar a aquellas personas que:
-
-\begin{itemize}
-\tightlist
-\item
-  Trabajan de manera permanente
-\item
-  No trabajan de manera permanente
-\end{itemize}
-
-Frecuencias y porcentajes de Trabajadores/as permanentes, por ola
-
-Open-ended
-
-Ola
-
-Total
-
-2016
-
-2018
-
-2021
-
-0
-
-{318}{19~\%}
-
-{511}{23.7~\%}
-
-{419}{27.3~\%}
-
-{1248}{23.3~\%}
-
-1
-
-{1356}{81~\%}
-
-{1647}{76.3~\%}
-
-{1114}{72.7~\%}
-
-{4117}{76.7~\%}
-
-Total
-
-{1674}{100~\%}
-
-{2158}{100~\%}
-
-{1533}{100~\%}
-
-{5365}{100~\%}
-
 \hypertarget{tipo-de-contrato}{%
 \subsection{Tipo de Contrato}\label{tipo-de-contrato}}
 
@@ -2632,63 +2492,6 @@ Total
 
 {5365}{100~\%}
 
-\hypertarget{female}{%
-\subsection{Female}\label{female}}
-
-Se crea una nueva variable binaria llamada \emph{female} para identificar a aquellas personas que:
-
-\begin{itemize}
-\tightlist
-\item
-  En la variable sexo se identifican como mujeres
-\item
-  En la variable sexo no se identifican como mujeres
-\end{itemize}
-
-Frecuencias y porcentajes de Trabajadoras, por ola
-
-Female
-
-Ola
-
-Total
-
-2016
-
-2018
-
-2021
-
-0
-
-{852}{50.8~\%}
-
-{1029}{47.6~\%}
-
-{693}{45.2~\%}
-
-{2574}{47.9~\%}
-
-1
-
-{825}{49.2~\%}
-
-{1132}{52.4~\%}
-
-{841}{54.8~\%}
-
-{2798}{52.1~\%}
-
-Total
-
-{1677}{100~\%}
-
-{2161}{100~\%}
-
-{1534}{100~\%}
-
-{5372}{100~\%}
-
 \hypertarget{valoraciuxf3n-movimiento-de-demandas-laborales}{%
 \section{Valoración Movimiento de Demandas Laborales}\label{valoraciuxf3n-movimiento-de-demandas-laborales}}
 
@@ -2704,7 +2507,7 @@ Si consideramos \textbf{solamente} a las personas que responden que el movimient
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-20}Frecuencia de respuestas 'Movimiento social de apoyo a demandas laborales'}
+\caption{\label{tab:unnamed-chunk-16}Frecuencia de respuestas 'Movimiento social de apoyo a demandas laborales'}
 \centering
 \begin{tabular}[t]{r|r|r|r}
 \hline
@@ -2972,7 +2775,7 @@ Total
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-24}Frecuencias de 'Grado de acuerdo: Posición opuesta entre el movimiento y las autoridades' por ola}
+\caption{\label{tab:unnamed-chunk-20}Frecuencias de 'Grado de acuerdo: Posición opuesta entre el movimiento y las autoridades' por ola}
 \centering
 \begin{tabular}[t]{l|r|r|r}
 \hline
@@ -3001,7 +2804,7 @@ Totalmente de acuerdo & 26 & 17 & \\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-25}Frecuencias de 'Frecuencia: Participación en el movimiento' por ola}
+\caption{\label{tab:unnamed-chunk-21}Frecuencias de 'Frecuencia: Participación en el movimiento' por ola}
 \centering
 \begin{tabular}[t]{l|r|r|r}
 \hline
@@ -3031,7 +2834,7 @@ Muy Frecuentemente & 6 & 7 & 1\\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-26}Frecuencias de cada categoría de Membresía Sindicatos por ola considerando toda la muestra}
+\caption{\label{tab:unnamed-chunk-22}Frecuencias de cada categoría de Membresía Sindicatos por ola considerando toda la muestra}
 \centering
 \begin{tabular}[t]{l|r|r|r}
 \hline
@@ -3050,7 +2853,7 @@ Miembro activo & 198 & 244 & \\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-27}Frecuencias de Membresía Sindicato por ola, para quienes valoran movimientos laborales}
+\caption{\label{tab:unnamed-chunk-23}Frecuencias de Membresía Sindicato por ola, para quienes valoran movimientos laborales}
 \centering
 \begin{tabular}[t]{l|r|r|r}
 \hline
@@ -3078,7 +2881,7 @@ Miembro activo & 53 & 38 & \\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-28}Frecuencias de cada categoría de Participación en huelga por ola considerando toda la muestra}
+\caption{\label{tab:unnamed-chunk-24}Frecuencias de cada categoría de Participación en huelga por ola considerando toda la muestra}
 \centering
 \begin{tabular}[t]{l|r|r|r}
 \hline
@@ -3101,7 +2904,7 @@ Muy Frecuentemente & 9 & 6 & \\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-29}Frecuencias de Participación en huelga por ola, para quienes valoran movimientos laborales}
+\caption{\label{tab:unnamed-chunk-25}Frecuencias de Participación en huelga por ola, para quienes valoran movimientos laborales}
 \centering
 \begin{tabular}[t]{l|r|r|r}
 \hline
@@ -3124,7 +2927,7 @@ Muy Frecuentemente & 3 & 2 & \\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-30}Frecuencias de Participación en huelga por ola, para quienes son miembros de sindicatos (activos o inactivos)}
+\caption{\label{tab:unnamed-chunk-26}Frecuencias de Participación en huelga por ola, para quienes son miembros de sindicatos (activos o inactivos)}
 \centering
 \begin{tabular}[t]{l|r|r}
 \hline
@@ -3154,7 +2957,7 @@ Muy Frecuentemente & 4 & 3\\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-31}Frecuencias de cada categoría de Interés en la política por ola considerando toda la muestra}
+\caption{\label{tab:unnamed-chunk-27}Frecuencias de cada categoría de Interés en la política por ola considerando toda la muestra}
 \centering
 \begin{tabular}[t]{l|r|r|r}
 \hline
@@ -3177,7 +2980,7 @@ Muy interesado & 50 & 74 & 69\\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-32}Frecuencias de Interés en la política por ola, para quienes valoran movimientos laborales}
+\caption{\label{tab:unnamed-chunk-28}Frecuencias de Interés en la política por ola, para quienes valoran movimientos laborales}
 \centering
 \begin{tabular}[t]{l|r|r|r}
 \hline
@@ -3198,7 +3001,7 @@ Muy interesado & 8 & 6 & 4\\
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-33}Frecuencias de Interés en la política por ola, para quienes son miembros de sindicatos (activos o inactivos)}
+\caption{\label{tab:unnamed-chunk-29}Frecuencias de Interés en la política por ola, para quienes son miembros de sindicatos (activos o inactivos)}
 \centering
 \begin{tabular}[t]{l|r|r}
 \hline

@@ -1,18 +1,5 @@
 "0","rm(list=ls())"
-"2","Warning messages:
-"
-"2","1: "
-"2","In readLines(index, encoding = encoding) :"
-"2","
- "
-"2"," incomplete final line found on 'C:/Users/danie/Documents/fondecyt/efectos-huelgas/index.Rmd'
-"
-"2","2: "
-"2","In readLines(index, encoding = encoding) :"
-"2","
- "
-"2"," incomplete final line found on 'C:/Users/danie/Documents/fondecyt/efectos-huelgas/index.Rmd'
-"
+"0",""
 "0","library(pacman)"
 "0","p_load(tidyverse,"
 "0","       knitr,"
