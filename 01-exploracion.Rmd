@@ -32,12 +32,12 @@ p_load(tidyverse,
        ggalluvial,
        survey, 
        httr,
-       devtools,
+       # devtools,
        readr, 
        ggplot2, 
        labelled)
 
-devtools::install_github("DiogoFerrari/occupar",dependencies=F)
+# devtools::install_github("DiogoFerrari/occupar",dependencies=F)
 ```
 
 ```{r datos-2}
@@ -390,50 +390,49 @@ sjt.xtab(data$rama, data$ola,
 ```
 
 ```{r}
-clase <- data %>% 
-  select(idencuesta,ola,class,class_2)
-
-clase <- clase %>%
-  drop_na(ola,class,class_2,idencuesta)
-
-clase <- clase %>% 
-  group_by(ola) %>% 
-  mutate(prop = n()/4537) %>% 
-  ungroup()
-
-ggplot(data = clase,
-       aes(y = prop,
-           x = ola,
-           fill = class_2, stratum=class_2, alluvium=idencuesta)) +
-  # geom_alluvium(aes(fill = rama), width = 0.2) +
-  ggalluvial::geom_stratum(linetype = 0) +
-  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
-  scale_x_discrete(limits = c("2016","2017", "2018","2019","2021"), expand = c(.1, .1)) +
-  labs(title = "Gráfico Aluvial de la Variable 'Rama' a lo Largo de las Olas",
-       x = "Ola",
-       y = "Número de Encuestados") +
-  theme_bw() +
-  ggalluvial::geom_flow(alpha = .66)
+# clase <- data %>% 
+#   select(idencuesta,ola,class,class_2)
+# 
+# clase <- clase %>%
+#   drop_na(ola,class,class_2,idencuesta)
+# 
+# clase <- clase %>% 
+#   group_by(ola) %>% 
+#   mutate(prop = n()/4537) %>% 
+#   ungroup()
+# 
+# ggplot(data = clase,
+#        aes(y = prop,
+#            x = ola,
+#            fill = class_2, stratum=class_2, alluvium=idencuesta)) +
+#   # geom_alluvium(aes(fill = rama), width = 0.2) +
+#   ggalluvial::geom_stratum(linetype = 0) +
+#   geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+#   scale_x_discrete(limits = c("2016","2017", "2018","2019","2021"), expand = c(.1, .1)) +
+#   labs(title = "Gráfico Aluvial de la Variable 'Rama' a lo Largo de las Olas",
+#        x = "Ola",
+#        y = "Número de Encuestados") +
+#   theme_bw() +
+#   ggalluvial::geom_flow(alpha = .66)
 ```
 
 ```{r}
-ggplot(data = clase,
-       aes(y = prop,
-           x = ola,
-           axis2 = class_2,
-           alluvium = idencuesta,
-           stratum = class_2,
-           fill = class_2)) +
-  theme_bw() +
-  ggalluvial::geom_flow(alpha = 0.66) +
-  ggalluvial::geom_stratum(width = 0.55, linetype=0) +
-  geom_text(stat = "stratum", aes(label = after_stat(stratum)), color = "black", size = 3) +
-  scale_x_discrete(limits = c("2016", "2017", "2018", "2019", "2021"), expand = c(.1, .1)) +
-  labs(title = "Gráfico Aluvial de la Variable 'Rama' a lo Largo de las Olas",
-       x = "Ola",
-       y = "Proporción") +
-  theme(legend.position = "bottom")
-
+# ggplot(data = clase,
+#        aes(y = prop,
+#            x = ola,
+#            axis2 = class_2,
+#            alluvium = idencuesta,
+#            stratum = class_2,
+#            fill = class_2)) +
+#   theme_bw() +
+#   ggalluvial::geom_flow(alpha = 0.66) +
+#   ggalluvial::geom_stratum(width = 0.55, linetype=0) +
+#   geom_text(stat = "stratum", aes(label = after_stat(stratum)), color = "black", size = 3) +
+#   scale_x_discrete(limits = c("2016", "2017", "2018", "2019", "2021"), expand = c(.1, .1)) +
+#   labs(title = "Gráfico Aluvial de la Variable 'Rama' a lo Largo de las Olas",
+#        x = "Ola",
+#        y = "Proporción") +
+#   theme(legend.position = "bottom")
 ```
 
 Rama 2: 
