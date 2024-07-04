@@ -8,7 +8,7 @@
 "0","## Carga bbdd con comparacion 88 y 08"
 "0","isic4_isic31 <- read_csv(""input/ISIC4_ISIC31.txt"")"
 "2","[1mRows: [22m[34m737[39m [1mColumns: [22m[34m5[39m"
-"2","[36m──[39m [1mColumn specification[22m [36m──────────────────────────────────────────────────────────────────[39m
+"2","[36m──[39m [1mColumn specification[22m [36m──────────────────────────────────────────────────────────────────────────────────────[39m
 [1mDelimiter:[22m "",""
 [31mchr[39m (3): ISIC4code, ISIC31code, Detail
 [32mdbl[39m (2): partialISIC4, partialISIC31"
