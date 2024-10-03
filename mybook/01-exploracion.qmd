@@ -38,39 +38,51 @@ load(here::here("input/data/ELSOC_Long.RData"))
 ```
 
 ```{r seleccion}
-# Seleccion solo para mirar, aun sin ponderadores
+# Seleccion de variables
 data <- elsoc_long_2016_2022 %>%
-  select(idencuesta,ola,ola_w01,ola_w02,ola_w03,          # identificacion
-         ola_w04,ola_w05,ola_w06,version,muestra,         # identificacion
-         sexo=m0_sexo,edad=m0_edad,educ=m01,              # caract sociodemografica
-         m02,m06,m07,m08,m10,                             # caract sociodemografica
+  select(idencuesta,                                      # identificacion encuestado
+         ola,ola_w01,ola_w02,ola_w03,                     # identificacion ola
+         ola_w04,ola_w05,ola_w06,                         # identificacion ola
+         version,muestra,tipo_atricion,estrato,           # identificacion srvy
+         segmento_disenno,ponderador02,estrato_disenno,   # identificacion srvy
+         sexo=m0_sexo,edad=m0_edad,educ=m01,              # caract sociodem
+         m02,m06,m07,m08,m10,                             # caract sociodem
          m03,ciuo88_m03,ciuo08_m03,                       # caract ocupacional
          m04,ciiu3_m04,ciiu4_m04,                         # caract ocupacional
          c12_04,                                          # membresia sindicato
-         c08_03,                                          # freq participa huelgas
+         c08_03,                                          # freq participa hlgs
          mov_valora=c20,mov_valora_otro=c20_otro,         # mov que mas valora
          c21_01,c21_02,c21_03,c21_04,c21_05,c21_06,       # caract mov valora
          c21_07,c21_08,c21_09,c21_10,c21_11,c22,c23,c24,  # caract mov valora
          c13,c14_01,c14_02                                # interes politica
          )
+
+# informacion diseno del estudio
+# data_svy <- svydesign(ids = ~segmento_disenno,weights = ~ponderador02,
+#                       data = ell,nest = TRUE,strata = ~estrato_disenno)
 ```
 
-Primero, se realiza una revisión exploratoria de las variables de interés, considerando todas las olas de la base de datos, tanto para la muestra original como la de refresco, sin ponderar.
+Primero, se realiza una revisión exploratoria de las variables de interés, considerando todas las olas de la base de datos, tanto para la muestra original como la de refresco.
 
-Se comienza con 18.035 observaciones.
-
-```{r}
-dim(data)
+```{r,echo=FALSE}
+n <- nrow(data)
 ```
+
+Se comienza con `r n` observaciones.
 
 
 ## Caracterización empleo
 
+
 ### Actividad principal
 
--   m02. ¿Cuál de estas situaciones describe mejor su actividad principal durante el último mes?
+Con la variable ELSOC:
 
-```{r}
+-   `m02`. ¿Cuál de estas situaciones describe mejor su actividad principal durante el último mes?
+
+Creamos la variable `actividad`.
+
+```{r,echo=FALSE}
 # Recodficar
 data$actividad <- car::recode(data$m02,
                               recodes=c("1='Trabaja de manera remunerada con jornada completa';
@@ -105,32 +117,32 @@ sjt.xtab(data$actividad, data$ola,
 
 Se continua con una base de datos filtrada dejando solo a las personas ocupadas de acuerdo con las siguientes categorías de actividad principal:
 
-- m02==1: Trabaja de manera remunerada con jornada completa
-- m02==2: Trabaja de manera remunerada a tiempo parcial
-- m03==3: Estudia y trabaja
+-   `m02==1`: Trabaja de manera remunerada con jornada completa
+-   `m02==2`: Trabaja de manera remunerada a tiempo parcial
+-   `m02==3`: Estudia y trabaja
 
-```{r}
+```{r,echo=FALSE}
 # Filtrar para ocupados
 data <- filter(data, actividad %in% c("Trabaja de manera remunerada con jornada completa",
                                       "Trabaja de manera remunerada a tiempo parcial",
                                       "Estudia y trabaja"))
 ```
 
-Quedan 11078 observaciones.
-
-```{r}
-dim(data)
+```{r,echo=FALSE}
+n <- nrow(data)
 ```
 
+Quedan `r n` observaciones.
 
-### Full-time
 
-Se crea una nueva variable binaria llamada *full-time* para identificar a aquellas personas que:
+### Full time
 
-- Trabajan de manera remunerada con jornada completa
-- Trabajan de manera remunerada a tiempo parcial, o trabajan y estudian
+Se crea una nueva variable binaria llamada `full_time` para identificar a aquellas personas que:
 
-```{r}
+- `full_time==1`: Trabajan de manera remunerada con jornada completa
+- `full_time==0`: Trabajan de manera remunerada a tiempo parcial, o trabajan y estudian
+
+```{r,echo=FALSE}
 # Crear variable binaria: full-time
 data <- mutate(data,
                full_time=if_else(actividad == "Trabaja de manera remunerada con jornada completa",1,0))
@@ -143,11 +155,16 @@ sjt.xtab(data$full_time,data$ola,
          title="Frecuencias y porcentajes de Trabajadores/as con jornada completa, por ola") 
 ```
 
+
 ### Relación de empleo
 
--   m07. En su actual ocupación usted trabaja como:
+Con la variable ELSOC:
 
-```{r}
+-   `m07`. En su actual ocupación usted trabaja como:
+
+Creamos la variable `rel_empleo`.
+
+```{r,echo=FALSE}
 # Recodficar
 data <- data %>%
   mutate(rel_empleo=car::recode(m07,
@@ -177,20 +194,49 @@ sjt.xtab(data$rel_empleo, data$ola,
          title = "Frecuencias y porcentajes de la Relación de empleo, por ola")
 ```
 
-Se continua con una base de datos filtrada dejando solo a las personas ocupadas empleadas o auto empleadasde acuerdo con las siguientes categorías de la relación de empleo:
+La variable de relación de empleo (`rel_empleo` ex `m07`), solamente está presente en las olas 2016, 2018 y 2021. Por lo tanto, se duplicarán los datos de relación de empleo para los años siguientes, es decir, en 2017 se pondrán los valores de 2016, y así sucesivamente.
 
-- m07==1: Empleado u obrero en empresa privada
-- m07==2: Empleado u obrero del sector público
-- m07==5: Trabaja solo, no tiene empleados
-- m07==6: Familiar no remunerado
-- m07==7: Servicio doméstico
-                                           
+```{r,echo=FALSE}
+# Crear una columna con la variable "rel_empleo" adelantada una ola
+data <- data %>%
+  # arrange(idencuesta, ola) %>%  # Ordena por id y ola, por si acaso no está ordenado
+  group_by(idencuesta) %>%        # Agrupa por id para trabajar en cada individuo
+  mutate(rel_empleo_lagged=lag(as.character(rel_empleo),n=1)) %>%  # Desplaza "rel_empleo" a la siguiente ola, 
+                                                                   # conviertiendo el factor en character temporalmente
+  ungroup()
+
+# Rellenar los valores NA en la variable original
+data <- data %>%
+  mutate(rel_empleo=ifelse(!is.na(rel_empleo),as.character(rel_empleo),rel_empleo_lagged)) %>%  # Si rel empleo es NA, sustituir con el valor de la ola anterior y asegurarse que actividad esté en formato carácter
+  mutate(rel_empleo=factor(rel_empleo)) %>%  # Convertir de nuevo a factor
+  select(-rel_empleo_lagged)                 # Elimina la columna temporal
+```
+
+Se presentan las frecuencias y porcentajes de la relación de empleo, por ola.
+
+```{r,echo=FALSE}
+# Tabla de frecuencias y porcentajes
+sjt.xtab(data$rel_empleo, data$ola,
+         show.col.prc = TRUE,
+         var.labels = c("Relación de empleo","Ola"),
+         show.summary = FALSE,
+         title = "Frecuencias y porcentajes de la Relación de empleo, por ola")
+```
+
+Se continua con una base de datos filtrada dejando solo a las personas ocupadas empleadas o auto empleadas de acuerdo con las siguientes categorías de la relación de empleo:
+
+-   `m07==1`: Empleado u obrero en empresa privada
+-   `m07==2`: Empleado u obrero del sector público
+-   `m07==5`: Trabaja solo, no tiene empleados
+-   `m07==6`: Familiar no remunerado
+-   `m07==7`: Servicio doméstico
+
 Dejando afuera:
 
-- m07==3: Miembro de las Fuerzas Armadas y de Orden
-- m07==4: Patrón/a o empleador/a
+-   `m07==3`: Miembro de las Fuerzas Armadas y de Orden
+-   `m07==4`: Patrón/a o empleador/a
 
-```{r}
+```{r,echo=FALSE}
 # Filtrar para trabajadores y self-employed
 data <- filter(data, rel_empleo %in% c("Empleado u obrero en empresa privada",
                                        "Empleado u obrero del sector público",
@@ -199,20 +245,27 @@ data <- filter(data, rel_empleo %in% c("Empleado u obrero en empresa privada",
                                        "Servicio doméstico"))
 ```
 
-Quedan 5372 observaciones.
+```{r}
+n <- nrow(data)
+```
+
+Quedan `r n` observaciones.
+
 
 ### Ocupación
 
--   m03. ¿Cuál es su ocupación u oficio actual? Describa sus principales tareas y funciones en el puesto de trabajo actual
+La variable ELSOC:
 
-Esta variable se encuentra codificada de acuerdo con la CIUO88 para el año 2016, y CIUO08 para los años 2018 y 2021.
+-   `m03`. ¿Cuál es su ocupación u oficio actual? Describa sus principales tareas y funciones en el puesto de trabajo actual
 
--   ciuo88_m03: CIUO (1988) del entrevistado
--   ciuo08_m03: CIUO (2008) del entrevistado
+Se encuentra codificada de acuerdo con la CIUO88 para el año 2016, y CIUO08 para los años 2018 y 2021.
 
-Por lo tanto, se realiza una recodificación generando una nueva variable donde están todas las olas homolagadas a la CIUO08. Se presentan las frecuecnias y porcentajes con uno y dos dígitos.
+-   `ciuo88_m03`: CIUO (1988) del entrevistado
+-   `ciuo08_m03`: CIUO (2008) del entrevistado
 
-```{r}
+Por lo tanto, se realiza una recodificación creando una nueva variable donde están todas las olas homolagadas a la CIUO08, `isco08`. 
+
+```{r,echo=FALSE,message=FALSE}
 # Carga bbdd con comparacion 88 y 08
 isco08_88 <- read_excel(here::here("input/isco08-88.xls"))
 isco08_88 <- isco08_88 %>%
@@ -232,7 +285,27 @@ data$ciuo08_rec <- as.numeric(data$ciuo08_rec) # es solo la recodificación de l
 
 # Creación variable isco08 con ciuo08_m03 y ciuo08_rec (ex ciuo88_m03) 4 digitos
 data$isco08 <- ifelse(!is.na(data$ciuo08_rec),data$ciuo08_rec,data$ciuo08_m03) # es la unión en una variable de todo en 08
+```
 
+Sin embargo, esta variable también se presenta solamente en las olas 2016, 2018 y 2021. Por lo que, se duplicarán los datos de ocupación para los años siguientes, es decir, en 2017 se pondrán los valores de 2016, y así sucesivamente.
+
+```{r,echo=FALSE}
+# Crear una columna con la variable "isco08" adelantada una ola
+data <- data %>%
+  # arrange(idencuesta, ola) %>%  # Ordena por id y ola, por si acaso no está ordenado
+  group_by(idencuesta) %>%        # Agrupa por id para trabajar en cada individuo
+  mutate(isco08_lagged=lag(isco08,n=1)) %>%  # Desplaza "isco08" a la siguiente ola
+  ungroup()
+
+# Rellenar los valores NA en la variable original
+data <- data %>%
+  mutate(isco08=ifelse(!is.na(isco08),isco08,isco08_lagged)) %>%  # Si isco08 es NA, sustituir con el valor de la ola anterior 
+  select(-isco08_lagged)                 # Elimina la columna temporal
+```
+
+Se crean dos nuevas variables `isco08_1d` y `isco08_2d`, con 1 y 2 dígitos respectivamente. Se presentan las frecuencias y porcentajes con uno y dos dígitos.
+
+```{r,echo=FALSE}
 # CIUO - ISCO: creación de variables con 1 dígito
 data$isco08_1d <- as.character(data$isco08)
 data$isco08_1d <- substr(data$isco08_1d,1,1)
@@ -258,32 +331,34 @@ sjt.xtab(data$isco08_2d, data$ola,
          title = "Frecuencias y porcentajes de Ocupación con 2 dígitos, por ola")
 ```
 
-Recodificación con paquete `occupar`, ver el [enlace](https://github.com/DiogoFerrari/occupar).
 
-```{r}
-data$ciuo08_rec2 <- occupar::isco88to08(data$ciuo88_m03)
-data$isco08_2 <- ifelse(!is.na(data$ciuo08_rec2),data$ciuo08_rec2,data$ciuo08_m03)
+<!-- Recodificación con paquete `occupar`, ver el [enlace](https://github.com/DiogoFerrari/occupar). -->
 
-data$isco08_2d2 <- as.character(data$isco08_2)
-data$isco08_2d2 <- substr(data$isco08_2d2,1,2)
-data$isco08_2d2 <- as.numeric(data$isco08_2d2)
-
-sjt.xtab(data$isco08_2d2, data$ola,
-         show.col.prc = TRUE, 
-         var.labels = c("CIUO08","Ola"),
-         show.summary = FALSE,
-         title = "Frecuencias y porcentajes de Ocupación con 2 dígitos, por ola")
+```{r,echo=FALSE}
+# data$ciuo08_rec2 <- occupar::isco88to08(data$ciuo88_m03)
+# data$isco08_2 <- ifelse(!is.na(data$ciuo08_rec2),data$ciuo08_rec2,data$ciuo08_m03)
+# 
+# data$isco08_2d2 <- as.character(data$isco08_2)
+# data$isco08_2d2 <- substr(data$isco08_2d2,1,2)
+# data$isco08_2d2 <- as.numeric(data$isco08_2d2)
+# 
+# sjt.xtab(data$isco08_2d2, data$ola,
+#          show.col.prc = TRUE, 
+#          var.labels = c("CIUO08","Ola"),
+#          show.summary = FALSE,
+#          title = "Frecuencias y porcentajes de Ocupación con 2 dígitos, por ola")
 ```
+
 
 ### Nivel de cualificación
 
-Se crea una nueva variable con el Nivel de cualificación, de acuerdo con la variable CIUO08 de 2 dígitos *isco08_2d*, siguiendo el criterio:
+Se crea una nueva variable con el Nivel de cualificación, llamada `cualificacion`, de acuerdo con la variable CIUO08 de 2 dígitos `isco08_2d`, siguiendo el criterio:
 
-- Expertos (Experts): 11 a 34 con universitaria completa o más 
-- Calificados (Skilled): 11 a 34 con universitaria incompleta o menos, y 35,41,42,43,44,53, y 51,54,61,62,71,72,73,74,75,81 con media completa o más.
-- No calificados (Unskilled): 51,54,61,62,71,72,73,74,75,81 con media incompleta o menos, y 52,61,63,75,82,83,90+ 
+-   Expertos (Experts): 11 a 34 con universitaria completa o más
+-   Calificados (Skilled): 11 a 34 con universitaria incompleta o menos, y 35,41,42,43,44,53, y 51,54,61,62,71,72,73,74,75,81 con media completa o más.
+-   No calificados (Unskilled): 51,54,61,62,71,72,73,74,75,81 con media incompleta o menos, y 52,61,63,75,82,83,90+
 
-```{r}
+```{r,echo=FALSE}
 # Creación variable Nivel de cualificación
 data <- mutate(data,
                cualificacion = case_when(isco08_2d <= 34 & educ >= 9 ~ "Experts",
@@ -327,18 +402,21 @@ sjt.xtab(data$cualificacion, data$ola,
          title = "Frecuencias y porcentajes del Nivel de Cualificación, por ola")
 ```
 
+
 ### Rama de Actividad Económica
 
--   m04. ¿A qué rubro o giro de actividad se dedica principalmente la empresa, institución o negocio para la cual usted trabaja?
+La variable ELSOC:
 
-Esta variable se encuentra codificada de acuerdo con la CIIU3 para el año 2016, y CIIU4 para los años 2018 y 2021.
+-   `m04`. ¿A qué rubro o giro de actividad se dedica principalmente la empresa, institución o negocio para la cual usted trabaja?
 
--   ciiu3_m04: CIIU (III version) del entrevistado
--   ciiu4_m04: CIIU (IV version) del entrevistado
+Se encuentra codificada de acuerdo con la CIIU3 para el año 2016, y CIIU4 para los años 2018 y 2021.
 
-Por lo tanto, se realiza una recodificación generando una nueva variable donde están todas las olas homolagadas a la CIIU4.
+-   `ciiu3_m04`: CIIU (III version) del entrevistado
+-   `ciiu4_m04`: CIIU (IV version) del entrevistado
 
-```{r}
+Por lo tanto, se realiza una recodificación generando una nueva variable donde están todas las olas homolagadas a la CIIU4, `isic4`.
+
+```{r,echo=FALSE,message=FALSE}
 # Recodificar variable CIIU 3 para que queden de 4 dígitos
 data$ciiu3 <- sprintf("%04d",data$ciiu3_m04)
 
@@ -346,7 +424,7 @@ data$ciiu3 <- sprintf("%04d",data$ciiu3_m04)
 data$ciiu4 <- sprintf("%04d",data$ciiu4_m04)
 
 # Creación de variable CIIU 4 con CIIU 3
-## Carga bbdd con comparacion 88 y 08
+## Carga bbdd con comparacion 31 y 4
 isic4_isic31 <- read_csv(here::here("input/ISIC4_ISIC31.txt"))
 
 ## Recodificación CIIU 3 -> CIIU 4
@@ -354,8 +432,28 @@ indices <- match(data$ciiu3,isic4_isic31$ISIC31code)
 data$ciiu4_rec <- isic4_isic31$ISIC4code[indices]
 
 # Creación variable isic4 con ciiu4 y ciiu4_rec (ex ciiu3) 4 digitos
-data$isic4 <- ifelse(!is.na(data$ciiu4_rec),data$ciiu4_rec,data$ciiu4) # es la unión en una variable de todo en 08
+data$isic4 <- ifelse(!is.na(data$ciiu4_rec),data$ciiu4_rec,data$ciiu4) # es la unión en una variable de todo en ciiu4
+```
 
+Sin embargo, esta variable también se presenta solamente en las olas 2016, 2018 y 2021. Por lo que, se duplicarán los datos de ocupación para los años siguientes, es decir, en 2017 se pondrán los valores de 2016, y así sucesivamente.
+
+```{r,echo=FALSE}
+# Crear una columna con la variable "isic4" adelantada una ola
+data <- data %>%
+  # arrange(idencuesta, ola) %>%  # Ordena por id y ola, por si acaso no está ordenado
+  group_by(idencuesta) %>%        # Agrupa por id para trabajar en cada individuo
+  mutate(isic4_lagged=lag(isic4,n=1)) %>%  # Desplaza "isic4" a la siguiente ola
+  ungroup()
+
+# Rellenar los valores NA en la variable original
+data <- data %>%
+  mutate(isic4=ifelse(!is.na(isic4),isic4,isic4_lagged)) %>%  # Si isic4 es NA, sustituir con el valor de la ola anterior 
+  select(-isic4_lagged)                 # Elimina la columna temporal
+```
+
+Además se crea la variable `isic4_2d` con 2 dígitos, y la variable `rama` con la agrupación del CIIU4 de dos dígitos en ramas de la actividad económica. Se presentan las frecuencias y porcentajes de la Rama de Actividad Económica, por ola.
+
+```{r,echo=FALSE}
 # CIIU 4: creación de variable con 2 dígitos
 data$isic4_2d <- substr(data$isic4,1,2)
 data$isic4_2d <- as.numeric(data$isic4_2d)
@@ -392,7 +490,8 @@ sjt.xtab(data$rama, data$ola,
          title = "Frecuencias y porcentajes de la Rama de Actividad Económica, por ola")
 ```
 
-```{r}
+
+```{r,echo=FALSE}
 # clase <- data %>% 
 #   select(idencuesta,ola,class,class_2)
 # 
@@ -419,7 +518,7 @@ sjt.xtab(data$rama, data$ola,
 #   ggalluvial::geom_flow(alpha = .66)
 ```
 
-```{r}
+```{r,echo=FALSE}
 # ggplot(data = clase,
 #        aes(y = prop,
 #            x = ola,
@@ -438,16 +537,16 @@ sjt.xtab(data$rama, data$ola,
 #   theme(legend.position = "bottom")
 ```
 
-Rama 2: 
+Rama 2:
 
-- Se unen *B* y *C*
-- Se unen *D*, *E* y *F*
-- Se unen *G* y *I*
-- Se unen *J*, *K*, *L*, *M* y *N*
-- Se unen *P* y *Q*
-- Se unen *R*, *S* y *U*
+-   Se unen *B* y *C*
+-   Se unen *D*, *E* y *F*
+-   Se unen *G* y *I*
+-   Se unen *J*, *K*, *L*, *M* y *N*
+-   Se unen *P* y *Q*
+-   Se unen *R*, *S* y *U*
 
-```{r}
+```{r,echo=FALSE}
 # Creación de variable posición de clase
 data <- mutate(data,
                rama_2=case_when(rama == "A" ~ "A",
@@ -476,15 +575,14 @@ sjt.xtab(data$rama_2, data$ola,
          title = "Frecuencias y porcentajes de la Rama 2, por ola")
 ```
 
+### Supervisión
 
-### Supervisión 
+-   `m06`. En su trabajo, ¿a cuántas personas supervisa usted?
 
--   m06. En su trabajo, ¿a cuántas personas supervisa usted?
+Se recodifica en una nueva variable, `supervisa`, donde:
 
-Se recodifica en una nueva variable donde:
-
-- 1 = supervisa a una o más personas
-- 0 = no supervisa
+-   `supervisa==1`: Supervisa a una o más personas
+-   `supervisa==0`: No supervisa
 
 ```{r}
 # Crear variable supervisa==1, no supervisa==0
@@ -506,13 +604,13 @@ sjt.xtab(data$supervisa, data$ola,
 
 Se crea la variable posición de clase (class) con 7 categorías:
 
-1. Self-employed
-2. Expert managers: expertos que supervisan
-3. Experts: expertos que no supervisan
-4. Skilled supervisors: skilled que supervisan
-5. Skilled workers: skilled que no supervisan
-6. Unskilled supervisors: unskilled que supervisan
-7. Workers: skilled que no supervisan
+1.  Self-employed
+2.  Expert managers: expertos que supervisan
+3.  Experts: expertos que no supervisan
+4.  Skilled supervisors: skilled que supervisan
+5.  Skilled workers: skilled que no supervisan
+6.  Unskilled supervisors: unskilled que supervisan
+7.  Workers: skilled que no supervisan
 
 ```{r}
 # Creación de variable posición de clase
@@ -542,10 +640,10 @@ sjt.xtab(data$class, data$ola,
          title = "Frecuencias y porcentajes de la Posición de clase, por ola")
 ```
 
-Class 2: 
+Class 2:
 
-- Se unen *Skilled supervisors* y *Unskilled supervisors*
-- Se unen *Skilled workers* y *Workers*
+-   Se unen *Skilled supervisors* y *Unskilled supervisors*
+-   Se unen *Skilled workers* y *Workers*
 
 ```{r}
 # Creación de variable posición de clase
@@ -570,7 +668,6 @@ sjt.xtab(data$class_2, data$ola,
          show.summary = FALSE,
          title = "Frecuencias y porcentajes de la Posición de clase 2, por ola")
 ```
-
 
 ### Temporalidad del trabajo
 
@@ -606,8 +703,8 @@ sjt.xtab(data$temp_trabajo, data$ola,
 
 Se crea una nueva variable binaria llamada *open-ended* para identificar a aquellas personas que:
 
-- Trabajan de manera permanente
-- No trabajan de manera permanente
+-   Trabajan de manera permanente
+-   No trabajan de manera permanente
 
 ```{r}
 # Crear variable binaria: open-ended
@@ -621,7 +718,6 @@ sjt.xtab(data$open_ended,data$ola,
          show.summary=FALSE,
          title="Frecuencias y porcentajes de Trabajadores/as permanentes, por ola") 
 ```
-
 
 ### Tipo de Contrato
 
@@ -653,8 +749,8 @@ sjt.xtab(data$contrato, data$ola,
 
 Se crea una nueva variable binaria llamada *female* para identificar a aquellas personas que:
 
-- En la variable sexo se identifican como mujeres
-- En la variable sexo no se identifican como mujeres
+-   En la variable sexo se identifican como mujeres
+-   En la variable sexo no se identifican como mujeres
 
 ```{r}
 # Crear variable binaria: female
@@ -689,9 +785,29 @@ kable(tabla_freq_mov_laboral, caption = "Frecuencia de respuestas 'Movimiento so
 
 El porcentaje más bajo de respuestas positivas se dio el año 2018 con un 6.08% y el más alto el año 2021 con un 16.75%. En promedio corresponde al 10.87% de la muestra.
 
+### Dummy
+
+Se crea una nueva variable binaria llamada *valora-lab* para identificar a aquellas personas que:
+
+-   Valoran el "Movimiento social de apoyo a demandas laborales"
+-   No valoran el "Movimiento social de apoyo a demandas laborales"
+
+```{r}
+# Crear variable binaria: open-ended
+data <- mutate(data,
+               valora_lab=if_else(mov_valora==2,1,0))
+
+# Tabla de frecuencias y porcentajes
+sjt.xtab(data$valora_lab,data$ola,
+         show.col.prc=TRUE, 
+         var.labels=c("Valora-Lab","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de Trabajadores/as permanentes, por ola") 
+```
+
 Esta variable tiene una serie de ítems asociados al nivel de acuerdo con afirmaciones respecto al movimiento social que más se valora.
 
--   c21. Pensando en [movimiento social que más valora], ¿cuán de acuerdo o en desacuerdo está usted con las siguientes afirmaciones?
+-   c21. Pensando en \[movimiento social que más valora\], ¿cuán de acuerdo o en desacuerdo está usted con las siguientes afirmaciones?
 
 -   c21_01. Siento un compromiso con este movimiento
 
@@ -722,6 +838,30 @@ sjt.xtab(data_ml$compromiso_mov,data_ml$ola,
          var.labels = c("Compromiso con el movimiento DL","Ola"),
          show.summary = FALSE,
          title = "Frecuencias y porcentajes del Nivel de Compromiso con el Movimiento de Demandas Laborales, por ola")
+```
+
+### Intervalo: compromiso
+
+Se crea una nueva variable de intervalo llamada *compromiso-lab* para identificar a aquellas personas que:
+
+-   0 = No valoran el "Movimiento social de apoyo a demandas laborales"
+-   1 = Totalmente en desacuerdo con compromiso al "Movimiento social de apoyo a demandas laborales"
+-   2 = En desacuerdo con compromiso al "Movimiento social de apoyo a demandas laborales"
+-   3 = Ni en desacuerdo ni de acuerdo con compromiso al "Movimiento social de apoyo a demandas laborales"
+-   4 = De acuerdo con compromiso al "Movimiento social de apoyo a demandas laborales"
+-   5 = Totalmente de acuerdo con compromiso al "Movimiento social de apoyo a demandas laborales"
+
+```{r}
+# Crear variable binaria: open-ended
+data <- mutate(data,
+               valora_lab=if_else(mov_valora==2,1,0))
+
+# Tabla de frecuencias y porcentajes
+sjt.xtab(data$valora_lab,data$ola,
+         show.col.prc=TRUE, 
+         var.labels=c("Valora-Lab","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de Trabajadores/as permanentes, por ola") 
 ```
 
 -   c21_02. Me identifico con este movimiento
@@ -821,7 +961,7 @@ tabla_freq_opuesta_ml <- tabla_freq_opuesta_ml %>%
 kable(tabla_freq_opuesta_ml,caption="Frecuencias de 'Grado de acuerdo: Posición opuesta entre el movimiento y las autoridades' por ola")
 ```
 
--   c22. Ahora, pensando en los últimos 12 meses, cuán frecuntemente ha participado usted en [movimiento social que más valora]
+-   c22. Ahora, pensando en los últimos 12 meses, cuán frecuntemente ha participado usted en \[movimiento social que más valora\]
 
 ```{r}
 # Recodificar
@@ -1040,5 +1180,193 @@ kable(tabla_freq_int_politica_ps,caption="Frecuencias de Interés en la polític
 
 ```{r}
 save(data,file=(here::here("output/elsoc-huelgas.Rdata")))
+saveRDS(data,file=(here::here("output/elsoc-huelgas.rds")))
 ```
 
+
+# SIN ATRICIÓN Exploración y preparación de datos 
+
+También, crearemos una base de datos que contenga solamente a aquellos/as encuestados/as que hayan participado en todas las olas, esto quiere decir, sin atrición. La llamaremos data_sa.
+
+```{r,echo=FALSE}
+data_sa <- data %>%
+  filter(tipo_atricion==1)
+```
+
+```{r,echo=FALSE}
+n_sa <- nrow(data_sa)
+```
+
+La base de datos sin atrición comienza con `r n_sa` observaciones.
+
+
+### Actividad principal S/A
+
+-   `m02`. ¿Cuál de estas situaciones describe mejor su actividad principal durante el último mes?
+
+```{r,echo=FALSE}
+# Recodficar
+data_sa$actividad <- car::recode(data_sa$m02,
+                                 recodes=c("1='Trabaja de manera remunerada con jornada completa';
+                                            2='Trabaja de manera remunerada a tiempo parcial';
+                                            3='Estudia y trabaja';
+                                            4='Solo estudia';
+                                            5='Jubilado o pensionado';
+                                            6='Desempleado, buscando trabajo';
+                                            7='Realiza tareas no remuneradas';
+                                            8='Esta enfermo o tiene una discapacidad';
+                                            9='No estudia, no trabaja y no busca trabajo';
+                                            -888=NA; 
+                                            -999=NA"),
+                                 as.factor=TRUE, 
+                                 levels=c("Trabaja de manera remunerada con jornada completa",
+                                          "Trabaja de manera remunerada a tiempo parcial",
+                                          "Estudia y trabaja",
+                                          "Solo estudia",
+                                          "Jubilado o pensionado",
+                                          "Desempleado, buscando trabajo",
+                                          "Realiza tareas no remuneradas",
+                                          "Esta enfermo o tiene una discapacidad",
+                                          "No estudia, no trabaja y no busca trabajo"))
+
+# Tabla de frecuencias y porcentajes
+sjt.xtab(data_sa$actividad,data_sa$ola,
+         show.col.prc=TRUE, 
+         var.labels=c("Actividad","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de Actividad principal, por ola, S/A") 
+```
+
+Se continua con una base de datos filtrada dejando solo a las personas ocupadas de acuerdo con las siguientes categorías de actividad principal:
+
+-   `m02==1`: Trabaja de manera remunerada con jornada completa
+-   `m02==2`: Trabaja de manera remunerada a tiempo parcial
+-   `m03==3`: Estudia y trabaja
+
+```{r,echo=FALSE}
+# Filtrar para ocupados
+data_sa <- filter(data_sa,actividad %in% c("Trabaja de manera remunerada con jornada completa",
+                                           "Trabaja de manera remunerada a tiempo parcial",
+                                           "Estudia y trabaja"))
+```
+
+```{r,echo=FALSE}
+n_sa <- nrow(data_sa)
+```
+
+Quedan `r n_sa` observaciones.
+
+### Full-time S/A
+
+Se crea una nueva variable binaria llamada *full-time* para identificar a aquellas personas que:
+
+-   Trabajan de manera remunerada con jornada completa
+-   Trabajan de manera remunerada a tiempo parcial, o trabajan y estudian
+
+```{r,echo=FALSE}
+# Crear variable binaria: full-time
+data_sa <- mutate(data_sa,
+                  full_time=if_else(actividad=="Trabaja de manera remunerada con jornada completa",1,0))
+
+# Tabla de frecuencias y porcentajes
+sjt.xtab(data_sa$full_time,data_sa$ola,
+         show.col.prc=TRUE, 
+         var.labels=c("Full-time","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de Trabajadores/as con jornada completa, por ola, S/A") 
+```
+
+### Relación de empleo S/A
+
+-   `m07`. En su actual ocupación usted trabaja como:
+
+```{r}
+# Recodficar
+data_sa <- data_sa %>%
+  mutate(rel_empleo=car::recode(m07,
+                                recodes=c("1='Empleado u obrero en empresa privada';
+                                           2='Empleado u obrero del sector público';
+                                           3='Miembro de las Fuerzas Armadas y de Orden';
+                                           4='Patrón/a o empleador/a';
+                                           5='Trabaja solo, no tiene empleados';
+                                           6='Familiar no remunerado';
+                                           7='Servicio doméstico';
+                                           -888=NA; 
+                                           -999=NA"),
+                                as.factor=TRUE, # convertir a factor
+                                levels=c("Empleado u obrero en empresa privada",
+                                         "Empleado u obrero del sector público",
+                                         "Miembro de las Fuerzas Armadas y de Orden",
+                                         "Patrón/a o empleador/a",
+                                         "Trabaja solo, no tiene empleados",
+                                         "Familiar no remunerado",
+                                         "Servicio doméstico"))) # ordenar niveles
+
+# Tabla de frecuencias y porcentajes 2 dígitos
+sjt.xtab(data_sa$rel_empleo,data_sa$ola,
+         show.col.prc=TRUE,
+         var.labels=c("Relación de empleo","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de la Relación de empleo, por ola")
+```
+
+La variable de relación de empleo (`rel_empleo` ex `m07`), solamente está presente en las olas 2016, 2018 y 2021. Por lo tanto, se duplicarán los datos de relación de empleo para los años siguientes, es decir, en 2017 se pondrán los valores de 2016, y así sucesivamente.
+
+```{r}
+# Crear una columna con la variable "actividad" adelantada una ola
+data_sa <- data_sa %>%
+  # arrange(idencuesta, ola) %>%  # Ordena por id y ola, por si acaso no está ordenado
+  group_by(idencuesta) %>%        # Agrupa por id para trabajar en cada individuo
+  mutate(rel_empleo_lagged=lag(as.character(rel_empleo),n=1)) %>%  # Desplaza "rel_empleo" a la siguiente ola, 
+                                                                   # conviertiendo el factor en character temporalmente
+  ungroup()
+
+# Rellenar los valores NA en la variable original
+data_sa <- data_sa %>%
+  mutate(rel_empleo=ifelse(is.na(rel_empleo),rel_empleo_lagged,as.character(rel_empleo))) %>%  # Si rel empleo es NA, sustituir con el valor de la ola anterior y asegurarse que actividad esté en formato carácter
+  mutate(rel_empleo=factor(rel_empleo)) %>%  # Convertir de nuevo a factor
+  select(-rel_empleo_lagged)                 # Elimina la columna temporal
+
+# Tabla de frecuencias y porcentajes 
+sjt.xtab(data_sa$rel_empleo,data_sa$ola,
+         show.col.prc=TRUE,
+         var.labels=c("Relación de empleo","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de la Relación de empleo, por ola, S/A")
+```
+
+Se continua con una base de datos filtrada dejando solo a las personas ocupadas empleadas o auto empleadasde acuerdo con las siguientes categorías de la relación de empleo:
+
+-   m07==1: Empleado u obrero en empresa privada
+-   m07==2: Empleado u obrero del sector público
+-   m07==5: Trabaja solo, no tiene empleados
+-   m07==6: Familiar no remunerado
+-   m07==7: Servicio doméstico
+
+Dejando afuera:
+
+-   m07==3: Miembro de las Fuerzas Armadas y de Orden
+-   m07==4: Patrón/a o empleador/a
+
+```{r}
+# Filtrar para trabajadores y self-employed
+data_sa <- filter(data_sa,rel_empleo %in% c("Empleado u obrero en empresa privada",
+                                            "Empleado u obrero del sector público",
+                                            "Trabaja solo, no tiene empleados",
+                                            "Familiar no remunerado",
+                                            "Servicio doméstico"))
+```
+
+Quedan 5.735 observaciones.
+
+```{r}
+dim(data_sa)
+```
+
+
+## Guardar base
+
+```{r}
+save(data_sa,file=(here::here("output/elsoc-huelgas-sa.Rdata")))
+saveRDS(data_sa,file=(here::here("output/elsoc-huelgas-sa.rds")))
+```
