@@ -1,0 +1,2 @@
+"0","data_sa <- data %>%"
+"0","  filter(tipo_atricion==1)"

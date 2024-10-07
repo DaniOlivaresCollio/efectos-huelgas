@@ -6,7 +6,6 @@
 "0","# Exploración"
 "0","valores_repetidos <- table(isco08_88$isco88) # Contar los valores repetidos en la variable"
 "0","valores_repetidos <- valores_repetidos[valores_repetidos > 1]"
-"0",""
 "0","valores_repetidos <- table(isco08_88$isco08) # Contar los valores repetidos en la variable"
 "0","valores_repetidos <- valores_repetidos[valores_repetidos > 1]"
 "0",""

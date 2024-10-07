@@ -1,6 +1,6 @@
 "0","# Crear variable binaria: full-time"
 "0","data <- mutate(data,"
-"0","               full_time=if_else(actividad == ""Trabaja de manera remunerada con jornada completa"",1,0))"
+"0","               full_time=if_else(actividad==""Trabaja de manera remunerada con jornada completa"",1,0))"
 "0",""
 "0","# Tabla de frecuencias y porcentajes"
 "0","sjt.xtab(data$full_time,data$ola,"
