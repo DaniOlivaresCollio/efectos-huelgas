@@ -55,7 +55,8 @@ data <- elsoc_long_2016_2022 %>%
          m03,ciuo88_m03,ciuo08_m03,                      # caract ocupacional
          m04,ciiu3_m04,ciiu4_m04,                        # caract ocupacional
          c12_04,                                         # membresia sindicato
-         c08_03,                                         # freq participa hlgs
+         c08_02,                                         # freq participa marcha
+         marcha=c08_03,                                  # freq participa hlgs
          c20,c20_otro,                                   # mov que mas valora
          c21_01,c21_02,c21_03,c21_04,c21_05,c21_06,      # caract mov valora
          c21_07,c21_08,c21_09,c21_10,c21_11,c22,c23,c24, # caract mov valora
