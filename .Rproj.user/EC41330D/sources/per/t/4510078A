@@ -3,7 +3,7 @@
     "path": "C:/Users/danie/Documents/fondecyt/efectos-huelgas/mybook/01-exploracion.qmd",
     "project_path": "mybook/01-exploracion.qmd",
     "type": "quarto_markdown",
-    "hash": "856805964",
+    "hash": "207065588",
     "contents": "",
     "dirty": false,
     "created": 1726602880383.0,
@@ -12,8 +12,8 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "953,16",
-        "scrollLine": "936",
+        "cursorPosition": "764,0",
+        "scrollLine": "757",
         "docOutlineVisible": "1",
         "rmdVisualMode": "false",
         "rmdVisualWrapConfigured": "true",
@@ -22,11 +22,11 @@
         "docOutlineSize": "146"
     },
     "folds": "",
-    "lastKnownWriteTime": 1728295343,
+    "lastKnownWriteTime": 1729626084,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1728295343558,
+    "last_content_update": 1729626621923,
     "read_only": false,
     "read_only_alternatives": []
 }

@@ -5,7 +5,7 @@ project:
 book:
   title: "Efectos políticos de las huelgas con ELSOC"
   author: "Pablo Pérez, Daniela Olivares"
-  date: "10-07-2024"
+  date: "10-22-2024"
   chapters:
     - index.qmd
     - 01-exploracion.qmd

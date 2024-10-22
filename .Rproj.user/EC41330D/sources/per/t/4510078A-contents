@@ -55,6 +55,7 @@ data <- elsoc_long_2016_2022 %>%
          m03,ciuo88_m03,ciuo08_m03,                      # caract ocupacional
          m04,ciiu3_m04,ciiu4_m04,                        # caract ocupacional
          c12_04,                                         # membresia sindicato
+         c08_02,                                         # freq participa marcha
          c08_03,                                         # freq participa hlgs
          c20,c20_otro,                                   # mov que mas valora
          c21_01,c21_02,c21_03,c21_04,c21_05,c21_06,      # caract mov valora
@@ -86,7 +87,7 @@ Con la variable ELSOC:
 
 -   `m02`. ¿Cuál de estas situaciones describe mejor su actividad principal durante el último mes?
 
-Creamos la variable `actividad`. Se presentan las frecuencias y porcentajes de la Actividad Principal, por ola.
+Creamos la variable de factor `actividad`. 
 
 ```{r,echo=FALSE}
 # Recodficar
@@ -152,7 +153,7 @@ Quedan `r n` observaciones.
 
 ### Full time
 
-Se crea una nueva variable binaria, llamada `full_time`, para identificar a aquellas personas que:
+Se crea una nueva variable dicotómica, llamada `full_time`, para identificar a aquellas personas que:
 
 - `full_time==1`: Trabajan de manera remunerada con jornada completa (`m02==1`)
 - `full_time==0`: Trabajan de manera remunerada a tiempo parcial (`m02==2`), o trabajan y estudian (`m02==3`)
@@ -177,7 +178,7 @@ Con la variable ELSOC:
 
 -   `m07`. En su actual ocupación usted trabaja como:
 
-Creamos la variable `rel_empleo`.
+Creamos la variable de factor `rel_empleo`.
 
 ```{r,echo=FALSE}
 # Recodficar
@@ -225,8 +226,6 @@ data <- data %>%
   mutate(rel_empleo=factor(rel_empleo)) %>%  # Convertir de nuevo a factor
   select(-rel_empleo_lagged)                 # Elimina la columna temporal
 ```
-
-Se presentan las frecuencias y porcentajes de la Relación de Empleo, por ola.
 
 ```{r,echo=FALSE}
 # Volver a establecer niveles
@@ -284,8 +283,8 @@ La variable ELSOC:
 
 Se encuentra codificada de acuerdo con la CIUO88 para el año 2016, y CIUO08 para los años 2018 y 2021.
 
--   `ciuo88_m03`: CIUO (1988) del entrevistado
--   `ciuo08_m03`: CIUO (2008) del entrevistado
+-   `ciuo88_m03`: CIUO (1988) del entrevistado, para año 2016
+-   `ciuo08_m03`: CIUO (2008) del entrevistado, para año 2018 y 2021
 
 Por lo tanto, se realiza una recodificación creando una nueva variable donde están todas las olas homolagadas a la CIUO08, llamada `isco08`. 
 
@@ -326,7 +325,7 @@ data <- data %>%
   select(-isco08_lagged)                 # Elimina la columna temporal
 ```
 
-Se crean dos nuevas variables `isco08_1d` y `isco08_2d`, de la ISCO08 con 1 y 2 dígitos respectivamente. Se presentan las frecuencias y porcentajes con uno y dos dígitos.
+Se crean dos nuevas variables `isco08_1d` y `isco08_2d`, de la ISCO08 con 1 y 2 dígitos respectivamente. 
 
 ```{r,echo=FALSE}
 # CIUO - ISCO: creación de variables con 1 dígito
@@ -434,8 +433,8 @@ La variable ELSOC:
 
 Se encuentra codificada de acuerdo con la CIIU3 para el año 2016, y CIIU4 para los años 2018 y 2021.
 
--   `ciiu3_m04`: CIIU (III version) del entrevistado
--   `ciiu4_m04`: CIIU (IV version) del entrevistado
+-   `ciiu3_m04`: CIIU (III version) del entrevistado, para el año 2016
+-   `ciiu4_m04`: CIIU (IV version) del entrevistado, para el año 2018 y 2021
 
 Por lo tanto, se realiza una recodificación generando una nueva variable donde están todas las olas homolagadas a la CIIU4, llamada `isic4`.
 
@@ -476,7 +475,7 @@ data <- data %>%
   select(-isic4_lagged)                 # Elimina la columna temporal
 ```
 
-Además, se crea la variable `isic4_2d` con 2 dígitos, y la variable `rama` con la agrupación del CIIU4 de dos dígitos en ramas de la actividad económica. Se presentan las frecuencias y porcentajes de la Rama de Actividad Económica, por ola.
+Además, se crea la variable `isic4_2d` con 2 dígitos, y la variable `rama` con la agrupación del CIIU4 de dos dígitos en ramas de la actividad económica. 
 
 ```{r,echo=FALSE}
 # CIIU 4: creación de variable con 2 dígitos
@@ -518,51 +517,7 @@ sjt.xtab(data$rama,data$ola,
 ```
 
 
-```{r,echo=FALSE}
-# clase <- data %>% 
-#   select(idencuesta,ola,class,class_2)
-# 
-# clase <- clase %>%
-#   drop_na(ola,class,class_2,idencuesta)
-# 
-# clase <- clase %>% 
-#   group_by(ola) %>% 
-#   mutate(prop = n()/4537) %>% 
-#   ungroup()
-# 
-# ggplot(data = clase,
-#        aes(y = prop,
-#            x = ola,
-#            fill = class_2, stratum=class_2, alluvium=idencuesta)) +
-#   # geom_alluvium(aes(fill = rama), width = 0.2) +
-#   ggalluvial::geom_stratum(linetype = 0) +
-#   geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
-#   scale_x_discrete(limits = c("2016","2017", "2018","2019","2021"), expand = c(.1, .1)) +
-#   labs(title = "Gráfico Aluvial de la Variable 'Rama' a lo Largo de las Olas",
-#        x = "Ola",
-#        y = "Número de Encuestados") +
-#   theme_bw() +
-#   ggalluvial::geom_flow(alpha = .66)
-```
-
-```{r,echo=FALSE}
-# ggplot(data = clase,
-#        aes(y = prop,
-#            x = ola,
-#            axis2 = class_2,
-#            alluvium = idencuesta,
-#            stratum = class_2,
-#            fill = class_2)) +
-#   theme_bw() +
-#   ggalluvial::geom_flow(alpha = 0.66) +
-#   ggalluvial::geom_stratum(width = 0.55, linetype=0) +
-#   geom_text(stat = "stratum", aes(label = after_stat(stratum)), color = "black", size = 3) +
-#   scale_x_discrete(limits = c("2016", "2017", "2018", "2019", "2021"), expand = c(.1, .1)) +
-#   labs(title = "Gráfico Aluvial de la Variable 'Rama' a lo Largo de las Olas",
-#        x = "Ola",
-#        y = "Proporción") +
-#   theme(legend.position = "bottom")
-```
+### Rama 2
 
 Se crea una segunda variable de Rama de la Actividad Económica, llamada `rama_2`, donde:
 
@@ -587,13 +542,6 @@ data <- mutate(data,
                                 rama=="R"|rama=="S"|rama=="U"~"RSU",
                                 rama=="T"~"T"))
 
-# data$rama_2 <- factor(data$rama_2,
-#                       levels = c("Self-employed",
-#                                  "Expert managers",
-#                                  "Experts",
-#                                  "Supervisors",
-#                                  "Workers"))
-
 # Tabla de frecuencias y porcentajes
 sjt.xtab(data$rama_2,data$ola,
          show.col.prc=TRUE, 
@@ -609,7 +557,7 @@ La variable ELSOC:
 
 -   `m06`. En su trabajo, ¿a cuántas personas supervisa usted?
 
-Se recodifica en una nueva variable, `supervisa`, donde:
+Se recodifica en una nueva variable dicotómica, `supervisa`, donde:
 
 -   `supervisa==1`: Supervisa a una o más personas (`m06>=1`)
 -   `supervisa==0`: No supervisa (`m06==0`)
@@ -665,7 +613,7 @@ sjt.xtab(data$supervisa,data$ola,
 
 ### Class
 
-Se crea la variable posición de clase, llamada `class`, con 7 categorías:
+Se crea la variable posición de clase tipo factor, llamada `class`, con 7 categorías:
 
 1.  Self-employed
 2.  Expert managers: expertos que supervisan
@@ -703,6 +651,9 @@ sjt.xtab(data$class,data$ola,
          title="Frecuencias y porcentajes de la Posición de Clase, por ola")
 ```
 
+
+### Class 2
+
 Se crea una segunda variable de clase, llamada `clase_2`, donde:
 
 -   Se unen *Skilled supervisors* y *Unskilled supervisors*
@@ -739,7 +690,7 @@ Con la variable ELSOC:
 
 -   `m08`. Su trabajo o negocio principal es de tipo:
 
-Se crea la variable `temp_trabajo`.
+Se crea la variable tipo factor `temp_trabajo`.
 
 ```{r,echo=FALSE}
 # Recodficar
@@ -1297,6 +1248,12 @@ sjt.xtab(data$identifico_mlab,data$ola,
 
 
 ## Guardar base
+
+```{r}
+colSums(is.na(data))
+```
+
+
 
 Se guarda la base de datos en formato `.Rdata` y `.rds`.
 
