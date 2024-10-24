@@ -734,7 +734,6 @@ data <- data %>%
   select(-m08_lagged) 
 ```
 
-
 ```{r,echo=FALSE}
 # Recodficar
 data <- data %>%
@@ -1027,7 +1026,7 @@ Con la variable ELSOC:
 
 -   `c08_03`. Durante los últimos 12 meses, con cuánta frecuencia usted ha participado en una huelga
 
-Se crea la variable `part_huelga`.
+Se crea la variable tipo factor `part_huelga`.
 
 ```{r,echo=FALSE}
 # Recodficar
@@ -1053,6 +1052,46 @@ sjt.xtab(data$part_huelga,data$ola,
          var.labels=c("Participa en huelgas","Ola"),
          show.summary=FALSE,
          title="Frecuencias y porcentajes de Trabajadores/as que han participado en huelgas, por ola") 
+```
+
+Se puede seguir usando la variable numérica `c08_03` para conseguir la misma tabla.
+
+```{r}
+# Quitar los NA de c08_03
+data <- data %>%
+  mutate(c08_03=car::recode(c08_03,recodes=c("-888=NA; 
+                                            -999=NA"))) %>%
+  filter(!is.na(c08_03))
+
+# Tabla de frecuencias y porcentajes
+sjt.xtab(data$c08_03,data$ola,
+         show.col.prc=TRUE, 
+         var.labels=c("Participa en huelgas","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de Trabajadores/as que han participado en huelgas, por ola") 
+```
+
+
+### Dummy participación en huelgas
+
+Se crea una nueva variable dicotómica, llamada `participa_h`, para identificar a aquellas personas que:
+
+-   `participa_h==1`: Participan en huelgas (`c08_03==2`, `c08_03==3`, `c08_03==4`, `c08_03==5`)
+-   `participa_h==0`: No participan en huelgas (`c08_03==1`)
+
+```{r}
+data <- data %>%
+  mutate(participa_h=case_when(c08_03==1~0,
+                               c08_03>=2~1,
+                               c08_03==-888~NA,
+                               c08_03==-999~NA))
+
+# Tabla de frecuencias y porcentajes 
+sjt.xtab(data$participa_h,data$ola,
+         show.col.prc=TRUE, 
+         var.labels=c("Participa en Huelgas","Ola"),
+         show.summary=FALSE,
+         title="Frecuencias y porcentajes de Trabajadores/as que Participan en Huelgas o no, por ola")
 ```
 
 
