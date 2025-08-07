@@ -2,3 +2,4 @@
 "0","data <- filter(data,actividad %in% c(""Trabaja de manera remunerada con jornada completa"","
 "0","                                     ""Trabaja de manera remunerada a tiempo parcial"","
 "0","                                     ""Estudia y trabaja""))"
+"0","# Al hacer esto tbn se quitan los NA (ex -999,-888) 24 y 20 respectivamente."

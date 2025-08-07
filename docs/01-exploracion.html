@@ -176,7 +176,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#participación-en-sindicatos" id="toc-participación-en-sindicatos" class="nav-link" data-scroll-target="#participación-en-sindicatos"><span class="header-section-number">1.1.18</span> Participación en sindicatos</a></li>
   <li><a href="#unionized" id="toc-unionized" class="nav-link" data-scroll-target="#unionized"><span class="header-section-number">1.1.19</span> Unionized</a></li>
   <li><a href="#participación-en-huelgas" id="toc-participación-en-huelgas" class="nav-link" data-scroll-target="#participación-en-huelgas"><span class="header-section-number">1.1.20</span> Participación en huelgas</a></li>
-  <li><a href="#interés-en-política" id="toc-interés-en-política" class="nav-link" data-scroll-target="#interés-en-política"><span class="header-section-number">1.1.21</span> Interés en política</a></li>
+  <li><a href="#dummy-participación-en-huelgas" id="toc-dummy-participación-en-huelgas" class="nav-link" data-scroll-target="#dummy-participación-en-huelgas"><span class="header-section-number">1.1.21</span> Dummy participación en huelgas</a></li>
+  <li><a href="#interés-en-política" id="toc-interés-en-política" class="nav-link" data-scroll-target="#interés-en-política"><span class="header-section-number">1.1.22</span> Interés en política</a></li>
   </ul></li>
   <li><a href="#variables-dependientes" id="toc-variables-dependientes" class="nav-link" data-scroll-target="#variables-dependientes"><span class="header-section-number">1.2</span> Variables dependientes</a>
   <ul class="collapse">
@@ -4448,7 +4449,7 @@ firmado</td>
 <ul>
 <li><code>c08_03</code>. Durante los últimos 12 meses, con cuánta frecuencia usted ha participado en una huelga</li>
 </ul>
-<p>Se crea la variable <code>part_huelga</code>.</p>
+<p>Se crea la variable tipo factor <code>part_huelga</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
@@ -4583,9 +4584,237 @@ firmado</td>
 </table>
 </div>
 </div>
+<p>Se puede seguir usando la variable numérica <code>c08_03</code> para conseguir la misma tabla.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quitar los NA de c08_03</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">c08_03=</span>car<span class="sc">::</span><span class="fu">recode</span>(c08_03,<span class="at">recodes=</span><span class="fu">c</span>(<span class="st">"-888=NA; </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">                                            -999=NA"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(c08_03))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla de frecuencias y porcentajes</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sjt.xtab</span>(data<span class="sc">$</span>c08_03,data<span class="sc">$</span>ola,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">show.col.prc=</span><span class="cn">TRUE</span>, </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">var.labels=</span><span class="fu">c</span>(<span class="st">"Participa en huelgas"</span>,<span class="st">"Ola"</span>),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">show.summary=</span><span class="cn">FALSE</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">title=</span><span class="st">"Frecuencias y porcentajes de Trabajadores/as que han participado en huelgas, por ola"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>Frecuencias y porcentajes de Trabajadores/as que han participado en huelgas, por ola</caption>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Participa en huelgas</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2016</td>
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Nunca</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1421</span><br>
+<span style="color:#339933;">84.8&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1095</span><br>
+<span style="color:#339933;">89.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1917</span><br>
+<span style="color:#339933;">88.6&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1422</span><br>
+<span style="color:#339933;">86.2&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1090</span><br>
+<span style="color:#339933;">93.5&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">6945</span><br>
+<span style="color:#339933;">88.1&nbsp;%</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Casi nunca</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">81</span><br>
+<span style="color:#339933;">4.8&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">46</span><br>
+<span style="color:#339933;">3.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">105</span><br>
+<span style="color:#339933;">4.9&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">83</span><br>
+<span style="color:#339933;">5&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">42</span><br>
+<span style="color:#339933;">3.6&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">357</span><br>
+<span style="color:#339933;">4.5&nbsp;%</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">A veces</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">134</span><br>
+<span style="color:#339933;">8&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">63</span><br>
+<span style="color:#339933;">5.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">112</span><br>
+<span style="color:#339933;">5.2&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">96</span><br>
+<span style="color:#339933;">5.8&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">26</span><br>
+<span style="color:#339933;">2.2&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">431</span><br>
+<span style="color:#339933;">5.5&nbsp;%</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Frecuentemente</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">30</span><br>
+<span style="color:#339933;">1.8&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">21</span><br>
+<span style="color:#339933;">1.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">23</span><br>
+<span style="color:#339933;">1.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">37</span><br>
+<span style="color:#339933;">2.2&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">7</span><br>
+<span style="color:#339933;">0.6&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">118</span><br>
+<span style="color:#339933;">1.5&nbsp;%</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Muy frecuentemente</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">9</span><br>
+<span style="color:#339933;">0.5&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">4</span><br>
+<span style="color:#339933;">0.3&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">6</span><br>
+<span style="color:#339933;">0.3&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">12</span><br>
+<span style="color:#339933;">0.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1</span><br>
+<span style="color:#339933;">0.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">32</span><br>
+<span style="color:#339933;">0.4&nbsp;%</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; border-bottom: double; font-weight: bolder; font-style: italic; vertical-align: middle;">Total</td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1675</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1229</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">2163</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1650</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1166</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">7883</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
-<section id="interés-en-política" class="level3" data-number="1.1.21">
-<h3 data-number="1.1.21" class="anchored" data-anchor-id="interés-en-política"><span class="header-section-number">1.1.21</span> Interés en política</h3>
+<section id="dummy-participación-en-huelgas" class="level3" data-number="1.1.21">
+<h3 data-number="1.1.21" class="anchored" data-anchor-id="dummy-participación-en-huelgas"><span class="header-section-number">1.1.21</span> Dummy participación en huelgas</h3>
+<p>Se crea una nueva variable dicotómica, llamada <code>participa_h</code>, para identificar a aquellas personas que:</p>
+<ul>
+<li><code>participa_h==1</code>: Participan en huelgas (<code>c08_03==2</code>, <code>c08_03==3</code>, <code>c08_03==4</code>, <code>c08_03==5</code>)</li>
+<li><code>participa_h==0</code>: No participan en huelgas (<code>c08_03==1</code>)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">participa_h=</span><span class="fu">case_when</span>(c08_03<span class="sc">==</span><span class="dv">1</span><span class="sc">~</span><span class="dv">0</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                               c08_03<span class="sc">&gt;=</span><span class="dv">2</span><span class="sc">~</span><span class="dv">1</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                               c08_03<span class="sc">==-</span><span class="dv">888</span><span class="sc">~</span><span class="cn">NA</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                               c08_03<span class="sc">==-</span><span class="dv">999</span><span class="sc">~</span><span class="cn">NA</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla de frecuencias y porcentajes </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sjt.xtab</span>(data<span class="sc">$</span>participa_h,data<span class="sc">$</span>ola,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">show.col.prc=</span><span class="cn">TRUE</span>, </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">var.labels=</span><span class="fu">c</span>(<span class="st">"Participa en Huelgas"</span>,<span class="st">"Ola"</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">show.summary=</span><span class="cn">FALSE</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">title=</span><span class="st">"Frecuencias y porcentajes de Trabajadores/as que Participan en Huelgas o no, por ola"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>Frecuencias y porcentajes de Trabajadores/as que Participan en Huelgas o no, por ola</caption>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Participa en Huelgas</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2016</td>
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
+<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">0</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1421</span><br>
+<span style="color:#339933;">84.8&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1095</span><br>
+<span style="color:#339933;">89.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1917</span><br>
+<span style="color:#339933;">88.6&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1422</span><br>
+<span style="color:#339933;">86.2&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1090</span><br>
+<span style="color:#339933;">93.5&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">6945</span><br>
+<span style="color:#339933;">88.1&nbsp;%</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: middle;">1</td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">254</span><br>
+<span style="color:#339933;">15.2&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">134</span><br>
+<span style="color:#339933;">10.9&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">246</span><br>
+<span style="color:#339933;">11.4&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">228</span><br>
+<span style="color:#339933;">13.8&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">76</span><br>
+<span style="color:#339933;">6.5&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">938</span><br>
+<span style="color:#339933;">11.9&nbsp;%</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; border-bottom: double; font-weight: bolder; font-style: italic; vertical-align: middle;">Total</td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1675</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1229</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">2163</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1650</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1166</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">7883</span><br>
+<span style="color:#339933;">100&nbsp;%</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="interés-en-política" class="level3" data-number="1.1.22">
+<h3 data-number="1.1.22" class="anchored" data-anchor-id="interés-en-política"><span class="header-section-number">1.1.22</span> Interés en política</h3>
 <p>Con la variable ELSOC:</p>
 <ul>
 <li><code>c13</code>. ¿Qué tan interesado está usted en la política?</li>
@@ -4596,20 +4825,19 @@ firmado</td>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <caption>Frecuencias y porcentajes de Trabajadores/as interesados en la política, por ola</caption>
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <tbody>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Interés en la<br>
 política</td>
-<td colspan="6" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
 </tr>
 <tr class="even">
@@ -4617,12 +4845,11 @@ política</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
-<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2021</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Nada interesado</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">996</span><br>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">995</span><br>
 <span style="color:#339933;">59.6&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">597</span><br>
 <span style="color:#339933;">48.7&nbsp;%</span></td>
@@ -4630,29 +4857,25 @@ política</td>
 <span style="color:#339933;">52.2&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">710</span><br>
 <span style="color:#339933;">43.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">564</span><br>
-<span style="color:#339933;">36.8&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">512</span><br>
 <span style="color:#339933;">43.9&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">4505</span><br>
-<span style="color:#339933;">47.9&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">3940</span><br>
+<span style="color:#339933;">50.1&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Poco interesado</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">302</span><br>
-<span style="color:#339933;">18.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">301</span><br>
+<span style="color:#339933;">18&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">262</span><br>
 <span style="color:#339933;">21.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">464</span><br>
 <span style="color:#339933;">21.5&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">332</span><br>
 <span style="color:#339933;">20.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">407</span><br>
-<span style="color:#339933;">26.6&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">234</span><br>
 <span style="color:#339933;">20.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">2001</span><br>
-<span style="color:#339933;">21.3&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1593</span><br>
+<span style="color:#339933;">20.2&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Algo interesado</td>
@@ -4664,12 +4887,10 @@ política</td>
 <span style="color:#339933;">15.1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">318</span><br>
 <span style="color:#339933;">19.3&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">323</span><br>
-<span style="color:#339933;">21.1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">230</span><br>
 <span style="color:#339933;">19.7&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1606</span><br>
-<span style="color:#339933;">17.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1283</span><br>
+<span style="color:#339933;">16.3&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Bastante interesado</td>
@@ -4681,12 +4902,10 @@ política</td>
 <span style="color:#339933;">7.8&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">192</span><br>
 <span style="color:#339933;">11.6&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">169</span><br>
-<span style="color:#339933;">11&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">132</span><br>
 <span style="color:#339933;">11.3&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">888</span><br>
-<span style="color:#339933;">9.4&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">719</span><br>
+<span style="color:#339933;">9.1&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Muy interesado</td>
@@ -4698,16 +4917,14 @@ política</td>
 <span style="color:#339933;">3.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">97</span><br>
 <span style="color:#339933;">5.9&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">69</span><br>
-<span style="color:#339933;">4.5&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">58</span><br>
 <span style="color:#339933;">5&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">402</span><br>
-<span style="color:#339933;">4.3&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">333</span><br>
+<span style="color:#339933;">4.2&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; border-bottom: double; font-weight: bolder; font-style: italic; vertical-align: middle;">Total</td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1672</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1670</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1225</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
@@ -4715,11 +4932,9 @@ política</td>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1649</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1532</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1166</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">9402</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">7868</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 </tr>
 </tbody>
@@ -4749,19 +4964,18 @@ política</td>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <caption>Frecuencias y porcentajes de Trabajadores/as que valoran el Movimiento de Demandas Laborales, por ola</caption>
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <tbody>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Valora Lab</td>
-<td colspan="6" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
 </tr>
 <tr class="even">
@@ -4769,25 +4983,22 @@ política</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
-<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2021</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">0</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1429</span><br>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1427</span><br>
 <span style="color:#339933;">85.2&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1070</span><br>
 <span style="color:#339933;">87.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">2020</span><br>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">2019</span><br>
 <span style="color:#339933;">93.3&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1470</span><br>
 <span style="color:#339933;">89.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1256</span><br>
-<span style="color:#339933;">81.9&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1051</span><br>
 <span style="color:#339933;">90.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">8296</span><br>
-<span style="color:#339933;">88.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">7037</span><br>
+<span style="color:#339933;">89.3&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">1</td>
@@ -4799,28 +5010,24 @@ política</td>
 <span style="color:#339933;">6.7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">180</span><br>
 <span style="color:#339933;">10.9&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">278</span><br>
-<span style="color:#339933;">18.1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">115</span><br>
 <span style="color:#339933;">9.9&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1124</span><br>
-<span style="color:#339933;">11.9&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">846</span><br>
+<span style="color:#339933;">10.7&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; border-bottom: double; font-weight: bolder; font-style: italic; vertical-align: middle;">Total</td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1677</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1675</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1229</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">2164</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">2163</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1650</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1534</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1166</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">9420</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">7883</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 </tr>
 </tbody>
@@ -4839,20 +5046,19 @@ política</td>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <caption>Frecuencias y porcentajes del Nivel de Compromiso con el Movimiento de Demandas Laborales, por ola</caption>
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <tbody>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Compromiso con el<br>
 movimiento DL</td>
-<td colspan="6" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
 </tr>
 <tr class="even">
@@ -4860,7 +5066,6 @@ movimiento DL</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
-<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2021</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
 </tr>
 <tr class="odd">
@@ -4872,8 +5077,6 @@ desacuerdo</td>
 <span style="color:#339933;">0.6&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">2</span><br>
 <span style="color:#339933;">1.4&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
@@ -4891,8 +5094,6 @@ desacuerdo</td>
 <span style="color:#339933;">7.7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">9</span><br>
 <span style="color:#339933;">5&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">12</span><br>
 <span style="color:#339933;">10.5&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">56</span><br>
@@ -4909,8 +5110,6 @@ de acuerdo</td>
 <span style="color:#339933;">11.2&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">17</span><br>
 <span style="color:#339933;">9.4&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">15</span><br>
 <span style="color:#339933;">13.2&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">93</span><br>
@@ -4926,8 +5125,6 @@ de acuerdo</td>
 <span style="color:#339933;">65&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">138</span><br>
 <span style="color:#339933;">76.7&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">82</span><br>
 <span style="color:#339933;">71.9&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">604</span><br>
@@ -4944,8 +5141,6 @@ acuerdo</td>
 <span style="color:#339933;">14.7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">16</span><br>
 <span style="color:#339933;">8.9&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">5</span><br>
 <span style="color:#339933;">4.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">83</span><br>
@@ -4960,8 +5155,6 @@ acuerdo</td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">143</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">180</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">114</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
@@ -4986,19 +5179,18 @@ acuerdo</td>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <caption>Frecuencias y porcentajes de Trabajadores/as permanentes, por ola</caption>
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <tbody>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Compromiso Mov Lab</td>
-<td colspan="6" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
 </tr>
 <tr class="even">
@@ -5006,25 +5198,22 @@ acuerdo</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
-<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2021</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">0</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1429</span><br>
-<span style="color:#339933;">85.4&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1427</span><br>
+<span style="color:#339933;">85.3&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1070</span><br>
 <span style="color:#339933;">87.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">2020</span><br>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">2019</span><br>
 <span style="color:#339933;">93.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1470</span><br>
 <span style="color:#339933;">89.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1256</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1051</span><br>
 <span style="color:#339933;">90.2&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">8296</span><br>
-<span style="color:#339933;">90.8&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">7037</span><br>
+<span style="color:#339933;">89.3&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">1</td>
@@ -5034,8 +5223,6 @@ acuerdo</td>
 <span style="color:#339933;">0.1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">2</span><br>
 <span style="color:#339933;">0.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
@@ -5053,12 +5240,10 @@ acuerdo</td>
 <span style="color:#339933;">0.5&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">9</span><br>
 <span style="color:#339933;">0.5&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">12</span><br>
 <span style="color:#339933;">1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">56</span><br>
-<span style="color:#339933;">0.6&nbsp;%</span></td>
+<span style="color:#339933;">0.7&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">3</td>
@@ -5070,12 +5255,10 @@ acuerdo</td>
 <span style="color:#339933;">0.7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">17</span><br>
 <span style="color:#339933;">1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">15</span><br>
 <span style="color:#339933;">1.3&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">93</span><br>
-<span style="color:#339933;">1&nbsp;%</span></td>
+<span style="color:#339933;">1.2&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">4</td>
@@ -5087,12 +5270,10 @@ acuerdo</td>
 <span style="color:#339933;">4.3&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">138</span><br>
 <span style="color:#339933;">8.4&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">82</span><br>
 <span style="color:#339933;">7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">604</span><br>
-<span style="color:#339933;">6.6&nbsp;%</span></td>
+<span style="color:#339933;">7.7&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">5</td>
@@ -5104,28 +5285,24 @@ acuerdo</td>
 <span style="color:#339933;">1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">16</span><br>
 <span style="color:#339933;">1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">5</span><br>
 <span style="color:#339933;">0.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">83</span><br>
-<span style="color:#339933;">0.9&nbsp;%</span></td>
+<span style="color:#339933;">1.1&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; border-bottom: double; font-weight: bolder; font-style: italic; vertical-align: middle;">Total</td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1674</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1672</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1229</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">2163</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">2162</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1650</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1256</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1165</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">9137</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">7878</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 </tr>
 </tbody>
@@ -5144,20 +5321,19 @@ acuerdo</td>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <caption>Frecuencias y porcentajes del Nivel de Identifico con el Movimiento de Demandas Laborales, por ola</caption>
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <tbody>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Compromiso con el<br>
 movimiento DL</td>
-<td colspan="6" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
 </tr>
 <tr class="even">
@@ -5165,7 +5341,6 @@ movimiento DL</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
-<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2021</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
 </tr>
 <tr class="odd">
@@ -5179,8 +5354,6 @@ desacuerdo</td>
 <span style="color:#339933;">1.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1</span><br>
 <span style="color:#339933;">0.6&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1</span><br>
 <span style="color:#339933;">0.9&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">10</span><br>
@@ -5196,8 +5369,6 @@ desacuerdo</td>
 <span style="color:#339933;">6.2&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">4</span><br>
 <span style="color:#339933;">2.2&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">8</span><br>
 <span style="color:#339933;">7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">43</span><br>
@@ -5214,8 +5385,6 @@ de acuerdo</td>
 <span style="color:#339933;">8.3&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">19</span><br>
 <span style="color:#339933;">10.6&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">15</span><br>
 <span style="color:#339933;">13&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">88</span><br>
@@ -5231,8 +5400,6 @@ de acuerdo</td>
 <span style="color:#339933;">73.6&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">142</span><br>
 <span style="color:#339933;">78.9&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">86</span><br>
 <span style="color:#339933;">74.8&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">635</span><br>
@@ -5249,8 +5416,6 @@ acuerdo</td>
 <span style="color:#339933;">10.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">14</span><br>
 <span style="color:#339933;">7.8&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">5</span><br>
 <span style="color:#339933;">4.3&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">69</span><br>
@@ -5265,8 +5430,6 @@ acuerdo</td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">144</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">180</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">115</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
@@ -5291,19 +5454,18 @@ acuerdo</td>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <caption>Frecuencias y porcentajes de Trabajadores/as permanentes, por ola</caption>
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <tbody>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Identifico Mov Lab</td>
-<td colspan="6" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
 </tr>
 <tr class="even">
@@ -5311,25 +5473,22 @@ acuerdo</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
-<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2021</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">0</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1429</span><br>
-<span style="color:#339933;">85.3&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1427</span><br>
+<span style="color:#339933;">85.2&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1070</span><br>
 <span style="color:#339933;">87.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">2020</span><br>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">2019</span><br>
 <span style="color:#339933;">93.3&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1470</span><br>
 <span style="color:#339933;">89.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1256</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1051</span><br>
 <span style="color:#339933;">90.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">8296</span><br>
-<span style="color:#339933;">90.8&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">7037</span><br>
+<span style="color:#339933;">89.3&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">1</td>
@@ -5341,8 +5500,6 @@ acuerdo</td>
 <span style="color:#339933;">0.1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1</span><br>
 <span style="color:#339933;">0.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1</span><br>
 <span style="color:#339933;">0.1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">10</span><br>
@@ -5358,8 +5515,6 @@ acuerdo</td>
 <span style="color:#339933;">0.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">4</span><br>
 <span style="color:#339933;">0.2&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">8</span><br>
 <span style="color:#339933;">0.7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">43</span><br>
@@ -5375,12 +5530,10 @@ acuerdo</td>
 <span style="color:#339933;">0.6&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">19</span><br>
 <span style="color:#339933;">1.2&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">15</span><br>
 <span style="color:#339933;">1.3&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">88</span><br>
-<span style="color:#339933;">1&nbsp;%</span></td>
+<span style="color:#339933;">1.1&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">4</td>
@@ -5392,12 +5545,10 @@ acuerdo</td>
 <span style="color:#339933;">4.9&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">142</span><br>
 <span style="color:#339933;">8.6&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">86</span><br>
 <span style="color:#339933;">7.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">635</span><br>
-<span style="color:#339933;">6.9&nbsp;%</span></td>
+<span style="color:#339933;">8.1&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">5</td>
@@ -5409,28 +5560,24 @@ acuerdo</td>
 <span style="color:#339933;">0.7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">14</span><br>
 <span style="color:#339933;">0.8&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">5</span><br>
 <span style="color:#339933;">0.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">69</span><br>
-<span style="color:#339933;">0.8&nbsp;%</span></td>
+<span style="color:#339933;">0.9&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; border-bottom: double; font-weight: bolder; font-style: italic; vertical-align: middle;">Total</td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1676</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1674</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1229</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">2164</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">2163</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1650</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1256</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1166</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">9141</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">7882</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 </tr>
 </tbody>
@@ -5442,7 +5589,7 @@ acuerdo</td>
 <section id="guardar-base" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="guardar-base"><span class="header-section-number">1.3</span> Guardar base</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      idencuesta              ola          ola_w01          ola_w02 
                0                0                0                0 
@@ -5453,53 +5600,55 @@ acuerdo</td>
 segmento_disenno     ponderador02  estrato_disenno             sexo 
                0                0                0                0 
             edad             educ              m02              m06 
-               0                0                0             4461 
+               0                0                0             4045 
              m07              m08              m10              m03 
-            4045             4045             4045             4046 
+            4045             4045             4045             4045 
       ciuo88_m03       ciuo08_m03              m04        ciiu3_m04 
-            7743             5722             4046             7829 
+            6208             5720             4045             6293 
        ciiu4_m04           c12_04           c08_02           c08_03 
-            5722             4501                0             1534 
+            5720             2967                0                0 
              c20         c20_otro           c21_01           c21_02 
-               0             9303             4215             4215 
+               0             7777             2680             2680 
           c21_03           c21_04           c21_05           c21_06 
-            4215             4215             4215             4215 
+            2680             2680             2680             2680 
           c21_07           c21_08           c21_09           c21_10 
-            4215             4215             4215             4215 
+            2680             2680             2680             2680 
           c21_11              c22              c23              c24 
-            4215             2725             4217             4217 
+            2680             2682             2682             2682 
              c13           c14_01           c14_02        actividad 
                0                0                0                0 
        full_time       rel_empleo       ciuo08_rec           isco08 
-               0                0             7752               15 
+               0                0             6217               15 
        isco08_1d        isco08_2d    cualificacion            ciiu3 
-              15               15             1572                0 
+              15               15             1322                0 
            ciiu4        ciiu4_rec            isic4         isic4_2d 
-               0             7866                0              214 
+               0             6330                0              213 
             rama           rama_2        supervisa         m06_full 
-             299              299              673              641 
+             280              280              299              271 
            class          class_2     temp_trabajo         m08_full 
-            1461             1461               14                0 
+            1218             1218               13                0 
       open_ended    tipo_contrato         m10_full         contrato 
-              14               13                0                0 
+              13               13                0                0 
           female             year    mem_sindicato      c12_04_full 
-               0                0             1479             1458 
-       unionized      part_huelga     int_politica       valora_lab 
-            1458             1537               18                0 
-  compromiso_mov  compromiso_mlab   identifico_mov  identifico_mlab 
-            4241              283             4226              279 </code></pre>
+               0                0              104               84 
+       unionized      part_huelga      participa_h     int_politica 
+              84                0                0               15 
+      valora_lab   compromiso_mov  compromiso_mlab   identifico_mov 
+               0             2706                5             2691 
+ identifico_mlab 
+               1 </code></pre>
 </div>
 </div>
 <p>Se guarda la base de datos en formato <code>.Rdata</code> y <code>.rds</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data,<span class="at">file=</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"output/elsoc-huelgas.Rdata"</span>)))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(data,<span class="at">file=</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"output/elsoc-huelgas.rds"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data,<span class="at">file=</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"output/elsoc-huelgas.Rdata"</span>)))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(data,<span class="at">file=</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"output/elsoc-huelgas.rds"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sin-atrición-exploración-y-preparación-de-datos" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="sin-atrición-exploración-y-preparación-de-datos"><span class="header-section-number">1.4</span> SIN ATRICIÓN Exploración y preparación de datos</h2>
 <p>También, crearemos una base de datos que contenga solamente a aquellos/as encuestados/as que hayan participado en todas las olas, esto quiere decir, sin atrición. La llamaremos <code>data_sa</code>.</p>
-<p>La base de datos sin atrición comienza con 5735 observaciones.</p>
+<p>La base de datos sin atrición comienza con 4594 observaciones.</p>
 </section>
 <section id="variables-independientes-sa" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="variables-independientes-sa"><span class="header-section-number">1.5</span> Variables independientes S/A</h2>
@@ -5513,19 +5662,18 @@ segmento_disenno     ponderador02  estrato_disenno             sexo
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <caption>Frecuencias y porcentajes de Actividad principal, por ola, S/A</caption>
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <tbody>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Actividad</td>
-<td colspan="6" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
 </tr>
 <tr class="even">
@@ -5533,14 +5681,13 @@ segmento_disenno     ponderador02  estrato_disenno             sexo
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
-<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2021</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Trabaja de manera<br>
 remunerada con<br>
 jornada completa</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">537</span><br>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">536</span><br>
 <span style="color:#339933;">74.2&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">471</span><br>
 <span style="color:#339933;">73.7&nbsp;%</span></td>
@@ -5548,31 +5695,27 @@ jornada completa</td>
 <span style="color:#339933;">72.3&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">745</span><br>
 <span style="color:#339933;">71.2&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">734</span><br>
-<span style="color:#339933;">64.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">733</span><br>
 <span style="color:#339933;">73.3&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">4078</span><br>
-<span style="color:#339933;">71.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">3343</span><br>
+<span style="color:#339933;">72.8&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Trabaja de manera<br>
 remunerada a tiempo<br>
 parcial</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">159</span><br>
-<span style="color:#339933;">22&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">158</span><br>
+<span style="color:#339933;">21.9&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">143</span><br>
 <span style="color:#339933;">22.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">286</span><br>
 <span style="color:#339933;">24.1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">261</span><br>
 <span style="color:#339933;">25&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">359</span><br>
-<span style="color:#339933;">31.5&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">233</span><br>
 <span style="color:#339933;">23.3&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1441</span><br>
-<span style="color:#339933;">25.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1081</span><br>
+<span style="color:#339933;">23.5&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Estudia y trabaja</td>
@@ -5584,17 +5727,13 @@ parcial</td>
 <span style="color:#339933;">3.6&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">40</span><br>
 <span style="color:#339933;">3.8&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">46</span><br>
-<span style="color:#339933;">4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">34</span><br>
 <span style="color:#339933;">3.4&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">216</span><br>
-<span style="color:#339933;">3.8&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">170</span><br>
+<span style="color:#339933;">3.7&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Solo estudia</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
@@ -5623,14 +5762,10 @@ pensionado</td>
 <span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">0&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Desempleado,<br>
 buscando trabajo</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
@@ -5659,14 +5794,10 @@ remuneradas</td>
 <span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">0&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Esta enfermo o tiene<br>
 una discapacidad</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
@@ -5696,12 +5827,10 @@ trabajo</td>
 <span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">0&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; border-bottom: double; font-weight: bolder; font-style: italic; vertical-align: middle;">Total</td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">724</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">722</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">639</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
@@ -5709,11 +5838,9 @@ trabajo</td>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1046</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1139</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1000</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">5735</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">4594</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 </tr>
 </tbody>
@@ -5728,19 +5855,18 @@ trabajo</td>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <caption>Frecuencias y porcentajes de Trabajadores/as con jornada completa, por ola, S/A</caption>
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <tbody>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Full-time</td>
-<td colspan="6" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
 </tr>
 <tr class="even">
@@ -5748,12 +5874,11 @@ trabajo</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
-<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2021</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">0</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">187</span><br>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">186</span><br>
 <span style="color:#339933;">25.8&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">168</span><br>
 <span style="color:#339933;">26.3&nbsp;%</span></td>
@@ -5761,16 +5886,14 @@ trabajo</td>
 <span style="color:#339933;">27.7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">301</span><br>
 <span style="color:#339933;">28.8&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">405</span><br>
-<span style="color:#339933;">35.6&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">267</span><br>
 <span style="color:#339933;">26.7&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1657</span><br>
-<span style="color:#339933;">28.9&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1251</span><br>
+<span style="color:#339933;">27.2&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">1</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">537</span><br>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">536</span><br>
 <span style="color:#339933;">74.2&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">471</span><br>
 <span style="color:#339933;">73.7&nbsp;%</span></td>
@@ -5778,16 +5901,14 @@ trabajo</td>
 <span style="color:#339933;">72.3&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">745</span><br>
 <span style="color:#339933;">71.2&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">734</span><br>
-<span style="color:#339933;">64.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">733</span><br>
 <span style="color:#339933;">73.3&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">4078</span><br>
-<span style="color:#339933;">71.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">3343</span><br>
+<span style="color:#339933;">72.8&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; border-bottom: double; font-weight: bolder; font-style: italic; vertical-align: middle;">Total</td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">724</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">722</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">639</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
@@ -5795,11 +5916,9 @@ trabajo</td>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1046</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1139</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1000</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">5735</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">4594</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 </tr>
 </tbody>
@@ -5814,19 +5933,18 @@ trabajo</td>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <caption>Frecuencias y porcentajes de la Relación de empleo, por ola, S/A</caption>
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <tbody>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; border-bottom: 1px solid;">Relación de empleo</td>
-<td colspan="6" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
+<td colspan="5" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal;">Ola</td>
 <td rowspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: italic; font-weight: normal; font-weight: bolder; font-style: italic; border-bottom: 1px solid;">Total</td>
 </tr>
 <tr class="even">
@@ -5834,26 +5952,23 @@ trabajo</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2017</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2018</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2019</td>
-<td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2021</td>
 <td style="text-align: center; border-bottom: 1px solid; padding: 0.2cm;">2022</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Empleado u obrero en<br>
 empresa privada</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">447</span><br>
-<span style="color:#339933;">61.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">446</span><br>
+<span style="color:#339933;">61.8&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">403</span><br>
 <span style="color:#339933;">63.1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">720</span><br>
 <span style="color:#339933;">60.7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">644</span><br>
 <span style="color:#339933;">61.6&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">634</span><br>
-<span style="color:#339933;">55.7&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">575</span><br>
 <span style="color:#339933;">57.5&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">3423</span><br>
-<span style="color:#339933;">59.7&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">2788</span><br>
+<span style="color:#339933;">60.7&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Empleado u obrero<br>
@@ -5866,19 +5981,15 @@ del sector público</td>
 <span style="color:#339933;">14.2&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">155</span><br>
 <span style="color:#339933;">14.8&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">169</span><br>
-<span style="color:#339933;">14.8&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">164</span><br>
 <span style="color:#339933;">16.4&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">828</span><br>
-<span style="color:#339933;">14.4&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">659</span><br>
+<span style="color:#339933;">14.3&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Miembro de las<br>
 Fuerzas Armadas y de<br>
 Orden</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
@@ -5907,26 +6018,22 @@ empleador/a</td>
 <span style="color:#339933;">0&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
 <span style="color:#339933;">0&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">0</span><br>
-<span style="color:#339933;">0&nbsp;%</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Trabaja solo, no<br>
 tiene empleados</td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">146</span><br>
-<span style="color:#339933;">20.2&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">145</span><br>
+<span style="color:#339933;">20.1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">119</span><br>
 <span style="color:#339933;">18.6&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">223</span><br>
 <span style="color:#339933;">18.8&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">181</span><br>
 <span style="color:#339933;">17.3&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">269</span><br>
-<span style="color:#339933;">23.6&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">212</span><br>
 <span style="color:#339933;">21.2&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1150</span><br>
-<span style="color:#339933;">20.1&nbsp;%</span></td>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">880</span><br>
+<span style="color:#339933;">19.2&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; vertical-align: middle;">Familiar no<br>
@@ -5941,9 +6048,7 @@ remunerado</td>
 <span style="color:#339933;">0.4&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1</span><br>
 <span style="color:#339933;">0.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">1</span><br>
-<span style="color:#339933;">0.1&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">10</span><br>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">9</span><br>
 <span style="color:#339933;">0.2&nbsp;%</span></td>
 </tr>
 <tr class="odd">
@@ -5956,16 +6061,14 @@ remunerado</td>
 <span style="color:#339933;">6.1&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">62</span><br>
 <span style="color:#339933;">5.9&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">66</span><br>
-<span style="color:#339933;">5.8&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm;"><span style="color:black;">48</span><br>
 <span style="color:#339933;">4.8&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">324</span><br>
+<td style="text-align: center; padding: 0.2cm;"><span style="color:black;">258</span><br>
 <span style="color:#339933;">5.6&nbsp;%</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding: 0.2cm; border-bottom: double; font-weight: bolder; font-style: italic; vertical-align: middle;">Total</td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">724</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">722</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">639</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
@@ -5973,11 +6076,9 @@ remunerado</td>
 <span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1046</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1139</span><br>
-<span style="color:#339933;">100&nbsp;%</span></td>
 <td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">1000</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
-<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">5735</span><br>
+<td style="text-align: center; padding: 0.2cm; border-bottom: double;"><span style="color:black;">4594</span><br>
 <span style="color:#339933;">100&nbsp;%</span></td>
 </tr>
 </tbody>
@@ -5989,8 +6090,8 @@ remunerado</td>
 <section id="guardar-base-sa" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="guardar-base-sa"><span class="header-section-number">1.6</span> Guardar base S/A</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data_sa,<span class="at">file=</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"output/elsoc-huelgas-sa.Rdata"</span>)))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(data_sa,<span class="at">file=</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"output/elsoc-huelgas-sa.rds"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data_sa,<span class="at">file=</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"output/elsoc-huelgas-sa.Rdata"</span>)))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(data_sa,<span class="at">file=</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"output/elsoc-huelgas-sa.rds"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

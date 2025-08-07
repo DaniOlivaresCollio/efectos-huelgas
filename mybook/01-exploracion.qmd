@@ -25,26 +25,22 @@ p_load(tidyverse,
        ggalluvial,
        survey, 
        httr,
-       # devtools,
        readr, 
        ggplot2, 
        labelled)
-
-# devtools::install_github("DiogoFerrari/occupar",dependencies=F)
 ```
-
 
 Cargamos la base de datos ELSOC 2016-2022 en formato *long*.
 
 ```{r datos,echo=FALSE}
-load(here::here("input/data/ELSOC_Long.RData"))
+load(here::here("input/data/ELSOC_Long_2016_2023.RData"))
 ```
 
 Seleccionamos las variables de interés.
 
 ```{r seleccion}
 # Seleccion de variables
-data <- elsoc_long_2016_2022 %>%
+data <- elsoc_long_2016_2023 %>%
   select(idencuesta,                                     # identificacion enctdo
          ola,ola_w01,ola_w02,ola_w03,                    # identificacion ola
          ola_w04,ola_w05,ola_w06,                        # identificacion ola
@@ -61,7 +57,8 @@ data <- elsoc_long_2016_2022 %>%
          c21_01,c21_02,c21_03,c21_04,c21_05,c21_06,      # caract mov valora
          c21_07,c21_08,c21_09,c21_10,c21_11,c22,c23,c24, # caract mov valora
          c13,c14_01,c14_02                               # interes politica
-         )
+         ) %>% 
+  sjlabelled::set_na(.,na=c(-999,-888,-777,-666))
 
 ## Informacion diseno del estudio
 # data_svy <- svydesign(ids = ~segmento_disenno,weights = ~ponderador02,
@@ -83,11 +80,11 @@ Se comienza con `r n` observaciones.
 
 ### Actividad
 
-Con la variable ELSOC:
+Con la variable *numérica* ELSOC:
 
 -   `m02`. ¿Cuál de estas situaciones describe mejor su actividad principal durante el último mes?
 
-Creamos la variable de factor `actividad`. 
+Creamos la variable *tipo factor* `actividad`. 
 
 ```{r,echo=FALSE}
 # Recodficar
@@ -142,6 +139,7 @@ Dejando afuera:
 data <- filter(data,actividad %in% c("Trabaja de manera remunerada con jornada completa",
                                      "Trabaja de manera remunerada a tiempo parcial",
                                      "Estudia y trabaja"))
+# Al hacer esto tbn se quitan los NA (ex -999,-888) 24 y 20 respectivamente.
 ```
 
 ```{r,echo=FALSE}
@@ -174,11 +172,11 @@ sjt.xtab(data$full_time,data$ola,
 
 ### Relación de empleo
 
-Con la variable ELSOC:
+Con la variable *numérica* ELSOC:
 
 -   `m07`. En su actual ocupación usted trabaja como:
 
-Creamos la variable de factor `rel_empleo`.
+Creamos la variable *tipo factor* `rel_empleo`.
 
 ```{r,echo=FALSE}
 # Recodficar
@@ -202,7 +200,7 @@ data <- data %>%
                                          "Familiar no remunerado",
                                          "Servicio doméstico"))) # ordenar niveles
 
-# Tabla de frecuencias y porcentajes 2 dígitos
+# Tabla de frecuencias y porcentajes 
 sjt.xtab(data$rel_empleo,data$ola,
          show.col.prc=TRUE,
          var.labels=c("Relación de empleo","Ola"),
@@ -277,7 +275,7 @@ Quedan `r n` observaciones.
 
 ### Ocupación
 
-La variable ELSOC:
+La variable *tipo character* ELSOC:
 
 -   `m03`. ¿Cuál es su ocupación u oficio actual? Describa sus principales tareas y funciones en el puesto de trabajo actual
 
@@ -325,7 +323,7 @@ data <- data %>%
   select(-isco08_lagged)                 # Elimina la columna temporal
 ```
 
-Se crean dos nuevas variables `isco08_1d` y `isco08_2d`, de la ISCO08 con 1 y 2 dígitos respectivamente. 
+Se crean dos nuevas variables tipo numéricas `isco08_1d` y `isco08_2d`, de la ISCO08 con 1 y 2 dígitos respectivamente. 
 
 ```{r,echo=FALSE}
 # CIUO - ISCO: creación de variables con 1 dígito
@@ -354,27 +352,9 @@ sjt.xtab(data$isco08_2d,data$ola,
 ```
 
 
-<!-- Recodificación con paquete `occupar`, ver el [enlace](https://github.com/DiogoFerrari/occupar). -->
-
-```{r,echo=FALSE}
-# data$ciuo08_rec2 <- occupar::isco88to08(data$ciuo88_m03)
-# data$isco08_2 <- ifelse(!is.na(data$ciuo08_rec2),data$ciuo08_rec2,data$ciuo08_m03)
-# 
-# data$isco08_2d2 <- as.character(data$isco08_2)
-# data$isco08_2d2 <- substr(data$isco08_2d2,1,2)
-# data$isco08_2d2 <- as.numeric(data$isco08_2d2)
-# 
-# sjt.xtab(data$isco08_2d2, data$ola,
-#          show.col.prc = TRUE, 
-#          var.labels = c("CIUO08","Ola"),
-#          show.summary = FALSE,
-#          title = "Frecuencias y porcentajes de Ocupación con 2 dígitos, por ola")
-```
-
-
 ### Cualificación
 
-Se crea una nueva variable con el Nivel de cualificación, llamada `cualificacion`, de acuerdo con la variable CIUO08 de 2 dígitos, `isco08_2d`, siguiendo el criterio:
+Se crea una nueva variable *tipo factor* con el Nivel de cualificación, llamada `cualificacion`, de acuerdo con la variable CIUO08 de 2 dígitos, `isco08_2d`, siguiendo el criterio:
 
 -   Expertos (Experts): 11 a 34 con universitaria completa o más
 -   Calificados (Skilled): 11 a 34 con universitaria incompleta o menos, y 35,41,42,43,44,53, y 51,54,61,62,71,72,73,74,75,81 con media completa o más.
@@ -414,7 +394,11 @@ data <- mutate(data,
                                        isco08_2d==75~"Unskilled",
                                        isco08_2d==82~"Unskilled",
                                        isco08_2d==83~"Unskilled",
-                                       isco08_2d==90~"Unskilled"))
+                                       isco08_2d==90~"Unskilled"),
+                                as.factor=TRUE, # convertir a factor
+                                levels=c("Skilled",
+                                         "Skilled",
+                                         "Unskilled"))
 
 # Tabla de frecuencias y porcentajes 2 dígitos
 sjt.xtab(data$cualificacion,data$ola,
@@ -425,9 +409,9 @@ sjt.xtab(data$cualificacion,data$ola,
 ```
 
 
-### Rama
+### Rama 1
 
-La variable ELSOC:
+La variable *tipo character* ELSOC:
 
 -   `m04`. ¿A qué rubro o giro de actividad se dedica principalmente la empresa, institución o negocio para la cual usted trabaja?
 
@@ -506,7 +490,9 @@ data <- mutate(data,
                               isic4_2d>=90&isic4_2d<=93~"R",
                               isic4_2d>=94&isic4_2d<=96~"S",
                               isic4_2d>=97&isic4_2d<=98~"T",
-                              isic4_2d==99~"U"))
+                              isic4_2d==99~"U"))%>%
+  filter(!is.na(isic4_2d))
+
 
 # Tabla de frecuencias y porcentajes
 sjt.xtab(data$rama,data$ola,
@@ -553,11 +539,11 @@ sjt.xtab(data$rama_2,data$ola,
 
 ### Supervisión
 
-La variable ELSOC:
+La variable *numérica* ELSOC:
 
 -   `m06`. En su trabajo, ¿a cuántas personas supervisa usted?
 
-Se recodifica en una nueva variable dicotómica, `supervisa`, donde:
+Se recodifica en una nueva variable *dicotómica*, `supervisa`, donde:
 
 -   `supervisa==1`: Supervisa a una o más personas (`m06>=1`)
 -   `supervisa==0`: No supervisa (`m06==0`)
@@ -611,7 +597,7 @@ sjt.xtab(data$supervisa,data$ola,
 ```
 
 
-### Class
+### Class 1
 
 Se crea la variable posición de clase tipo factor, llamada `class`, con 7 categorías:
 
